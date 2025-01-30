@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--favicon-->
+	<link rel="icon" href="assets/images/favicon-32x32.png" type="image/png" />
+	<!--plugins-->
+    <link rel="stylesheet" href="assets/plugins/notifications/css/lobibox.min.css" />
+	<link href="assets/plugins/simplebar/css/simplebar.css" rel="stylesheet" />
+	<link href="assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet" />
+	<link href="assets/plugins/metismenu/css/metisMenu.min.css" rel="stylesheet" />
+	<!-- loader-->
+	<link href="assets/css/pace.min.css" rel="stylesheet" />
+	<script src="assets/js/pace.min.js"></script>
+	
+    <%- include ('./head-css.ejs') %>
+
+	<title><%-title%> | Admin  </title>
+</head>
+
+<body class="bg-login">
+	<!--wrapper-->  
+	<div class="wrapper">
+   
+		<%- body%>
+		<!-- for toast -->
+		<% if (successMessage && successMessage.length > 0) { %>
+			<script>
+			document.addEventListener("DOMContentLoaded", function () {
+				showToast("<%= successMessage[0] %>",'success');
+			});
+			</script>
+		<% } %>
+		
+		<% if (errorMessage && errorMessage.length > 0) { %>
+			<script>
+				document.addEventListener("DOMContentLoaded", function () {
+					showToast("<%= errorMessage[0] %>",'error');
+				});
+				</script>
+		<% } %>
+
+		<script>
+			document.addEventListener("DOMContentLoaded", function () {
+				let dataFlash = sessionStorage.getItem('dataFlash');
+				if (dataFlash) {
+					let flashData = JSON.parse(dataFlash);
+					showToast(flashData.message,flashData.status);
+					sessionStorage.removeItem('dataFlash');
+				}
+			});
+		</script>
+	</div>
+	<!--end wrapper-->
+	<!-- Bootstrap JS -->
+	<script src="assets/js/bootstrap.bundle.min.js"></script>
+	<!--plugins-->
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/plugins/simplebar/js/simplebar.min.js"></script>
+	<script src="assets/plugins/metismenu/js/metisMenu.min.js"></script>
+	<script src="assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js"></script>
+
+     <!--notification js -->
+	<script src="assets/plugins/notifications/js/lobibox.min.js"></script>
+	<script src="assets/plugins/notifications/js/notifications.min.js"></script>
+	<script src="assets/plugins/notifications/js/notification-custom-script.js"></script>
+
+    <script src="assets/js/custom.js"></script>
+
+   
+
+	<!--Password show & hide js -->
+	<script>
+		$(document).ready(function () {
+			$("#show_hide_password a").on('click', function (event) {
+				event.preventDefault();
+				if ($('#show_hide_password input').attr("type") == "text") {
+					$('#show_hide_password input').attr('type', 'password');
+					$('#show_hide_password i').addClass("bx-hide");
+					$('#show_hide_password i').removeClass("bx-show");
+				} else if ($('#show_hide_password input').attr("type") == "password") {
+					$('#show_hide_password input').attr('type', 'text');
+					$('#show_hide_password i').removeClass("bx-hide");
+					$('#show_hide_password i').addClass("bx-show");
+				}
+			});
+		});
+	</script>
+	<!--app JS-->
+	<script src="assets/js/app.js"></script>
+    <script>
+		// Example starter JavaScript for disabling form submissions if there are invalid fields
+			(function () {
+			  'use strict'
+	
+			  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+			  var forms = document.querySelectorAll('.needs-validation')
+	
+			  // Loop over them and prevent submission
+			  Array.prototype.slice.call(forms)
+				.forEach(function (form) {
+				  form.addEventListener('submit', function (event) {
+					if (!form.checkValidity()) {
+					  event.preventDefault()
+					  event.stopPropagation()
+					}
+	
+					form.classList.add('was-validated')
+				  }, false)
+				})
+			})()
+	</script>
+</body>
+
+</html>

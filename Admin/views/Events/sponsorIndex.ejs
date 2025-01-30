@@ -1,0 +1,42 @@
+<%- contentFor('body') %>
+<section class="content">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card card-theme card-outline shadow-sm">
+					<div class="card-header">
+						<h4 class="card-title">sponser</h4>
+						
+						<div class="card-tools">
+							<button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+							    <i class="fa-solid fa-angle-down"></i>
+							</button>
+						</div>
+					</div>
+					
+                    <div class="card-body border-bottom">
+    					<div class="row">
+        					<div class="col-6">
+        						<button type="button" class="btn btn-gradient-dark px-5 radius-30 float-left" data-route="<%= AdminRoute('/sponserAdd') %>" data-bs-toggle="modal" data-bs-target="#form-modal">
+        						    <i class="fa-solid fa-pen-to-square"></i> ADD
+        						</button>
+						    </div>
+						    
+        					<div class="col-6">
+        						<button type="button" class="btn btn-gradient-danger px-5 radius-30 float-right" data-route="" data-toggle="modal" data-target="#form-modal">
+        						    <i class="fa-solid fa-pen-to-square"></i> EDIT
+        						</button>
+						    </div>
+						</div>
+        			</div>
+					
+                    <div class="card-body">
+    					<div class="table-container">
+        					
+					    </div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

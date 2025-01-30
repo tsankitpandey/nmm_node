@@ -1,0 +1,18 @@
+# Node.js
+node_modules/
+
+# Environment files
+# .env
+config.env
+# Log files
+*.log
+
+# MacOS
+.DS_Store
+
+# VS Code
+.vscode/
+
+# Build outputs
+dist/
+build/
