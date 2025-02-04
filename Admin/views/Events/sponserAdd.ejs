@@ -1,50 +1,51 @@
 <%- contentFor('body') %>
-<%- contentFor('body') %>
 
 <div class="modal-content">
     <div class="modal-header">
-        	<h4 class="card-title ">Add</h4>
+        	<h4 class="card-title "> Sponsor Add</h4>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
     </div>
     <div class="modal-body">
-
-
 		<section class="content">
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-md-12">
 						<div class="card card-theme card-outline shadow-sm">
-							<div class="card-header">
-								<h4 class="card-title">sponser</h4>
-								
-								<div class="card-tools">
-									<button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-										<i class="fa-solid fa-angle-down"></i>
-									</button>
-								</div>
-							</div>
-							
-							<div class="card-body border-bottom">
-								<div class="row">
-									<div class="col-6">
-										<button type="button" class="btn btn-gradient-dark px-3 radius-30 float-left" data-route="<%= AdminRoute('/sponserAdd') %>" data-bs-toggle="modal" data-bs-target="#form-modal">
-											<i class="fa-solid fa-pen-to-square"></i> ADD
-										</button>
-									</div>
-									
-									<div class="col-6">
-										<button type="button" class="btn btn-gradient-danger px-3 radius-30 float-right" data-route="" data-toggle="modal" data-target="#form-modal">
-											<i class="fa-solid fa-pen-to-square"></i> EDIT
-										</button>
-									</div>
-								</div>
-							</div>
-							
 							<div class="card-body">
-								<div class="table-container">
+								<form class="row g-3">
+									<div class="col-md-6">
+										<label for="inputLastName" class="form-label">Sponsor Company Name <span class="text-red">*</span></label>
+										<input type="text" class="form-control" id="inputLastName" readonly/>
+									</div>
+									<div class="col-md-6">
+										<label for="inputLastName" class="form-label">Website <span class="text-red">*</span></label>
+										<input type="text" class="form-control" id="inputLastName">
+									</div>
 									
-								</div>
+									<div class="col-md-6">
+										<label>Company Logo <span class="text-red">* <span class="text-xs" data-tooltip="You'll need to ensure that the file you're trying to upload is in one of these formats (JPG, PNG, JPEG)">(Only jpg/png/jpeg files are allowed)</span></span></label>
+										
+										<div class="form-file">
+											<input type="file" class="form-control form-file-input" name="event[image]" value="" placeholder="Event Image">
+											
+											<label class="form-file-label"></label>
+										</div>
+									</div>           
+									
+									<div class="col-md-6">
+										<label for="inputState" class="form-label">Sponsor Group <span class="text-red">*</span></label>
+										<select id="inputState" class="form-select">
+											<option selected>Choose...</option>
+											<option>...</option>
+										</select>
+									</div>
+									 
+									 <div class="col-12">
+										<button type="submit" class="btn btn-primary px-5">Submit</button>
+									</div>
+								</form>
 							</div>
+							
 						</div>
 					</div>
 				</div>
