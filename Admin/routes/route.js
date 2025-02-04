@@ -87,7 +87,14 @@ route.post('/sponserAdd', EventController.sponserAdd);
 
 
 
-
+// Event Router---
+route.get('/EventInfo', EventController.EventInfoIndex);
+route.get('/EventOrg', EventController.EventOrgIndex);
+route.get('/sponsor', EventController.sponsorIndex);
+route.post('/sponserAdd', EventController.sponserAdd);
+route.post('/sponserManage', EventController.sponserManage);
+route.get('/Ems', EventController.EmsDetails);
+route.post('/EmsAdd', EventController.EmsAdd);
 
 
 module.exports = route;
