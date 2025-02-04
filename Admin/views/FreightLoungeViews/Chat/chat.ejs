@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Page</title>
+
+    <style>
+      
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7fc;
+        }
+
+        .sidebar {
+            background: linear-gradient(145deg, #464545, #212529);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar .user-profile {
+            background-color: #ffffff;
+            padding: 8px;
+            border-radius: 12px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar .user-profile:hover {
+            transform: scale(1.05);
+        }
+
+        .sidebar .user-profile img {
+            border-radius: 50%;
+            margin-right: 20px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+        }
+
+        .sidebar .user-profile h5 {
+            margin: 0;
+            color: #141313;
+            font-weight: bold;
+        }
+
+        .sidebar .search-bar input {
+            border-radius: 25px;
+            padding-left: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar .search-bar input:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+
+        .sidebar .nav-buttons button {
+            border-radius: 30px;
+            padding: 10px 18px;
+            margin-top: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .sidebar .nav-buttons button:hover {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .sidebar .list-group-item {
+            border: none;
+            padding: 12px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            background-color: #f8f9fa;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            transition: background-color 0.3s ease;
+        }
+
+        .sidebar .list-group-item:hover {
+            background-color: #e9ecef;
+            cursor: pointer;
+        }
+
+        .chat-window {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            height: 70vh;
+            overflow-y: auto;
+        }
+
+        .chat-window .message {
+            margin-bottom: 20px;
+        }
+
+        .chat-window .message .sender {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .chat-window .message .text {
+            background-color: #eff2f5;
+            padding: 12px 18px;
+            border-radius: 18px;
+            max-width: max-content
+            ;
+            word-wrap: break-word;
+        }
+
+        .chat-window .message.receiver .text {
+            background-color: #dcedff;;
+          
+            margin-left: auto;
+        }
+
+        .chat-window .message.sender .text {
+            background-color: #f1f1f1;
+            color: #333;
+        }
+
+        .sidebar .list-group {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Column 4 (Sidebar) -->
+            <div class="col-3 sidebar">
+                <!-- User Profile -->
+                <div class="user-profile">
+                    <img src="https://plus.unsplash.com/premium_photo-1664533227571-cb18551cac82?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                        class="rounded-circle" alt="User Logo" width="70" height="70">
+                    <div>
+                        <h5>Rachel Zane</h5>
+                        <p style="color: #0f0e0e;">Senior Associate</p>
+                    </div>
+                </div>
+
+                
+                <div class="search-bar mb-4">
+                    <input type="text" class="form-control" placeholder="Search..." />
+                </div>
+
+              
+                <div class="whatsapp-nav-buttons d-flex justify-content-evenly">
+                    <button class="btn btn-outline-light btn-sm d-flex align-items-center px-2 py-1 m-1">
+                        <i class="bx bx-chat"></i> Chats
+                    </button>
+                    <button class="btn btn-outline-light btn-sm d-flex align-items-center px-2 py-1 m-1">
+                        <i class="bx bx-phone"></i> Calls
+                    </button>
+                   
+                    <button class="btn btn-outline-light btn-sm d-flex align-items-center px-2 py-1 m-1">
+                        <i class="bx bx-bell"></i> Notifications
+                    </button>
+                </div>
+                <hr style="border-top: 1px solid #ddd;">
+             
+                <div class="whatsapp-nav-buttons d-flex justify-content-evenly">
+                    <button class="btn btn-outline-light btn-sm d-flex align-items-center px-2 py-1 m-1">
+                        <i class="bx bx-phone"></i> Contacts
+                    </button>
+                  
+                    <div class="dropdown">
+                        <button class="btn btn-outline-light btn-sm d-flex align-items-center px-2 py-1 m-1 dropdown-toggle" type="button" id="meetNowDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bx bx-video"></i> Meet Now
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="meetNowDropdown">
+                            <li><a class="dropdown-item" href="#">Schedule a Meeting</a></li>
+                            <li><a class="dropdown-item" href="#">Join Meeting</a></li>
+                        </ul>
+                    </div>
+                   
+                    <div class="dropdown">
+                        <button class="btn btn-outline-light btn-sm d-flex align-items-center px-2 py-1 m-1 dropdown-toggle" type="button" id="chatNewDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bx bx-message"></i> Chat New
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="chatNewDropdown">
+                            <li><a class="dropdown-item" href="#">Start New Chat</a></li>
+                            <li><a class="dropdown-item" href="#">Group Chat</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+              
+                <hr style="border-top: 1px solid #ddd;">
+
+              
+                <div class="list-group" style="max-height: 400px; overflow-y: auto;">
+                    <a href="#" class="list-group-item d-flex align-items-center justify-content-between">
+                        <div class="d-flex align-items-center">
+                            <img src="https://plus.unsplash.com/premium_photo-1664533227571-cb18551cac82?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="rounded-circle me-3" alt="Member Logo" width="30" height="30">
+                            <div>
+                                <h6 class="mb-0">Louis Litt</h6>
+                                <small class="text-muted">Last message preview</small>
+                            </div>
+                        </div>
+
+                        
+                        <div class="d-flex align-items-center">
+                            <small class="text-muted me-3">2:30 PM</small>
+                            <span class="dot bg-success" style="width: 10px; height: 10px; border-radius: 50%;"></span>
+                        </div>
+                    </a>
+                    <a href="#" class="list-group-item d-flex align-items-center justify-content-between">
+                        <div class="d-flex align-items-center">
+                            <img src="path/to/member-logo2.png" class="rounded-circle me-3" alt="Member Logo" width="30" height="30">
+                            <div>
+                                <h6 class="mb-0">Harvey Specter</h6>
+                                <small class="text-muted">Last message preview</small>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <small class="text-muted me-3">3:45 PM</small>
+                            <span class="dot bg-success" style="width: 10px; height: 10px; border-radius: 50%;"></span>
+                        </div>
+                    </a>
+                    <a href="#" class="list-group-item d-flex align-items-center justify-content-between">
+                        <div class="d-flex align-items-center">
+                            <img src="path/to/member-logo3.png" class="rounded-circle me-3" alt="Member Logo" width="30" height="30">
+                            <div>
+                                <h6 class="mb-0">Donna Paulsen</h6>
+                                <small class="text-muted">Last message preview</small>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <small class="text-muted me-3">5:15 PM</small>
+                            <span class="dot bg-success" style="width: 10px; height: 10px; border-radius: 50%;"></span>
+                        </div>
+                    </a>
+                    <a href="#" class="list-group-item d-flex align-items-center justify-content-between">
+                        <div class="d-flex align-items-center">
+                            <img src="path/to/member-logo4.png" class="rounded-circle me-3" alt="Member Logo" width="30" height="30">
+                            <div>
+                                <h6 class="mb-0">Jessica Pearson</h6>
+                                <small class="text-muted">Last message preview</small>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <small class="text-muted me-3">6:30 PM</small>
+                            <span class="dot bg-success" style="width: 10px; height: 10px; border-radius: 50%;"></span>
+                        </div>
+                    </a>
+
+                    <a href="#" class="list-group-item d-flex align-items-center justify-content-between">
+                        <div class="d-flex align-items-center">
+                            <img src="path/to/member-logo4.png" class="rounded-circle me-3" alt="Member Logo" width="30" height="30">
+                            <div>
+                                <h6 class="mb-0">Jessica Pearson</h6>
+                                <small class="text-muted">Last message preview</small>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <small class="text-muted me-3">6:30 PM</small>
+                            <span class="dot bg-success" style="width: 10px; height: 10px; border-radius: 50%;"></span>
+                        </div>
+                    </a>
+
+                    <a href="#" class="list-group-item d-flex align-items-center justify-content-between">
+                        <div class="d-flex align-items-center">
+                            <img src="path/to/member-logo4.png" class="rounded-circle me-3" alt="Member Logo" width="30" height="30">
+                            <div>
+                                <h6 class="mb-0">Jessica Pearson</h6>
+                                <small class="text-muted">Last message preview</small>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <small class="text-muted me-3">6:30 PM</small>
+                            <span class="dot bg-success" style="width: 10px; height: 10px; border-radius: 50%;"></span>
+                        </div>
+                    </a>
+
+                    <a href="#" class="list-group-item d-flex align-items-center justify-content-between">
+                        <div class="d-flex align-items-center">
+                            <img src="path/to/member-logo4.png" class="rounded-circle me-3" alt="Member Logo" width="30" height="30">
+                            <div>
+                                <h6 class="mb-0">Jessica Pearson</h6>
+                                <small class="text-muted">Last message preview</small>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <small class="text-muted me-3">6:30 PM</small>
+                            <span class="dot bg-success" style="width: 10px; height: 10px; border-radius: 50%;"></span>
+                        </div>
+                    </a>
+
+
+
+                    <a href="#" class="list-group-item d-flex align-items-center justify-content-between">
+                        <div class="d-flex align-items-center">
+                            <img src="path/to/member-logo4.png" class="rounded-circle me-3" alt="Member Logo" width="30" height="30">
+                            <div>
+                                <h6 class="mb-0">Jessica Pearson</h6>
+                                <small class="text-muted">Last message preview</small>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <small class="text-muted me-3">6:30 PM</small>
+                            <span class="dot bg-success" style="width: 10px; height: 10px; border-radius: 50%;"></span>
+                        </div>
+                    </a>
+                </div>
+                
+            </div>
+
+            
+            <div class="col-md-9">
+              
+                <div class="chat-window h-80">
+                    <div class="border-bottom mb-3 d-flex justify-content-between align-items-center p-3" 
+                    style="background-color: #fff; border-radius: 10px; border: 1px solid #ddd;">
+                    
+                 
+                    <div class="d-flex align-items-center">
+                        <div class="position-relative">
+                          
+                            <img src="https://plus.unsplash.com/premium_photo-1664533227571-cb18551cac82?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
+                                class="rounded-circle me-3" alt="Member Logo" width="45" height="45">
+                            
+                           
+                            <span class="position-absolute bottom-0 end-0 bg-success border border-white rounded-circle" 
+                                style="width: 12px; height: 12px; right: 5px; bottom: 5px;"></span>
+                        </div>
+                        
+                      
+                        <h5 class="mb-0" style="font-weight: bold; color: #333;">Rachel Zane</h5>
+                    </div>
+                
+                  
+                    <div class="d-flex align-items-center">
+                        <button class="btn btn-light rounded-circle me-2" style="border: 1px solid #ddd; padding: 8px;">
+                            <i class="bx bx-video" style="font-size: 22px; color: #030303;"></i> 
+                        </button>
+                        <button class="btn btn-light rounded-circle me-2" style="border: 1px solid #ddd; padding: 8px;">
+                            <i class="bx bx-phone" style="font-size: 22px; color: #030303;"></i> 
+                        </button>
+                        <button class="btn btn-light rounded-circle" style="border: 1px solid #ddd; padding: 8px;">
+                            <i class="bx bx-user-plus" style="font-size: 22px; color: #030303;"></i> 
+                        </button>
+                    </div>
+                 </div>
+
+
+                   
+                    <div class="message sender">
+                        <div class="sender">Rachel Zane</div>
+                        <div class="text">Hey, how are you doing?</div>
+                    </div>
+                    <div class="message receiver mb-2">
+                        <div class="text">I'm good, thanks! How about you?</div>
+                    </div>
+
+                    <div class="message receiver mb-2">
+                       <div class="text">I'm good, thanks! How about you?</div>
+                    </div>
+
+                  
+
+                </div>
+
+                <div class="chat-input d-flex align-items-center p-2 mt-2" 
+            style="background-color: #fff; border-radius: 10px; border: 1px solid #ddd;">
+            
+            <!-- Attachment Button -->
+            <button class="btn btn-light rounded-circle me-2" style="border: 1px solid #ddd; padding: 8px;">
+                <i class="bx bx-paperclip" style="font-size: 22px; color: #030303;"></i>
+            </button>
+
+            <!-- Emoji Button -->
+            <button class="btn btn-light rounded-circle me-2" style="border: 1px solid #ddd; padding: 8px;">
+                <i class="bx bx-smile" style="font-size: 22px; color: #030303;"></i>
+            </button>
+
+            <!-- Text Input -->
+            <textarea class="form-control me-2" placeholder="Type a message..." 
+                style="resize: none; height: 40px; border-radius: 10px;"></textarea>
+
+            <!-- Send Button -->
+            <button class="btn btn-primary rounded-circle" style="padding: 8px;">
+                <i class="bx bx-send" style="font-size: 22px; color: #fff;"></i>
+            </button>
+        </div>
+            </div>
+        </div>
+    </div>
+
+   
+   
+</body>
+
+</html>

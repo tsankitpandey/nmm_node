@@ -26,6 +26,8 @@ app.set('views', path.join(__dirname, 'Admin/views'));
 
 app.use(express.json());
 
+
+
 app.use(session({
     secret: 'nodedemo',
     resave: false,
