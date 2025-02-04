@@ -1,0 +1,88 @@
+<%- contentFor('body') %>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="accordion" id="accordionExample">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header " id="headingOne">
+                                    <button class="accordion-button mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        Create New Conference
+                                    </button>
+                                </h2>
+                                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">
+                                        <form class="g-3" method="">
+                                        <div class="row ">
+                                            <div class="col-md-12 mb-3">
+                                                <label for="inputFirstName" class="form-label">Event Title <span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control" id="">
+                                            </div>
+
+                                            <div class="col-md-6 mb-3">
+                                                <label for="" class="form-label">Event Name <span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control" id="">
+                                            </div>
+
+                                            <div class="col-md-6 mb-3">
+                                                <label for="" class="form-label"> <span class="text-danger">* (Image size must be 1300x200)</span></label>
+                                                <div class="input-group ">
+                                                    <input type="file" class="form-control" id="inputGroupFile02">
+                                                    <label class="input-group-text" for="inputGroupFile02">Upload</label>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-12 mb-3">
+                                                <label for="" class="form-label">Description<span class="text-danger">*</span></label>
+                                                <textarea type="text" class="form-control" id="" ></textarea>
+                                            </div>
+                                        
+
+                                            <div class="col-md-6 mb-3">
+                                                <label class="form-label">Start Date<span class="text-danger">*</span></label>
+                                                <input class="form-control" type="date" placeholder="start Date">
+                                            </div>
+
+                                            <div class="col-md-6 mb-3">
+                                                <label class="form-label">End Date<span class="text-danger">*</span></label>
+                                                <input class="form-control" type="date" placeholder="End Date">
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <label for="" class="form-label">Location (Country) <span class="text-danger">*</span></label>
+                                                <select class="form-select" >
+                                                    <option >Country</option>
+                                                    <option value="1">India</option>
+                                                    <option value="2">Italy</option>
+                                                    
+                                                </select>
+                                            </div>
+
+                                            <div class="col-md-6 mb-3">
+                                                <label for="" class="form-label">Timezone <span class="text-danger">*</span></label>
+                                                <select class="form-select" >
+                                                    <option >select Timezone</option>
+                                                    <option value="1">Standard Time</option>
+                                                    
+                                                </select>
+                                            </div>
+                                        </div>
+                                    <hr>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                            <button type="submit" class="btn btn-primary float-end">Submit</button>
+                                        </div>
+                                    </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

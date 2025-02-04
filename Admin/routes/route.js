@@ -5,6 +5,11 @@ const {verifyToken ,Authenticated ,logout}= require('../../Middleware/auth')
 const DashboardController=require("../Controller/DashboardController");
 const AuthenticationController=require("../Controller/AuthenticationController");
 const EventController=require("../Controller/EventController");
+const NewsNMMController=require("../Controller/NewsNMMController");
+const CrmNMMController=require("../Controller/CrmNMMController");
+const BusinessNMMController=require("../Controller/BusinessNMMController");
+const PlanNMMController=require("../Controller/PlanNMMController");
+const ConferenceNMMController=require("../Controller/ConferenceNMMController");
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
@@ -95,6 +100,30 @@ route.post('/sponserAdd', EventController.sponserAdd);
 route.post('/sponserManage', EventController.sponserManage);
 route.get('/Ems', EventController.EmsDetails);
 route.post('/EmsAdd', EventController.EmsAdd);
+
+// News Router---
+route.get('/news', NewsNMMController.NewsIndex);
+route.get('/newslist', NewsNMMController.NewsList);
+route.post('/NewsAdd', NewsNMMController.NewsAdd);
+route.get('/banner', NewsNMMController.Banner);
+route.post('/BannerAdd', NewsNMMController.BannerAdd);
+
+// CRM Router---
+route.get('/CrmProsect', CrmNMMController.CrmIndex);
+route.post('/ProspectAdd', CrmNMMController.ProspectAdd);
+
+// Business Impact Router---
+route.get('/ViewImpact', BusinessNMMController.ViewIndex);
+route.get('/Transaction', BusinessNMMController.TransactionIndex);
+
+// Business Impact Router---
+route.get('/PlanList', PlanNMMController.PlanIndex);
+route.post('/PlanAdd', PlanNMMController.PlanAdd);
+
+// Conference Router---
+route.get('/AttendeeList', ConferenceNMMController.AttendeeIndex);
+route.get('/Event', ConferenceNMMController.EventIndex);
+route.get('/EventAdd', ConferenceNMMController.EventAdd);
 
 
 module.exports = route;
