@@ -1,74 +1,30 @@
+$(document).ready(function () {
+  // Ensure DataTable is initialized only once
+  if ($.fn.dataTable.isDataTable('#example2')) {
+      $('#example2').DataTable().destroy();
+  }
+
+  var table = $('#example2').DataTable({
+      retrieve: true, // Retrieve existing instance instead of reinitializing
+      lengthChange: false,
+      buttons: ['copy', 'excel', 'pdf', 'print']
+  });
+
+  // Append buttons to DataTable wrapper
+  table.buttons().container()
+      .appendTo('#example2_wrapper .col-md-6:eq(0)');
+
+  // Initialize DataTable for another table (#example) if needed
+  if (!$.fn.dataTable.isDataTable('#example')) {
+      $('#example').DataTable();
+  }
+
+});
 
 $(document).ready(function () {
 	dataModal();
   formSubmit();
 });
-
-/* Rounded corners Notifications */
-function round_default_noti(msz) {
-	Lobibox.notify('default', {
-		pauseDelayOnHover: true,
-		size: 'mini',
-		rounded: true,
-		delayIndicator: false,
-		continueDelayOnInactiveTab: false,
-		position: 'top right',
-		msg: msz
-	});
-}
-
-function round_info_noti(msz) {
-	Lobibox.notify('info', {
-		pauseDelayOnHover: true,
-		size: 'mini',
-		rounded: true,
-		icon: 'bx bx-info-circle',
-		delayIndicator: false,
-		continueDelayOnInactiveTab: false,
-		position: 'top right',
-		msg: msz
-	});
-}
-
-function round_warning_noti(msz) {
-	Lobibox.notify('warning', {
-		pauseDelayOnHover: true,
-		size: 'mini',
-		rounded: true,
-		delayIndicator: false,
-		icon: 'bx bx-error',
-		continueDelayOnInactiveTab: false,
-		position: 'top right',
-		msg: msz
-	});
-}
-
-function round_error_noti(msz) {
-	Lobibox.notify('error', {
-		pauseDelayOnHover: true,
-		size: 'mini',
-		rounded: true,
-		delayIndicator: false,
-		icon: 'bx bx-x-circle',
-		continueDelayOnInactiveTab: false,
-		position: 'top right',
-		msg: msz
-	});
-}
-
-// function round_success_noti(msz) {
-//     console.log(msz)
-// 	Lobibox.notify('success', {
-// 		pauseDelayOnHover: true,
-// 		size: 'mini',
-// 		rounded: true,
-// 		icon: 'bx bx-check-circle',
-// 		delayIndicator: false,
-// 		continueDelayOnInactiveTab: false,
-// 		position: 'top right',
-// 		msg: msz
-// 	});
-// }
 
 function dataModal() {
 
