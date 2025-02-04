@@ -13,5 +13,13 @@ class ConferenceNMMController extends BaseController{
     static async EventAdd(req, res){
         res.render("NMM/Conference/EventAdd", {title: "Conference", component_title:'Conference', icon:'<i class="bx bx-home-alt"></i>', page_title: 'Event' })
     }
+
+    static async MemberIndex(req, res){
+        res.render("NMM/Conference/MemebrIndex", {title: "Conference", component_title:'Conference', icon:'<i class="bx bx-home-alt"></i>', page_title: 'Attendee List' })
+    }
+    
+    static async GuestIndex(req, res){
+        res.render("NMM/Conference/GuestIndex", {title: "Conference", component_title:'Conference', icon:'<i class="bx bx-home-alt"></i>', page_title: 'Attendee List' })
+    }
 }
 module.exports = ConferenceNMMController;

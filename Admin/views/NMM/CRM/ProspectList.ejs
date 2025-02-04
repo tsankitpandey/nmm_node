@@ -6,48 +6,43 @@
 				<div class="card card-theme card-outline shadow-sm">
 					<div class="card-header">
 						<h4 class="card-title mb-3">Prospect List</h4>
-
 					</div>
 					
                     <div class="card-body border-bottom">
     					<div class="row">
-        					<div class="col-6">
-        						<button type="button" class="btn btn-sm btn-gradient-dark px-4 radius-30 float-lefty" data-route="<%= AdminRoute('/ProspectAdd') %>" data-bs-toggle="modal" data-bs-target="#form-modal">
+        					<div class="col-12">
+        						<button type="button" class="btn btn-sm btn-gradient-dark radius-30 float-right mx-2" data-route="<%= AdminRoute('/ProspectAdd') %>" data-bs-toggle="modal" data-bs-target="#form-modal">
                                     <i class='bx bx-edit'></i> ADD
         						</button>
-                                <button type="button" class="btn btn-sm btn-gradient-success px-4 radius-30 float-lefty" data-route="<%= AdminRoute('#') %>" data-bs-toggle="modal" data-bs-target="#form-modal">
+                                <button type="button" class="btn btn-sm btn-gradient-success radius-30 float-right" data-route="<%= AdminRoute('#') %>" data-bs-toggle="modal" data-bs-target="#form-modal">
         						    <i class='bx bxs-file-export'></i>Import
         						</button>
 						    </div>
 						</div>
         			</div>
-                    
-					
-                    <div class="card">
-                        <div class="card-body">
-                            
-                            <div class="table-responsive">
-                                <table id="example" class="table table-striped table-bordered" style="width:100%">
-                                    <thead>
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Country</th>
-                                            <th>Email</th>
-                                            <th>Entry Date</th>          
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                </tbody>        
-                                </table>
-                            </div>
+
+                    <div class="card-body"> 
+                        <div class="table-responsive">
+                            <table id="example" class="table table-striped table-bordered" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Country</th>
+                                        <th>Email</th>
+                                        <th>Entry Date</th>          
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                            </tbody>        
+                            </table>
                         </div>
                     </div>
 				</div>

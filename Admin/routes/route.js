@@ -10,6 +10,7 @@ const CrmNMMController=require("../Controller/CrmNMMController");
 const BusinessNMMController=require("../Controller/BusinessNMMController");
 const PlanNMMController=require("../Controller/PlanNMMController");
 const ConferenceNMMController=require("../Controller/ConferenceNMMController");
+const DataController=require('../Controller/DataController');
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
@@ -124,6 +125,10 @@ route.post('/PlanAdd', PlanNMMController.PlanAdd);
 route.get('/AttendeeList', ConferenceNMMController.AttendeeIndex);
 route.get('/Event', ConferenceNMMController.EventIndex);
 route.get('/EventAdd', ConferenceNMMController.EventAdd);
+route.get('/member', ConferenceNMMController.MemberIndex);
+route.get('/guest', ConferenceNMMController.GuestIndex);
 
+//country
+route.get('/countrylist', DataController.countrylist);
 
 module.exports = route;
