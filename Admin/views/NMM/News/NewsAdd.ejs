@@ -9,48 +9,56 @@
     <div class="modal-body">
         <div class="card">
             <div class="card-body border border-1 rounded-3">
-                <form class="row g-3" method="">
+                <form class="row g-3 needs-validation" action="<%=AdminRoute('/newsSave') %>" method="post" enctype="multipart/form-data" novalidate>
                     <div class="col-md-6">
-                        <label for="inputFirstName" class="form-label">Title <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="" placeholder="Title">
+                        <label for="inputTitle" class="form-label">Title <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="inputTitle"  placeholder="Title" name="title" required>
+                        <div class="invalid-feedback">Please enter a Title.</div>
                     </div>
+                    
                     <div class="col-md-6">
-                        <label for="" class="form-label">Priority <span class="text-danger">*</span></label>
-                        <select class="form-select" >
-                            <option >New Priority</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
+                        <label for="inputPriority" class="form-label">Priority <span class="text-danger">*</span></label>
+                        <select class="form-select" id="inputCPriority" name="priority" required>
+                            <option>New Priority</option>  
+                            <% for(let i = 1; i <= 5; i++) { %>
+                                <option value="<%= i %>"><%= i %></option>
+                            <% } %>
                         </select>
+                        <div class="invalid-feedback">Please enter a Priority.</div>
                     </div>
+
                     <div class="col-md-6">
-                        <label for="" class="form-label">Category <span class="text-danger">*</span></label>
-                        <select class="form-select" >
-                            <option >New Category</option>
-                            <option value="1">Member spotlight</option>
-                            <option value="2">Industry Trends</option>
-                            <option value="3">NMM Insider</option>
-                            <option value="3">Other</option>
+                        <label for="inputCategory" class="form-label">Category <span class="text-danger">*</span></label>
+                        <select class="form-select"  name="category_id" required>
+                            <option value="">New Category</option>
+                            <% NewsAdd.forEach(category => { %>
+                                <option value="<%= category.id %>"><%= category.type %></option>
+                            <% }) %>
                         </select>
+                        <div class="invalid-feedback">Please enter a Category.</div>
                     </div>
+
                     <div class="col-md-6 mb-3">
-                            <label class="form-label">Date Only Picker <span class="text-danger">*</span></label>
-                            <input class="result form-control" type="date" id="date" placeholder="Date Picker...">
+                        <label class="form-label" for="inputDate">Date <span class="text-danger">*</span></label>
+                        <input class="result form-control" type="date" id="inputDate" name="date" placeholder="Date" required>
+                        <div class="invalid-feedback">Please enter a date.</div>
                     </div>
+
                     <span class="text-danger">* (Image size must be 745x420)</span>
                     <div class="input-group mb-3">
-                        <input type="file" class="form-control" id="inputGroupFile02">
+                        <input type="file" class="form-control" id="inputGroupFile02" name="image" required>
                         <label class="input-group-text" for="inputGroupFile02">Upload </label>
+                        <div class="invalid-feedback">Please Upload a image.</div>
                     </div>
+
                     <div class="col-md-12">
-                        <label for="inputFirstName" class="form-label">Description <span class="text-danger">*</span></label>
-                        <textarea id="elm1" name="area"></textarea>
+                        <label for="inputDescription" class="form-label">Description <span class="text-danger">*</span></label>
+                        <textarea id="elm1" name="description" required></textarea>
+                        <div class="invalid-feedback">Please enter a Description.</div>
                     </div>
 
                     <div class="col-12">
-                        <button type="submit" class="btn btn-primary ">Submit</button>
+                        <button type="submit" class="btn btn-dark ">Submit</button>
                     </div>
                 </form>
             </div>

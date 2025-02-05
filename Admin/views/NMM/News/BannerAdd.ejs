@@ -12,41 +12,33 @@
                 <form class="row g-3" method="">
                     <div class="col-md-12">
                         <label for="inputFirstName" class="form-label">Title <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="">
+                        <input type="text" class="form-control" id="inputFirstName" placeholder="Title">
                     </div>
                     <div class="col-md-6">
                         <label for="" class="form-label">Priority <span class="text-danger">*</span></label>
                         <select class="form-select" >
                             <option >New Priority</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
+                            <% for(let i = 1; i <= 5; i++) { %>
+                                <option value="<%= i %>"><%= i %></option>
+                            <% } %>
                         </select>
                     </div>
                     <div class="col-md-6">
                         <label for="" class="form-label">Display banner's title, description, button <span class="text-danger">*</span></label>
                         <div class="form-check">
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="1">
                                 <label class="form-check-label" for="inlineRadio1">On</label>
                               </div>
                               <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="0">
                                 <label class="form-check-label" for="inlineRadio2">Off</label>
                               </div> 
                           </div>
                     </div>
                     <div class="col-md-6">
-                        <label for="" class="form-label">Category <span class="text-danger">*</span></label>
-                        <select class="form-select" >
-                            <option >New Category</option>
-                            <option value="1">Member spotlight</option>
-                            <option value="2">Industry Trends</option>
-                            <option value="3">NMM Insider</option>
-                            <option value="3">Other</option>
-                        </select>
+                        <label for="" class="form-label">Button Text <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" name="button_text" placeholder="Button Text">
                     </div>
                     <div class="form-group col-md-6">
                         <div class="form-collapse">

@@ -106,6 +106,7 @@ route.post('/EmsAdd', EventController.EmsAdd);
 route.get('/news', NewsNMMController.NewsIndex);
 route.get('/newslist', NewsNMMController.NewsList);
 route.post('/NewsAdd', NewsNMMController.NewsAdd);
+route.post('/newsSave', upload.any(), NewsNMMController.NewsSave);
 route.get('/banner', NewsNMMController.Banner);
 route.post('/BannerAdd', NewsNMMController.BannerAdd);
 
