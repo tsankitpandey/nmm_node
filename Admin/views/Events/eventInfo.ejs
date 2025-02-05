@@ -22,13 +22,20 @@
                             </div>
                             
                             <div class="col-md-6">
-                                <label>Event Image <span class="text-red">* <span class="text-xs" data-tooltip="You'll need to ensure that the file you're trying to upload is in one of these formats (JPG, PNG, JPEG)">(Only jpg/png/jpeg files are allowed)</span></span></label>
+                                <div class="form-group mb-3">
+                                    <label>Image check</label>
+                                        <div class="form-file">
+                                            <input type="file" class="form-control form-file-input" name="news[image]" value="" placeholder="News Image" id="form-file" view="preview">
+                                            <label class="form-file-label"></label>
+                                        </div>
+                                </div>
+                                <!-- <label>Event Image <span class="text-red">* <span class="text-xs" data-tooltip="You'll need to ensure that the file you're trying to upload is in one of these formats (JPG, PNG, JPEG)">(Only jpg/png/jpeg files are allowed)</span></span></label>
                                 
                                 <div class="form-file">
                                     <input type="file" class="form-control form-file-input" name="event[image]" value="" placeholder="Event Image">
                                     
                                     <label class="form-file-label"></label>
-                                </div>
+                                </div> -->
                             </div>           
                             <div class="col-md-6">
                                 <label for="inputLastName" class="form-label">Event Theme <span class="text-red">*</span></label>

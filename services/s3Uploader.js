@@ -16,12 +16,12 @@ class S3Uploader {
 
     async uploadFile(fileName, fileData, fileType ,awspath) {
         const params = {
-            Bucket: this.bucketName,
+            Bucket: process.env.AWS_S3_BUCKET_NAME,
             Key: `${awspath}/${fileName}`,
             Body: fileData,
             ContentType: fileType,
         };
-        
+        console.log(process.env.AWS_S3_BUCKET_NAME)
         return new Promise((resolve, reject) => {
             s3.upload(params, (err, data) => {
                 if (err) {

@@ -76,6 +76,9 @@ $(document).ready(function() {
 $(document).ready(function () {
 	dataModal();
   formSubmit();
+  formFile();
+  console.log("check");
+  console.log('custom.js loaded from:', document.currentScript);
 });
 
 function dataModal() {
@@ -264,5 +267,164 @@ function showToast(message,status){
 }
 
 
+
+$.initialize('.form-file', function () {
+  let fileEvent = $(this);
+  let fileValue = $(fileEvent).find('.form-file-input').attr('value');
+let fileName = $(fileEvent).find('.form-file-input').attr('name');
+let fileTitle = $(fileEvent).find('.form-file-input').attr('multiple') ? fileName+'[]' : fileName;
+  let fileLabel = $(fileEvent).find('.form-file-input').attr('placeholder');
+  let fileView = $(fileEvent).find('.form-file-input').attr('view');
+  
+  if (fileView == 'preview') {
+      fileCSS = 'img-fluid col-6 mb-3';
+  }
+  
+  if (fileView == 'profile') {
+      fileCSS = 'img-cover';
+  }
+  
+if (!$(fileEvent).hasClass('data-event')) {
+  $(fileEvent).addClass('data-event');
+      
+      $(fileEvent).find('.form-file-input').attr('name', fileTitle);
+      
+    $(fileEvent).before('<div class="form-file-preview text-center"></div>').wrap('<div class="input-group form-file-group"></div>').after('<div class="input-group-append"><span class="input-group-text input-reset ripple d-none"><i class="bx bx-x"></i></span><span class="input-group-text input-click ripple"><i class="bx bx-cloud-upload"></i></span></div>');
+    
+    $(fileEvent).closest('.form-file-group').before('<input type="hidden" class="form-control form-file-hidden" name="'+fileName+'" value="'+fileValue+'" placeholder="'+fileLabel+'"  view="'+fileView+'">');
+    
+    
+    if (fileValue) {
+          let fileArray = fileValue.split(',');
+          
+          $.each(fileArray, function (key, value) {
+              let fileUrl = value;
+               let fileImage = $('<img/>', {
+                          'class': fileCSS,
+                          'src': fileUrl,
+                      });
+                      console.log(fileImage)
+                      $(fileEvent).closest('.form-group').find('.form-file-preview').append(fileImage);
+              // fetch(fileUrl).then(function (reponse) {
+              //     if (reponse.headers.get('content-type').includes('image')) {
+                     
+              //     }
+              // });
+          });
+          
+          $(fileEvent).find('.form-file-label').html('<span>'+fileLabel+'</span>');
+    } else {
+          $(fileEvent).find('.form-file-label').html('<span>'+fileLabel+'</span>');
+    }
+}
+});
+
+function formFile() {
+
+  $(document).on('change', '.form-file-group .form-file-input', function (event) {
+
+      let fileEvent = $(this);
+      let fileView = $(fileEvent).closest('.form-group').find('.form-file-hidden').attr('view');
+      let fileName = $(fileEvent).closest('.form-group').find('.form-file-hidden').attr('name');
+      
+      if (fileView == 'preview') {
+          fileCSS = 'img-fluid col-6 mb-3';
+      } 
+      
+      if (fileView == 'profile') {
+          fileCSS = 'img-cover';
+      }
+      
+      let fileValue = '';
+    
+      $(fileEvent).closest('.form-group').find('.input-reset').removeClass('d-none');
+      
+      $(fileEvent).closest('.form-group').find('.form-file-preview').html('');
+     
+      $($(fileEvent)[0].files).each(function (key, value) {
+          let fileData = $(value)[0];
+          let fileReader = new FileReader();
+      
+          fileValue += fileData.name + ',';
+          
+          fileReader.onload = function (event) {
+              /*if (fileName.includes("attendee")) {
+                  let base64Data = resizedataURL(event.target.result);
+                  localStorage.setItem(fileName, event.target.result);
+              }*/
+              
+              if (fileName.includes("attendee")) {
+                  resizeImage(event.target.result,300, 300).then((result) => {
+               
+                      localStorage.setItem(fileName, result);
+                  });
+              }
+              
+              
+              if (fileData.type.includes('image')) {
+                  let fileImage = $('<img/>', {
+                      'class': fileCSS,
+                      'src': event.target.result,
+                  });
+                  console.log(fileImage);
+                  $(fileEvent).closest('.form-group').find('.form-file-preview').append(fileImage);
+              }
+          }
+          
+          fileReader.readAsDataURL(fileData);
+    });
+    
+    if (fileValue) {
+        fileValue = fileValue.replace(/,*$/, '');
+        
+          $(fileEvent).closest('.form-group').find('.form-file-label').html(fileValue);
+    }
+});
+
+  $(document).on('click', '.form-file-group .input-reset', function (event) {
+   
+      let fileEvent = $(this);
+      let fileValue = $(fileEvent).closest('.form-group').find('.form-file-hidden').attr('value');
+      let fileLabel = $(fileEvent).closest('.form-group').find('.form-file-input').attr('placeholder');
+      let fileView = $(fileEvent).closest('.form-group').find('.form-file-hidden').attr('view');
+      
+      if (fileView == 'preview') {
+          fileCSS = 'img-fluid col-6 mb-3';
+      }
+      
+      if (fileView == 'profile') {
+          fileCSS = 'img-cover';
+      }
+      
+      $(fileEvent).closest('.form-group').find('.input-reset').addClass('d-none');
+      
+      $(fileEvent).closest('.form-group').find('.form-file-preview').html('');
+      
+      $(fileEvent).closest('.form-group').find('.form-file-input').val('');
+      
+      if (fileValue) {
+          let fileArray = fileValue.split(',');
+          
+          $.each(fileArray, function (key, value) {
+              let fileUrl = value;
+              
+              fetch(fileUrl).then(function (reponse) {
+                  if (reponse.headers.get('content-type').includes('image')) {
+                      let fileImage = $('<img/>', {
+                          'class': fileCSS,
+                          'src': fileUrl,
+                      });
+                     console.log(fileImage)
+                      $(fileEvent).closest('.form-group').find('.form-file-preview').append(fileImage);
+                  }
+              });
+          });
+          
+          $(fileEvent).closest('.form-group').find('.form-file-label').html('<span>'+fileLabel+'</span>');
+      } else {
+          $(fileEvent).closest('.form-group').find('.form-file-label').html('<span>'+fileLabel+'</span>');
+      }
+  });
+}
 
 
