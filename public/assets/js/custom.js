@@ -1,5 +1,5 @@
 $(document).ready(function () {
-  // Ensure DataTable is initialized only once
+  if ($.fn.DataTable) {
   if ($.fn.dataTable.isDataTable('#example2')) {
       $('#example2').DataTable().destroy();
   }
@@ -18,7 +18,59 @@ $(document).ready(function () {
   if (!$.fn.dataTable.isDataTable('#example')) {
       $('#example').DataTable();
   }
+  }
+});
+if ($('.single-select').length) {
+$('.single-select').select2({
+  theme: 'bootstrap4',
+  width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+  placeholder: $(this).data('placeholder'),
+  allowClear: Boolean($(this).data('allow-clear')),
+});
+}
 
+if ($('.single-select').length) {
+$('.multiple-select').select2({
+  theme: 'bootstrap4',
+  width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+  placeholder: $(this).data('placeholder'),
+  allowClear: Boolean($(this).data('allow-clear')),
+});
+}
+
+$(document).ready(function() {
+  if ($('.single-select').length) {
+  $('.single-select').select2({
+    placeholder: "Select a country"
+  });
+  
+  // Get the data-route attribute from the parent div (or change the selector if attached elsewhere)
+  var dataRoute = $('.select-country').data('route');
+  
+  // Make an AJAX request to the URL provided in data-route
+  $.ajax({
+    url: dataRoute,
+    method: 'GET',
+    dataType: 'json',
+    success: function(data) {
+      // Loop through each country and append it as an option to the select element
+  
+      data.forEach(function(country) {
+        $('.single-select').append(
+          $('<option>', {
+            value: country.value,
+            text: country.label
+          })
+        );
+      });
+      // If using select2, notify it to update the list of options
+      $('.single-select').trigger('change');
+    },
+    error: function(err) {
+      console.error('Error fetching country data:', err);
+    }
+  });
+  }
 });
 
 $(document).ready(function () {
