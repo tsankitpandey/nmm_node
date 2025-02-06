@@ -109,6 +109,7 @@ route.post('/NewsAdd', NewsNMMController.NewsAdd);
 route.post('/newsSave', upload.any(), NewsNMMController.NewsSave);
 route.get('/banner', NewsNMMController.Banner);
 route.post('/BannerAdd', NewsNMMController.BannerAdd);
+route.post('/BannerSave', upload.any(), NewsNMMController.BannerSave);
 
 // CRM Router---
 route.get('/CrmProsect', CrmNMMController.CrmIndex);
