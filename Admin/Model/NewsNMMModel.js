@@ -1,9 +1,34 @@
 const BaseModel=require('./BaseModel');
 class NewsNMMModel extends BaseModel{
 
+    static async NewsIndex() {
+        return new Promise((resolve, reject) => {
+            const query = `
+                SELECT nmm_news.*, 
+                nmm_category.type 
+                FROM nmm_news
+                INNER JOIN nmm_category ON nmm_news.category_id = nmm_category.id
+                `;
+
+            super.db.query(query, (err, results) => {
+                if (err) {
+                    console.error("Error fetching filtered news:", err);
+                    reject(err);
+                } else {
+                    resolve(results);
+                }
+            });
+        });
+    }
+    
     static async NewsList() {
         return new Promise((resolve, reject) => {
-            const query = 'SELECT * FROM nmm_news'; 
+            const query = `
+                SELECT nmm_news.*, 
+                nmm_category.type 
+                FROM nmm_news
+                INNER JOIN nmm_category ON nmm_news.category_id = nmm_category.id
+                `; 
           
             super.db.query(query, (err, results) => {
                 if (err) {

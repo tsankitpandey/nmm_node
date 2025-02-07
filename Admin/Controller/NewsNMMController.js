@@ -4,8 +4,22 @@ class NewsNMMController extends BaseController{
 
     static async NewsIndex(req,res){
 
-        res.render("NMM/News/NewsIndex", { title: "News", component_title:'News', icon:'<i class="bx bx-home-alt"></i>', page_title: "News",
-        })
+        try {
+            const NewsIndex = await NewsNMMModel.NewsIndex();
+            // return res.status(200).json({"mesg": NewsIndex});
+            res.render("NMM/News/NewsIndex", {
+                title: "News",
+                component_title:'News',
+                icon:'<i class="bx bx-home-alt"></i>',
+                page_title: "News Index",
+                NewsIndex,
+            });
+        } catch (error) {
+            console.error("Error in News:", error);
+            req.flash("error", "An error occurred while fetching the News.");
+            res.redirect(res.Admin("/news"));
+        }
+        
     }
 
     static async NewsList(req,res){
@@ -65,6 +79,49 @@ class NewsNMMController extends BaseController{
             return res.status(500).redirect(res.Admin('/newslist'));
         }
         
+    }
+
+    static async NewsEdit(req, res) {
+        try {
+            const { id } = req.query;
+            const NewsEdit = await NewsNMMModel.NewsEdit();
+            const NewsEdits = NewsEdit.find(NewsEdit => NewsEdit.id == id);
+
+            if (!NewsEdits) {
+                return res.status(404).json({ message: 'News not found' });
+            }
+            else{
+                res.render("News/NewsEdit", {
+                layout: "layout/layout-model",
+                title: "News",
+                page_title: "News List",
+                NewsEdits, 
+            });
+        }
+        } catch (error) {
+            console.error('Error fetching News:', error);
+            res.status(500).json({ message: 'Internal server error', error });
+        }
+    }
+    
+    static async NewsUpdate(req, res) {
+
+        const { id, title, priority, image, date, description, type} = req.body; 
+        try {
+            const updateResult = await NewsNMMModel.NewsUpdate(id, title, priority, image, date, description, type);
+           
+            if (updateResult.affectedRows > 0) {
+                req.flash("success", "News Updated successfully!");
+                return res.status(200).redirect(res.Admin('/newslist'));
+            } else {
+                req.flash("warning", "Failed to Update News. No rows were affected.");
+                return res.status(200).redirect(res.Admin('/newslist'));
+            }
+        } catch (error) {
+            console.error("Error in News Update:", error);
+            req.flash("error", "An error occurred while updating the activeProspect.");
+            return res.status(200).redirect(res.Admin('/newslist'));
+        }
     }
 
     static async Banner(req,res){

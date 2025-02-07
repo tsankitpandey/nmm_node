@@ -107,9 +107,13 @@ route.get('/news', NewsNMMController.NewsIndex);
 route.get('/newslist', NewsNMMController.NewsList);
 route.post('/NewsAdd', NewsNMMController.NewsAdd);
 route.post('/newsSave', upload.any(), NewsNMMController.NewsSave);
+route.post('/NewsEdit', NewsNMMController. NewsEdit);
+// route.post('/bannerUpdate', upload.any(), NewsNMMController.NewsUpdate);
 route.get('/banner', NewsNMMController.Banner);
 route.post('/BannerAdd', NewsNMMController.BannerAdd);
 route.post('/BannerSave', upload.any(), NewsNMMController.BannerSave);
+// route.get('/bannerEdit', authMiddleware, NewsNMMController. BannerEdit);
+// route.post('/bannerUpdate', upload.any(), NewsNMMController.BannerUpdate);  
 
 // CRM Router---
 route.get('/CrmProsect', CrmNMMController.CrmIndex);

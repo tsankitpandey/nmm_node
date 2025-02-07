@@ -20,31 +20,37 @@
                                 <table  id="example2" class=" display table table-striped table-bordered mb-5">
                                     <thead class="mb-2 border-1">
                                         <tr>
-                                            <th>Name</th>
-                                            <th>Position</th>
-                                            <th>Office</th>
-                                            <th>Age</th>
-                                            <th>Start date</th>
-                                            <th>Salary</th>
+                                            <th>Image</th>
+                                            <th>Title</th>
+                                            <th>Priority</th>
+                                            <th>Category</th>
+                                            <th>Date</th>
+                                            <th>Description</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                    <% if (NewsList && NewsList.length > 0) { %>
+                                        <% NewsList.forEach(NewsList => { %>
                                         <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>61</td>
-                                            <td>2011/04/25</td>
-                                            <td>$320,800</td>
+                                            <td><img
+                                            src="<%= NewsList.image %>"
+                                            alt="image" style="width: 50px; height: 50px; object-fit: cover"/> </td>
+                                            <td><%= NewsList.title %></td>
+                                            <td><%= NewsList.priority %></td>
+                                            <td><%= NewsList.type %> </td>
+                                            <td><%= NewsList.date %></td>
+                                            <td><%= NewsList.description %></td>
+                                            
+                                            <td>   
+                                            <button class="btn btn-sm btn-gradient-success waves-effect px-4 radius-30 waves-light" data-route="<%= AdminRoute(`/NewsEdit?id=${NewsList.id}`) %>" data-bs-toggle="modal" data-bs-target="#form-modal"><i class='bx bx-edit'></i>edit
+                                            </button>
+                                            
+                                            <a href="<%= AdminRoute(`/NewsDelete/${NewsList.id}`) %>" class="btn btn-sm btn-gradient-danger px-3 radius-30" onclick="return confirm('Are you sure you want to delete this News ?')"><i class='bx bxs-trash' ></i>Delete
+                                            </a></td>
                                         </tr>
-                                        <tr>
-                                            <td>Garrett Winters</td>
-                                            <td>Accountant</td>
-                                            <td>Tokyo</td>
-                                            <td>63</td>
-                                            <td>2011/07/25</td>
-                                            <td>$170,750</td>
-                                        </tr>
+                                        <% }); %>
+                                    <% }  %>
                                     </tbody>
                                 </table>
                             </div>
