@@ -57,7 +57,7 @@ route.get("/chat", (req, res) => {
 
 
 route.post("/feedsedit/:id",FL_timelineController.editfeeds);
-route.post("/feedsdelete/:id",FL_timelineController.DeletePost);
+route.get("/feedsdelete/:id",upload.any(),FL_timelineController.DeletePost);
 route.post('/insert',  upload.any(), FL_timelineController.insert);
 route.get("/timeline",FL_timelineController.fetchAllFeeds);
 route.post("/updatetimeline/:id",upload.any(), FL_timelineController.updatetimeline);

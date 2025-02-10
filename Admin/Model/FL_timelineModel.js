@@ -108,13 +108,14 @@ class FL_timelineModel extends BaseModel {
     }
 
     static async DeleteFeeds(feedId) {
+
         return new Promise((resolve, reject) => {
             try {
-              
+            //   resolve(feedId)
                 const query = 'DELETE FROM FL_Timeline WHERE id = ?';
     
               
-                connection.query(query, [feedId], (error, results) => {
+                super.db.query(query, [feedId], (error, results) => {
                     if (error) {
                         reject({ success: false, message: 'Error deleting feed', error: error });
                     } else {
