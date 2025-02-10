@@ -9,10 +9,10 @@
     <div class="modal-body">
         <div class="card">
             <div class="card-body border border-1 rounded-3">
-                <form class="row g-3 needs-validation form submit" action="<%=AdminRoute('/NewsEdit') %>" method="post" enctype="multipart/form-data" novalidate>
+                <form class="row g-3 needs-validation form submit" action="<%=AdminRoute('/NewsUpdate') %>" method="post" enctype="multipart/form-data" novalidate>
                     <div class="col-md-6">
                         <label for="inputTitle" class="form-label">Title <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="inputTitle"  placeholder="Title" name="title" required>
+                        <input type="text" class="form-control" id="inputTitle"  placeholder="Title" name="title" value="<%= NewsEdits.title %>" required>
                         <div class="invalid-feedback">Please enter a Title.</div>
                     </div>
                     
@@ -21,7 +21,8 @@
                         <select class="form-select" id="inputPriority" name="priority" required>
                             <option>New Priority</option>  
                             <% for(let i = 1; i <= 5; i++) { %>
-                                <option value="<%= i %>"><%= i %></option>
+                                <option value="<%= i %>" <%= (NewsEdits.priority == i) ? 'selected' : ''%>>
+                                    <%= i %></option>
                             <% } %>
                         </select>
                         <div class="invalid-feedback">Please enter a Priority.</div>
@@ -31,16 +32,19 @@
                         <label for="inputCategory" class="form-label">Category <span class="text-danger">*</span></label>
                         <select class="form-select"  name="category_id" required>
                             <option value="">New Category</option>
-                            <% NewsAdd.forEach(category => { %>
-                                <option value="<%= category.id %>"><%= category.type %></option>
-                            <% }) %>
+                            <% category_data.forEach(category => { %>
+                                <option value="<%= category.id %>" <%= (NewsEdits.category_id == category.id) ? 'selected' : '' %>>
+                                    <%= category.type %>
+                                </option>
+                            <% }); %>
                         </select>
+                        
                         <div class="invalid-feedback">Please enter a Category.</div>
                     </div>
 
                     <div class="col-md-6 mb-3">
                         <label class="form-label" for="inputDate">Date <span class="text-danger">*</span></label>
-                        <input class="result form-control" type="date" id="inputDate" name="date" placeholder="Date" required>
+                        <input class="result form-control" type="date" id="inputDate" name="date" placeholder="Date" value="<%= NewsEdits.date %>" required>
                         <div class="invalid-feedback">Please enter a date.</div>
                     </div>
 
@@ -48,8 +52,9 @@
                         <div class="form-group mb-3">
                             <label>Image Upload <span class="text-danger"> * (Image size must be 1300x200)</span> </label>
                             <div class="form-file">
-                                <input type="file" class="form-control form-file-input" name="image" value="" placeholder="News Image" id="form-file" view="preview" required>
+                                <input type="file" class="form-control form-file-input" name="image" value="<%= NewsEdits.image %>" placeholder="News Image" id="form-file" view="preview" required>
                                 <label class="form-file-label"></label>
+                                <div id="filePreview" class="col-md-12 mt-2"></div>
                             </div>
                         </div>
                         <div class="invalid-feedback">Please enter a Description.</div>
@@ -57,7 +62,7 @@
 
                     <div class="col-md-12">
                         <label for="inputDescription" class="form-label">Description <span class="text-danger">*</span></label>
-                        <textarea id="elm1" name="description" required></textarea>
+                        <textarea id="elm1" name="description" value="<%= NewsEdits.description %>" required><%= NewsEdits.description %></textarea>
                         <div class="invalid-feedback">Please enter a Description.</div>
                     </div>
 

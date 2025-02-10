@@ -74,6 +74,58 @@ class NewsNMMModel extends BaseModel{
         });
     }
 
+    static async NewsUpdate(id, title, priority, category_id, date, image, description) {
+        
+        const timestamp = Math.floor(Date.now() / 1000); 
+
+        return new Promise((resolve, reject) => {
+            let query;
+            let values;
+
+          if(image){
+             query = `
+                UPDATE nmm_news 
+                SET 
+                    title = ?, 
+                    priority = ?, 
+                    image = ?,
+                    category_id = ?,
+                    date = ?,
+                    description = ?,
+                    updated_at = ?
+                WHERE 
+                    id = ?`;
+    
+             values = [title, priority, image, category_id, date, description, timestamp, id];
+
+          }else{
+
+            query = `
+                UPDATE nmm_news 
+                SET 
+                    title = ?, 
+                    priority = ?, 
+                    category_id = ?,
+                    date = ?,
+                    description = ?,
+                    updated_at = ?
+                WHERE 
+                    id = ?`;
+
+             values = [title, priority, category_id, date, description, timestamp, id];
+          }
+    
+            super.db.query(query, values, (err, results) => {
+                if (err) {
+                    console.error('Error executing update query:', err);
+                    return reject({ error: 'Error updating news details', details: err });
+                }
+    
+                resolve(results);
+            });
+        });
+    }
+
     static async BannerSave(data, image) {
 
         const timestamp = Math.floor(Date.now() / 1000); 
@@ -89,6 +141,37 @@ class NewsNMMModel extends BaseModel{
                     return reject(err); 
                 }
                 resolve(result); 
+            });
+        });
+    }
+
+    static async NewsDelete(id) {
+        return new Promise((resolve, reject) => {
+            const query = `
+                DELETE FROM nmm_news
+                WHERE id = ?`;
+    
+            super.db.query(query, [id], (err, results) => {
+                if (err) {
+                    console.error('Error executing delete query:', err);
+                    return reject({ error: 'Error deleting event', details: err });
+                }
+    
+                resolve(results);
+            });
+        });
+    }
+    static async bannerIndex() {
+        return new Promise((resolve, reject) => {
+            const query = `SELECT * FROM nmm_banner`
+
+            super.db.query(query, (err, results) => {
+                if (err) {
+                    console.error("Error fetching filtered banner:", err);
+                    reject(err);
+                } else {
+                    resolve(results);
+                }
             });
         });
     }

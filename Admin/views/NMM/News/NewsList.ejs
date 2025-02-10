@@ -46,7 +46,7 @@
                                             <button class="btn btn-sm btn-gradient-success waves-effect px-4 radius-30 waves-light" data-route="<%= AdminRoute(`/NewsEdit?id=${NewsList.id}`) %>" data-bs-toggle="modal" data-bs-target="#form-modal"><i class='bx bx-edit'></i>edit
                                             </button>
                                             
-                                            <a href="<%= AdminRoute(`/NewsDelete/${NewsList.id}`) %>" class="btn btn-sm btn-gradient-danger px-3 radius-30" onclick="return confirm('Are you sure you want to delete this News ?')"><i class='bx bxs-trash' ></i>Delete
+                                            <a href="<%= AdminRoute(`/NewsDelete?id=${NewsList.id}`) %>" class="btn btn-sm btn-gradient-danger px-3 radius-30" onclick="return confirm('Are you sure you want to delete this News ?')"><i class='bx bxs-trash' ></i>Delete
                                             </a></td>
                                         </tr>
                                         <% }); %>
