@@ -11,50 +11,19 @@ const BusinessNMMController=require("../Controller/BusinessNMMController");
 const PlanNMMController=require("../Controller/PlanNMMController");
 const ConferenceNMMController=require("../Controller/ConferenceNMMController");
 const DataController=require('../Controller/DataController');
+const FL_timelineController= require("../Controller/FL_timelineController");
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
 // routes
 
-const timelineFeeds = [
-    { 
-        user: "Alice", 
-        post: "This is my first post!", 
-        time: "2 hrs ago", 
-        user_logo: "https://images.unsplash.com/photo-1564564321837-a57b7070ac4f?q=80&w=2076&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", 
-        post_image: "https://images.unsplash.com/photo-1612128686557-71729cbcfe41?q=80&w=2090&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
-    },
-    { 
-        user: "Bob", 
-        post: "Loving this new platform!", 
-        time: "5 hrs ago", 
-        user_logo: "https://plus.unsplash.com/premium_photo-1664533227571-cb18551cac82?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", 
-        post_image: "https://images.unsplash.com/photo-1604356589600-d353607c09b1?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-    }
-];
-
-
-const newsCards = [
-    { title: "Breaking News!", description: "Something big just happened.",image:"https://images.unsplash.com/photo-1604356589600-d353607c09b1?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
-    { title: "Tech Update", description: "New tech product released.",image:"https://images.unsplash.com/photo-1612128686557-71729cbcfe41?q=80&w=2090&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" }
-];
-
 route.get('/',  Authenticated, AuthenticationController.login);
 route.post('/login',upload.none(),  AuthenticationController.loginVerify);
 route.get('/dashboard', verifyToken, DashboardController.index);
 
 route.get('/logout', logout);
-route.get("/timeline", (req, res) => {
-    res.render("FreightLoungeViews/Timeline/Timeline", { 
-        title: "Timeline",  
-        component_title: "Timeline Feeds",
-        icon: "<i class='fas fa-clock'></i>",  
-        page_title: "Timeline Page",
-        timelineFeeds,
-        newsCards
-    });
-});
+route.get("/timeline",FL_timelineController.fetchAllFeeds);
 
 route.get("/chat", (req, res) => {
     const userProfile = {
@@ -84,6 +53,23 @@ route.get("/chat", (req, res) => {
     });
 });
 
+//---------------- freight Lounge routes start-------------------- 
+
+
+route.post("/feedsedit/:id",FL_timelineController.editfeeds);
+route.post("/feedsdelete/:id",FL_timelineController.DeletePost);
+route.post('/insert',  upload.any(), FL_timelineController.insert);
+route.get("/timeline",FL_timelineController.fetchAllFeeds);
+route.post("/updatetimeline/:id",upload.any(), FL_timelineController.updatetimeline);
+route.post("/comment",((req,res)=>{
+    res.render("FreightLoungeViews/Timeline/Comment", {
+        layout: "layout/layout-model", 
+    });
+}));
+
+
+
+// --------------- freight Lounge routes END -------------------- 
 
 
 

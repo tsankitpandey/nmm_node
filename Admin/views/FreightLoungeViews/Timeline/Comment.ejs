@@ -1,56 +1,117 @@
-<%- contentFor('body') %>
+<%- contentFor('body') %> <%- contentFor('body') %>
 
 <div class="modal-content">
-    <div class="modal-header">
-        <h4 class="card-title">Add Comment</h4>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  <!-- Modal Header -->
+  <div class="modal-header bg-dark text-white">
+    <h4 class="card-title text-white"> <i class="bx bx-comment-detail"></i> Comments</h4>
+    <button
+      type="button"
+      class="btn-close btn-close-white"
+      data-bs-dismiss="modal"
+      aria-label="Close"
+    ></button>
+  </div>
+
+  <!-- Modal Body -->
+  <div class="modal-body">
+    <!-- Member Profile -->
+    <div class="d-flex align-items-center mb-3">
+      <img
+        src="https://media.istockphoto.com/id/2152939474/photo/mature-man-contemplating-on-balcony-at-home.jpg?s=2048x2048&w=is&k=20&c=C-GkDF-ONBKEzwbTlr2zwMa6_k4NI8K2xJkJjtzxYlE="
+        alt="Member Logo"
+        class="rounded-circle border me-3"
+        width="50"
+        height="50"
+      />
+      <div>
+        <h5 class="mb-0">John Doe</h5>
+        <small class="text-muted">Posted 2 hours ago</small>
+      </div>
     </div>
-    <div class="modal-body">
 
-        <!-- Comment Section -->
-        <section class="content">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card card-theme card-outline shadow-sm">
-                            <div class="card-header">
-                                <h4 class="card-title">Post Comment</h4>
+    <!-- Comment Section Layout -->
+    <div class="row">
+      <!-- Left Side: Image -->
+      <div class="col-md-6">
+        <div class="position-relative">
+          <img
+            src="https://images.unsplash.com/photo-1516475429286-465d815a0df7?q=80&w=1910&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            alt="News Image"
+            class="img-fluid rounded shadow-sm"
+          />
+        </div>
+      </div>
 
-                                <div class="card-tools">
-                                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                                        <i class="fa-solid fa-angle-down"></i>
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div class="card-body border-bottom">
-                                <!-- Post Information -->
-                                <div class="row">
-                                    <div class="col-12 mb-2">
-                                        <strong><%= post.userName %></strong>: <%= post.text %>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="card-body">
-                                <!-- Comment Form -->
-                                <form method="POST" action="<%= AdminRoute('/submitComment') %>">
-                                    <div class="form-group">
-                                        <label for="comment-textarea">Your Comment</label>
-                                        <textarea class="form-control" id="comment-textarea" name="comment" rows="4" placeholder="Write your comment here..."></textarea>
-                                    </div>
-                                    <div class="form-group mt-3">
-                                        <button type="submit" class="btn btn-gradient-dark px-3 radius-30 float-end">
-                                            <i class="fa-solid fa-comment"></i> Post Comment
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+      <!-- Right Side: Comments List -->
+      <div class="col-md-6">
+        <div class="card border-0 shadow-sm p-3">
+          <h6 class="mb-5 border-bottom border-dark">
+            <i class="bx bx-comment-detail"></i> Comments
+          </h6>
+          <div class="overflow-auto" style="max-height: 300px">
+            <div class="d-flex align-items-start mb-3">
+              <img
+                src="/images/user1.jpg"
+                class="rounded-circle border me-2"
+                width="40"
+                height="40"
+              />
+              <div>
+                <strong>Alice</strong>
+                <p class="mb-1 text-muted small">Great post! 🎉</p>
+                <small class="text-muted">Just now</small>
+              </div>
             </div>
-        </section>
-
+            <div class="d-flex align-items-start mb-3">
+              <img
+                src="/images/user2.jpg"
+                class="rounded-circle border me-2"
+                width="40"
+                height="40"
+              />
+              <div>
+                <strong>Bob</strong>
+                <p class="mb-1 text-muted small">Thanks for sharing. 😊</p>
+                <small class="text-muted">5 mins ago</small>
+              </div>
+            </div>
+            <div class="d-flex align-items-start">
+              <img
+                src="/images/user3.jpg"
+                class="rounded-circle border me-2"
+                width="40"
+                height="40"
+              />
+              <div>
+                <strong>Charlie</strong>
+                <p class="mb-1 text-muted small">Very informative! 🔥</p>
+                <small class="text-muted">10 mins ago</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+
+    <!-- Comment Input Box -->
+    <div class="mt-4">
+      <div class="d-flex align-items-center">
+        <img
+          src="https://media.istockphoto.com/id/2152939474/photo/mature-man-contemplating-on-balcony-at-home.jpg?s=2048x2048&w=is&k=20&c=C-GkDF-ONBKEzwbTlr2zwMa6_k4NI8K2xJkJjtzxYlE="
+          alt="User Avatar"
+          class="rounded-circle border me-2"
+          width="40"
+          height="40"
+        />
+        <textarea
+          class="form-control rounded-pill"
+          placeholder="Write a comment..."
+          rows="1"
+        ></textarea>
+        <button class="btn btn-primary ms-2">
+          <i class="bx bx-send"></i>
+        </button>
+      </div>
+    </div>
+  </div>
 </div>

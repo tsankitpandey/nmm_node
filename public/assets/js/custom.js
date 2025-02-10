@@ -428,3 +428,77 @@ function formFile() {
 }
 
 
+//----------- Timeline js Start--------
+
+function getCookie(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(';').shift();
+}
+
+  document.addEventListener("DOMContentLoaded", function () {
+  document.getElementById("memberId").value = getCookie("userId");
+  document.getElementById("companyId").value = getCookie("company_id");
+});
+  document.getElementById('addPhotoBtn').addEventListener('click', function() {
+      document.getElementById('photoInput').click();
+  });
+
+  document.getElementById('addVideoBtn').addEventListener('click', function() {
+      document.getElementById('videoInput').click();
+  });
+
+  document.getElementById('addMusicBtn').addEventListener('click', function() {
+      document.getElementById('musicInput').click();
+  });
+
+  // Handle file input and preview
+  document.getElementById('photoInput').addEventListener('change', function(event) {
+      showPreview(event.target.files[0], 'photo');
+  });
+
+  document.getElementById('videoInput').addEventListener('change', function(event) {
+      showPreview(event.target.files[0], 'video');
+  });
+
+  document.getElementById('musicInput').addEventListener('change', function(event) {
+      showPreview(event.target.files[0], 'music');
+  });
+
+  function showPreview(file, type) {
+      let previewContainer = document.getElementById('previewContainer');
+      previewContainer.innerHTML = ''; // Clear any previous preview
+
+      let previewElement;
+
+      if (type === 'photo') {
+          previewElement = document.createElement('img');
+          previewElement.src = URL.createObjectURL(file);
+      } else if (type === 'video') {
+          previewElement = document.createElement('video');
+          previewElement.src = URL.createObjectURL(file);
+          previewElement.controls = true;
+      } else if (type === 'music') {
+          previewElement = document.createElement('audio');
+          previewElement.src = URL.createObjectURL(file);
+          previewElement.controls = true;
+      }
+
+     
+      previewContainer.appendChild(previewElement);
+
+     
+      let removeBtn = document.createElement('button');
+      removeBtn.innerHTML = 'remove x';
+      removeBtn.className = 'remove-preview';
+      previewContainer.appendChild(removeBtn);
+
+      removeBtn.addEventListener('click', function() {
+          previewContainer.innerHTML = ''; 
+          document.getElementById('photoInput').value = '';
+          document.getElementById('videoInput').value = '';
+          document.getElementById('musicInput').value = '';
+      });
+  }
+//----------- Timeline js END--------
+
