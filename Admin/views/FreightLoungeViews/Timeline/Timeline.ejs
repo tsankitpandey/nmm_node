@@ -179,7 +179,8 @@
                                         <button class="btn btn-light btn-sm like-btn">
                                             <i class="bx bx-like"></i> <span class="d-none d-md-inline">Like</span>
                                         </button>
-                                        <button class="btn btn-light btn-sm comment-btn" data-route="<%= AdminRoute('/comment') %>"
+                                        <button class="btn btn-light btn-sm comment-btn" data-route="<%= AdminRoute('/comment/' + feed.id) %>"
+
                                             data-bs-toggle="modal" data-bs-target="#form-modal">
                                             <i class="bx bx-comment"></i> <span class="d-none d-md-inline">Comment</span>
                                         </button>

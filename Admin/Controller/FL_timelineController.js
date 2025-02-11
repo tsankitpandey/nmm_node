@@ -90,6 +90,65 @@ class FL_timelineController extends BaseController {
         }
     }
 
+    static async commentInsert(req, res) {
+        try {
+            const data = req.body;
+
+            // return res.status(200).json({data})
+          
+          
+            const timelineComment = await FL_timelineModel.commentInsert(data);
+
+            if (timelineComment.result.affectedRows > 0) {
+                req.flash("success", "comment posted!");
+                return res.status(200).redirect(res.Admin("/timeline"));
+            } else {
+                req.flash("error", "Failed to post comment. No rows were affected.");
+                return res.status(200).redirect(res.Admin("/timeline"));
+            }
+        } catch (error) {
+            console.error("Error inserting timeline:", error);
+            req.flash("error", "An error occurred while inserting the comment.");
+            return res.status(500).redirect(res.Admin("/timeline"));
+        }
+    }
+
+    static async fetchcomment(req, res) {
+
+        try {
+            const feedId = req.params.id;
+
+            const feeds = await FL_timelineModel.fetchAllFeeds();
+            
+            const timelineComment = await FL_timelineModel.fetchComments(feedId);
+
+            // return res.status(200).json({timelineComment});
+
+            
+        if (feeds) {
+            const selectedFeed = feeds.feeds.find(feed => feed.id === parseInt(feedId, 10));
+            // return res.status(200).json({selectedFeed});
+            if (selectedFeed) {
+                res.render("FreightLoungeViews/Timeline/Comment", {
+                    layout: "layout/layout-model",
+                    selectedFeed,
+                    timelineComment: timelineComment.comments 
+                });
+            } else {
+                res.send('Feed not found');
+            }
+        } else {
+            console.error('Feeds data is not an array!');
+           
+        }
+        } catch (error) {
+            console.error("Error inserting timeline:", error);
+            req.flash("error", "An error occurred while inserting the comment.");
+            return res.status(500).redirect(res.Admin("/timeline"));
+        }
+    }
+
+
     static async DeletePost(req, res) {
         const feedId = req.params.id;
 // return res .status(200).json({feedId});

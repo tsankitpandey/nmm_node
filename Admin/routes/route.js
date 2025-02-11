@@ -57,15 +57,12 @@ route.get("/chat", (req, res) => {
 
 
 route.post("/feedsedit/:id",FL_timelineController.editfeeds);
-route.get("/feedsdelete/:id",upload.any(),FL_timelineController.DeletePost);
+route.get("/feedsdelete/:id",FL_timelineController.DeletePost);
 route.post('/insert',  upload.any(), FL_timelineController.insert);
 route.get("/timeline",FL_timelineController.fetchAllFeeds);
 route.post("/updatetimeline/:id",upload.any(), FL_timelineController.updatetimeline);
-route.post("/comment",((req,res)=>{
-    res.render("FreightLoungeViews/Timeline/Comment", {
-        layout: "layout/layout-model", 
-    });
-}));
+route.post("/commentinsert",  upload.any(),FL_timelineController.commentInsert);
+route.post("/comment/:id",FL_timelineController.fetchcomment);
 
 
 

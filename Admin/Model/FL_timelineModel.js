@@ -132,6 +132,65 @@ class FL_timelineModel extends BaseModel {
         });
     
 }
+
+
+static async commentInsert(data) {
+    return new Promise((resolve, reject) => {
+        try {
+            const timestamp = Math.floor(Date.now() / 1000);
+
+            const query = ` INSERT INTO comments (post_id,comment,created_at ) VALUES ( ?, ?, ?)`;
+
+                 const values = [ data.post_id, data.comment, timestamp ];
+
+            super.db.query(query, values, (err, result) => {
+                if (err) {
+                    console.error("Database Error:", err);
+                    return reject({ success: false, message: "Database insertion failed", error: err });
+                }
+                
+                resolve({
+                    success: true,
+                    message: "Data inserted successfully",
+                  result 
+                });
+            });
+
+        } catch (error) {
+            console.error("Insert Error:", error);
+            reject({ success: false, message: "Unexpected error occurred", error });
+        }
+    });
+}
+static async fetchComments(feedId) {
+    return new Promise((resolve, reject) => {
+        try {
+            const query = `
+                SELECT * FROM comments 
+                WHERE post_id = ? 
+                ORDER BY created_at DESC`;
+
+            super.db.query(query, [feedId], (err, result) => {
+                if (err) {
+                    // console.error("Database Error:", err);
+                    return reject({ success: false, message: "Failed to fetch comments", error: err });
+                }
+                
+                resolve({
+                    success: true,
+                    message: "Comments fetched successfully",
+                    comments: result
+                });
+            });
+
+        } catch (error) {
+            console.error("Fetch Error:", error);
+            reject({ success: false, message: "Unexpected error occurred", error });
+        }
+    });
+}
+
+
 }
 
 module.exports = FL_timelineModel;
