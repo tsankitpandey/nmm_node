@@ -1,87 +1,89 @@
 <%- contentFor('body') %>
 <section class="content">
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-md-12">
-				<div class="card border-top border-0 border-4 border-primary">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card border-top border-0 border-4 border-primary">
                     <div class="card-body p-5">
                         <div class="card-title d-flex align-items-center">
-                            <div>
-                            </div>
+                            <div></div>
                             <h5 class="mb-0 text-primary">Event Information</h5>
                         </div>
                         <hr>
-                        <form class="row g-3">
+                        <form class="row g-3 needs-validation" novalidate>
                             <div class="col-md-6">
-                                <label for="inputLastName" class="form-label">Event Short Name <span class="text-red">*</span></label>
-                                <input type="text" class="form-control" id="inputLastName" readonly/>
+                                <label for="inputShortName" class="form-label">Event Short Name <span class="text-red">*</span></label>
+                                <input type="text" class="form-control" id="inputShortName" required readonly/>
+                                <div class="invalid-feedback">Event short name is required.</div>
                             </div>
                             <div class="col-md-6">
-                                <label for="inputLastName" class="form-label">Event Title <span class="text-red">*</span></label>
-                                <input type="text" class="form-control" id="inputLastName">
+                                <label for="inputTitle" class="form-label">Event Title <span class="text-red">*</span></label>
+                                <input type="text" class="form-control" id="inputTitle" required>
+                                <div class="invalid-feedback">Event title is required.</div>
                             </div>
                             
                             <div class="col-md-6">
                                 <div class="form-group mb-3">
                                     <label>Image check</label>
-                                        <div class="form-file">
-                                            <input type="file" class="form-control form-file-input" name="news[image]" value="" placeholder="News Image" id="form-file" view="preview">
-                                            <label class="form-file-label"></label>
-                                        </div>
+                                    <div class="form-file">
+                                        <input type="file" class="form-control form-file-input" name="news[image]" required />
+                                        <label class="form-file-label"></label>
+                                    </div>
+                                    <div class="invalid-feedback">Event image is required.</div>
                                 </div>
-                                <!-- <label>Event Image <span class="text-red">* <span class="text-xs" data-tooltip="You'll need to ensure that the file you're trying to upload is in one of these formats (JPG, PNG, JPEG)">(Only jpg/png/jpeg files are allowed)</span></span></label>
-                                
-                                <div class="form-file">
-                                    <input type="file" class="form-control form-file-input" name="event[image]" value="" placeholder="Event Image">
-                                    
-                                    <label class="form-file-label"></label>
-                                </div> -->
                             </div>           
                             <div class="col-md-6">
-                                <label for="inputLastName" class="form-label">Event Theme <span class="text-red">*</span></label>
-                                <input type="text" class="form-control" id="inputLastName">
+                                <label for="inputTheme" class="form-label">Event Theme <span class="text-red">*</span></label>
+                                <input type="text" class="form-control" id="inputTheme" required>
+                                <div class="invalid-feedback">Event theme is required.</div>
                             </div>        
                             <div class="col-12">
-                                <label for="inputAddress" class="form-label">Description</label>
-                                <textarea class="form-control" id="inputAddress" placeholder="Address..." rows="3"></textarea>
+                                <label for="inputDescription" class="form-label">Description</label>
+                                <textarea class="form-control" id="inputDescription" placeholder="Description..." rows="3" required></textarea>
+                                <div class="invalid-feedback">Description is required.</div>
                             </div>
                             
                             <div class="col-md-4">
-                                <label for="inputState" class="form-label">Country <span class="text-red">*</span></label>
-                                <select id="inputState" class="form-select">
-                                    <option selected>Choose...</option>
+                                <label for="inputCountry" class="form-label">Country <span class="text-red">*</span></label>
+                                <select id="inputCountry" class="form-select" required>
+                                    <option selected disabled>Choose...</option>
                                     <option>...</option>
                                 </select>
+                                <div class="invalid-feedback">Country is required.</div>
                             </div>
                             <div class="col-md-4">
-                                <label for="inputState" class="form-label">City <span class="text-xs" data-tooltip="Select country first">(Note)</span></label>
-                                <select id="inputState" class="form-select">
-                                    <option selected>Choose...</option>
+                                <label for="inputCity" class="form-label">City <span class="text-xs" data-tooltip="Select country first">(Note)</span></label>
+                                <select id="inputCity" class="form-select" required>
+                                    <option selected disabled>Choose...</option>
                                     <option>...</option>
                                 </select>
+                                <div class="invalid-feedback">City is required.</div>
                             </div>
                             <div class="col-md-4">
-                                <label for="inputState" class="form-label">TimeZone<span class="text-red">* <span class="text-xs" data-tooltip="Select country first">(Note)</span></span></label>
-                                <select id="inputState" class="form-select">
-                                    <option selected>Choose...</option>
+                                <label for="inputTimezone" class="form-label">TimeZone <span class="text-red">*</span><span class="text-xs" data-tooltip="Select country first">(Note)</span></label>
+                                <select id="inputTimezone" class="form-select" required>
+                                    <option selected disabled>Choose...</option>
                                     <option>...</option>
                                 </select>
+                                <div class="invalid-feedback">TimeZone is required.</div>
                             </div>
                             <div class="col-md-6">
-                                <label for="inputLastName" class="form-label">Event Start Date <span class="text-red">*</span></label>
-                                <input type="date" class="form-control" id="inputLastName">
+                                <label for="inputStartDate" class="form-label">Event Start Date <span class="text-red">*</span></label>
+                                <input type="date" class="form-control" id="inputStartDate" required>
+                                <div class="invalid-feedback">Event start date is required.</div>
                             </div> 
                             <div class="col-md-6">
-                                <label for="inputLastName" class="form-label">Event End Date <span class="text-red">*</span></label>
-                                <input type="date" class="form-control" id="inputLastName">
+                                <label for="inputEndDate" class="form-label">Event End Date <span class="text-red">*</span></label>
+                                <input type="date" class="form-control" id="inputEndDate" required>
+                                <div class="invalid-feedback">Event end date is required.</div>
                             </div> 
-                             <div class="col-12">
+                            <div class="col-12">
                                 <button type="submit" class="btn btn-primary px-5">Submit</button>
                             </div>
                         </form>
                     </div>
                 </div>
-			</div>
-		</div>
-	</div>
+            </div>
+        </div>
+    </div>
 </section>

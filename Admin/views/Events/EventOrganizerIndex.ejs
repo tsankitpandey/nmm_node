@@ -1,65 +1,78 @@
 <%- contentFor('body') %>
-<section class="content">
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-md-12">
-				<div class="card border-top border-0 border-4 border-primary">
-                    <div class="card-body p-5">
-                        <div class="card-title d-flex align-items-center">
-                            <div>
-                            </div>
-                            <h5 class="mb-0 text-primary">Event Organizer</h5>
-                        </div>
-                        <hr>
-                        <form class="row g-3">
-                            <div class="col-md-12">
-                                <label for="inputLastName" class="form-label">Client Name <span class="text-red">*</span></label>
-                                <input type="text" class="form-control" id="inputLastName">
-                            </div>
-                            <div class="col-md-6">
-                                <label for="inputLastName" class="form-label">Client First Name <span class="text-red">*</span></label>
-                                <input type="text" class="form-control" id="inputLastName">
-                            </div>
-                                                 
-                               
-                            <div class="col-md-6">
-                                <label for="inputLastName" class="form-label">Client Last Name <span class="text-red">*</span></label>
-                                <input type="text" class="form-control" id="inputLastName">
-                            </div>
-                            <div class="col-md-6">
-                                <label for="inputLastName" class="form-label">Client Email <span class="text-red">*</span></label>
-                                <input type="text" class="form-control" id="inputLastName">
-                            </div>
-                            <div class="col-md-6">
-                                <label for="inputLastName" class="form-label">Client Contact <span class="text-red">*</span></label>
-                                <input type="text" class="form-control" id="inputLastName">
-                            </div>
-                            
-                            <div class="col-md-6" >
-                                <div class="mb-3 select2-sm select-country" data-route="<%=AdminRoute('/countrylist') %>">
-                                  <label class="form-label">Client Country</label>
-                                  <select class="single-select">
-                                 
-                                  </select>
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card border-top border-0 border-4 border-primary">
+                        <div class="card-body p-5">
+                            <div class="card-title d-flex align-items-center">
+                                <div>
                                 </div>
-                            </div>  
-                            
-
-                            
-
-                                  
-                            <div class="col-12">
-                                <label for="inputAddress" class="form-label">Description</label>
-                                <textarea class="form-control" id="inputAddress" placeholder="Address..." rows="3"></textarea>
+                                <h5 class="mb-0 text-primary">Event Organizer</h5>
                             </div>
-                            
-                            <div class="col-12">
-                                <button type="submit" class="btn btn-primary px-5">Submit</button>
-                            </div>
-                        </form>
+                            <hr>
+                            <form class="row g-3 needs-validation" action="/EventOrgInsert" method="POST"
+                                enctype="multipart/form-data" novalidate>
+                                <div class="col-md-12">
+                                    <label for="inputClientName" class="form-label">Client Name <span
+                                            class="text-red">*</span></label>
+                                    <input type="text" class="form-control" id="inputClientName" name="client_name"
+                                        required>
+                                    <div class="invalid-feedback">Client name is required.</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="inputFirstName" class="form-label">Client First Name <span
+                                            class="text-red">*</span></label>
+                                    <input type="text" class="form-control" name="first_name" id="inputFirstName"
+                                        required>
+                                    <div class="invalid-feedback">Client first name is required.</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="inputLastName" class="form-label">Client Last Name <span
+                                            class="text-red">*</span></label>
+                                    <input type="text" class="form-control" name="last_name" id="inputLastName"
+                                        required>
+                                    <div class="invalid-feedback">Client last name is required.</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="inputEmail" class="form-label">Client Email <span
+                                            class="text-red">*</span></label>
+                                    <input type="email" class="form-control" name="email" id="inputEmail" required>
+                                    <div class="invalid-feedback">Client email is required.</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="inputContact" class="form-label">Client Contact <span
+                                            class="text-red">*</span></label>
+                                    <input type="text" class="form-control" name="contact_number" id="inputContact"
+                                        required>
+                                    <div class="invalid-feedback">Client contact is required.</div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="mb-3 select2-sm select-country"
+                                        data-route="<%= AdminRoute('/countrylist') %>">
+                                        <label class="form-label">Client Country</label>
+                                        <select class="single-select form-select" name="country" required>
+                                            <option value="" selected disabled>Choose...</option>
+
+                                        </select>
+                                        <div class="invalid-feedback">Client country is required.</div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <label for="inputDescription" class="form-label">Description</label>
+                                    <textarea class="form-control" id="inputDescription" name="Description"
+                                        placeholder="Description..." rows="3"></textarea>
+                                </div>
+
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary px-5">Submit</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
-			</div>
-		</div>
-	</div>
-</section>
+            </div>
+        </div>
+    </section>
