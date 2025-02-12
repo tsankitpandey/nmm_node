@@ -57,13 +57,13 @@ class NewsNMMModel extends BaseModel{
     }
 
     static async NewsSave(data, image) {
-
         const timestamp = Math.floor(Date.now() / 1000); 
-    
+        
         return new Promise((resolve, reject) => {
             const query = 'INSERT INTO nmm_news (title, priority, image, category_id, date, description, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)';
             const values = [data.title, data.priority, image[0].thumbUrl, data.category_id, data.date, data.description, timestamp];
-    
+            // console.error('Error executing query1:', values);
+            
             super.db.query(query, values, (err, result) => {
                 if (err) {
                     console.error('Error executing query1:', err);
@@ -74,8 +74,8 @@ class NewsNMMModel extends BaseModel{
         });
     }
 
-    static async NewsUpdate(id, title, priority, category_id, date, image, description) {
-        
+    static async NewsUpdate(id, title, priority, category_id, date, description, image) {
+       
         const timestamp = Math.floor(Date.now() / 1000); 
 
         return new Promise((resolve, reject) => {
@@ -161,6 +161,7 @@ class NewsNMMModel extends BaseModel{
             });
         });
     }
+    
     static async bannerIndex() {
         return new Promise((resolve, reject) => {
             const query = `SELECT * FROM nmm_banner`

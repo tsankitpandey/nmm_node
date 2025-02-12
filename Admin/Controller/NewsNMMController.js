@@ -60,11 +60,11 @@ class NewsNMMController extends BaseController{
         try {
             const data = req.body;
             const file =req.files;
-            // return res.status(200).json({"mesg": file})
             const image = await super.uploadFiles(file,'DEMO');
             if(image){
-            const result = await NewsNMMModel.NewsSave(data, image);
-            if (result && result.affectedRows > 0) {
+                const result = await NewsNMMModel.NewsSave(data, image);
+                // return res.status(200).json({"mesg": result})
+                if (result && result.affectedRows > 0) {
                 req.flash('success', 'News saved successfully!');
                 return res.status(200).redirect(res.Admin('/newslist'));
             } else {
@@ -111,17 +111,17 @@ class NewsNMMController extends BaseController{
         const { id, title, priority, category_id, date, description} = req.body; 
         
         let image = req.files;
-        
         try {
             if (req.files && req.files.length > 0) {
-
+                
                 const uploadedFiles = await super.uploadFiles(image, "DEMO");
                 image = uploadedFiles[0].thumbUrl; 
-                
+                    
             }else{
                 image = null;
             }
-            const updateResult = await NewsNMMModel.NewsUpdate(id, title, priority, category_id, date, image, description);
+
+            const updateResult = await NewsNMMModel.NewsUpdate(id, title, priority, category_id, date, description, image);
            
             if (updateResult.affectedRows > 0) {
                 req.flash("success", "News Updated successfully!");

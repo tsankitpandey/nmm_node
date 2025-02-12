@@ -10,6 +10,9 @@
         <div class="card">
             <div class="card-body border border-1 rounded-3">
                 <form class="row g-3 needs-validation form submit" action="<%=AdminRoute('/NewsUpdate') %>" method="post" enctype="multipart/form-data" novalidate>
+                <div class="row">
+                    <input type="hidden" name="id" value="<%= NewsEdits.id %>">
+
                     <div class="col-md-6">
                         <label for="inputTitle" class="form-label">Title <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="inputTitle"  placeholder="Title" name="title" value="<%= NewsEdits.title %>" required>
@@ -69,6 +72,7 @@
                     <div class="col-12">
                         <button type="submit" class="btn btn-dark ">Submit</button>
                     </div>
+                </div>
                 </form>
             </div>
         </div>
