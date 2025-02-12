@@ -207,5 +207,51 @@ class NewsNMMController extends BaseController{
         }
         
     }
+
+    static async BannerEdit(req, res) {
+        try {
+            const { id } = req.query;
+            // return res.status(200).json({"msg": id})
+            const bannerEdit = await NewsNMMModel.bannerIndex();
+            const bannerEdits = bannerEdit.find(bannerEdit => bannerEdit.id == id);
+
+            if (!bannerEdits) {
+                return res.status(404).json({ message: 'banner not found' });
+            }
+                res.render("NMM/News/BannerEdit", {
+                layout: "layout/layout-model",
+                title: "Banner",
+                page_title: "Banner List",
+                bannerEdits,
+            
+            });
+       
+        } catch (error) {
+            console.error('Error fetching banner:', error);
+            res.status(500).json({ message: 'Internal server error', error });
+        }
+    }
+
+    static async BannerDelete (req,res){
+        try {
+    
+            const { id } = req.query;
+        //    return res.status(200).json({"msg": id})
+            const result = await NewsNMMModel.BannerDelete(id);
+            if (result && result.affectedRows > 0) { 
+                req.flash('success', 'banner deleted successfully!');
+                return res.status(200).redirect(res.Admin('/banner'));
+    
+            } else {
+                req.flash('error', 'Failed to delete banner. No rows were affected.');
+                return res.status(200).redirect(res.Admin('/banner'));
+            }
+        }
+         catch (error) {
+            console.error('Error in banner:', error);
+            req.flash('error', 'An error occurred while Deleting banner.');
+            return res.status(200).redirect(res.Admin('/banner'));
+        }
+    }
 }
 module.exports = NewsNMMController;

@@ -165,7 +165,7 @@ class NewsNMMModel extends BaseModel{
     static async bannerIndex() {
         return new Promise((resolve, reject) => {
             const query = `SELECT * FROM nmm_banner`
-
+            // console.error("dd",query);
             super.db.query(query, (err, results) => {
                 if (err) {
                     console.error("Error fetching filtered banner:", err);
@@ -173,6 +173,23 @@ class NewsNMMModel extends BaseModel{
                 } else {
                     resolve(results);
                 }
+            });
+        });
+    }
+
+    static async BannerDelete(id) {
+        return new Promise((resolve, reject) => {
+            const query = `
+                DELETE FROM nmm_banner
+                WHERE id = ?`;
+    
+            super.db.query(query, [id], (err, results) => {
+                if (err) {
+                    console.error('Error executing delete query:', err);
+                    return reject({ error: 'Error deleting banner', details: err });
+                }
+    
+                resolve(results);
             });
         });
     }

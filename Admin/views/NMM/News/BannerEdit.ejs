@@ -1,0 +1,139 @@
+<%- contentFor('body') %>
+<%- contentFor('body') %>
+
+<div class="modal-content">
+    <div class="modal-header">
+        	<h4 class="card-title ">Add</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body mb-3">
+        <div class="card">
+            <div class="card-body border border-1 rounded-3 mb-3">
+                <form class="row g-3 needs-validation mt-2" action="<%=AdminRoute('/bannerUpdate') %>" method="post" enctype="multipart/form-data" novalidate>
+                <div class="row mb-3">
+                    <input type="hidden" name="id" value="<%= bannerEdits.id %>">
+                    <div class="col-md-12 mb-3">
+                        <label for="inputTitle" class="form-label">Title <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control mb-2" id="inputTitle"  placeholder="Title" name="title" value="<%=bannerEdits.title %>" required>
+                        <div class="invalid-feedback">Please enter a Title.</div>
+                    </div>
+                    
+                    <div class="col-md-6 mb-3">
+                        <label for="inputPriority" class="form-label">Priority <span class="text-danger">*</span></label>
+                        <select class="form-select" id="inputPriority" name="priority" required>
+                            <option>New Priority</option>  
+                            <% for(let i = 1; i <= 5; i++) { %>
+                                <option value="<%= i %>"><%= i %></option>
+                            <% } %>
+                        </select>
+                        <div class="invalid-feedback">Please enter a Priority.</div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label for="" class="form-label">Display banner's title, description, button <span class="text-danger">*</span></label>
+                        <div class="form-check">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input " type="radio" name="banner[display]" value="1" <%= bannerEdits.display == 1 ? 'checked' : '' %> required>
+
+                                <label class="form-check-label" for="inlineRadio1" >On</label>
+                              </div>
+                              <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="display" id="inlineRadio2" value="0" <%= bannerEdits.display == 0 ? 'checked' : '' %> required>
+                                <label class="form-check-label" for="inlineRadio2">Off</label>
+                              </div> 
+                          </div>
+                          <div class="invalid-feedback">Please enter a banner's title.</div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label for="" class="form-label">Button Text <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" name="button_text" placeholder="Button Text" value="<%= bannerEdits.button_text %>" required>
+                        <div class="invalid-feedback">Please enter button text</div>
+                    </div>
+
+                    <div class="form-group col-md-6 mb-3">
+                        <div class="form-collapse">
+                            <div class="form-row">
+                                <div class="col-md-12">
+                                    <label class="mb-2">Button Link <span class="text-danger">*</span></label>
+                    
+                                    <ul class="nav nav-pills">
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link button-collapse border shadow mr-2" 
+                                               data-bs-toggle="collapse" data-bs-target="#collapse1" onclick="toggleCollapse('collapse1', 'collapse2')">Popup</a>
+                                        </li>
+                    
+                                        <li class="nav-item mx-2">
+                                            <a href="#" class="nav-link button-collapse border shadow" 
+                                               data-bs-toggle="collapse" data-bs-target="#collapse2" data-tooltip="Add URL with https://"
+                                               onclick="toggleCollapse('collapse2', 'collapse1')">URL</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                    
+                            <div class="collapse mt-3" id="collapse1">
+                                <div class="col-md-12 ">
+                                    <input type="text" class="form-control" name="popup" value="1" placeholder="Popup">
+                                </div>
+                            </div>
+                    
+                            <div class="collapse mt-3" id="collapse2">
+                                <div class="col-md-12">
+                                    <input type="text" class="form-control" name="button_link" value="<%= bannerEdits.button_link %>" placeholder="https://">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="invalid-feedback">Please upload link.</div>
+                    </div>
+
+                    <div class="col-md-12 mb-3">
+                        <label for="inputDescription" class="form-label">Description <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" name="description" placholder="Description" value="<%=bannerEdits.description%>" required>
+                        <div class="invalid-feedback">Please enter a Description.</div>
+                    </div>
+
+                    <div class="col-md-12 mb-3">
+                        <div class="form-group mb-3">
+                            <label>Image Upload <span class="text-danger"> * (Image size must be 1300x200)</span> </label>
+                            <div class="form-file">
+                                <input type="file" class="form-control form-file-input" name="image" value="<%= bannerEdits.image%>" placeholder="News Image" id="form-file" view="preview" required>
+                                <label class="form-file-label"></label>
+                            </div>
+                        </div>
+                        <div class="invalid-feedback">Please upload Image.</div>
+                    </div>
+
+                    <div class="col-md-12 mb-3">
+                        <label for="inputContent" class="form-label">Content <span class="text-danger"> *  
+                        </span></label>
+                        <textarea id="elm1" name="content" value="<%= bannerEdits.content%>"required><%= bannerEdits.content%></textarea>
+                        <div class="invalid-feedback">Please enter a Content.</div>
+                    </div>
+
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-dark ">Submit</button>
+                    </div>
+                </div>
+                </form>
+            </div>
+        </div>
+
+	</div>
+</div>	
+
+<script>
+    function toggleCollapse(showId, hideId) {
+        let showElement = document.getElementById(showId);
+        let hideElement = document.getElementById(hideId);
+
+        if (showElement.classList.contains("show")) {
+            
+            bootstrap.Collapse.getInstance(showElement).hide();
+        } else {
+        
+            bootstrap.Collapse.getOrCreateInstance(showElement).show();
+            bootstrap.Collapse.getInstance(hideElement)?.hide();
+        }
+    }
+</script>
