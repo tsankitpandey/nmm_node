@@ -85,6 +85,7 @@ route.post('/sponserAdd', EventController.sponserAdd);
 route.post('/sponserManage', EventController.sponserManage);
 route.get('/Ems', EventController.EmsDetails);
 route.post('/EmsAdd', EventController.EmsAdd);
+route.post('/EventSave', upload.any(), EventController.EventSave);
 
 // News Router---
 route.get('/news', NewsNMMController.NewsIndex);
