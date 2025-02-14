@@ -211,8 +211,8 @@ class NewsNMMController extends BaseController{
     static async BannerEdit(req, res) {
         try {
             const { id } = req.query;
-            // return res.status(200).json({"msg": id})
             const bannerEdit = await NewsNMMModel.bannerIndex();
+            // return res.status(200).json({"msg": bannerEdit})
             const bannerEdits = bannerEdit.find(bannerEdit => bannerEdit.id == id);
 
             if (!bannerEdits) {
@@ -253,5 +253,38 @@ class NewsNMMController extends BaseController{
             return res.status(200).redirect(res.Admin('/banner'));
         }
     }
+
+    static async BannerUpdate(req, res) {
+
+        const { id, title, priority, display, button_text, popup, button_link, description, content } = req.body; 
+    
+        let image = req.files;
+        
+        try {
+            if (req.files && req.files.length > 0) {
+                const uploadedFiles = await super.uploadFiles(image, "DEMO");
+                image = uploadedFiles[0].thumbUrl; 
+            } else {
+                image = null;
+            }
+    
+            const updateResult = await NewsNMMModel.BannerUpdate(
+                id, title, priority, display, popup, button_text, button_link, description, content, image
+            );
+    
+            if (updateResult.affectedRows > 0) {
+                req.flash("success", "Banner updated successfully!");
+                return res.status(200).redirect(res.Admin('/banner'));
+            } else {
+                req.flash("warning", "Failed to update banner. No rows were affected.");
+                return res.status(200).redirect(res.Admin('/banner'));
+            }
+        } catch (error) {
+            console.error("Error in banner update:", error);
+            req.flash("error", "An error occurred while updating the banner.");
+            return res.status(200).redirect(res.Admin('/banner'));
+        }
+    }
+    
 }
 module.exports = NewsNMMController;

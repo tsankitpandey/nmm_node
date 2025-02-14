@@ -8,18 +8,18 @@
     </div>
     <div class="modal-body">
         <div class="card">
-            <div class="card-body border border-1 rounded-3">
-                <form class="row g-3 needs-validation form submit" action="<%=AdminRoute('/NewsUpdate') %>" method="post" enctype="multipart/form-data" novalidate>
+            <div class="card-body border border-1 rounded-3 ">
+                <form class="row g-3 needs-validation form submit mt-2" action="<%=AdminRoute('/NewsUpdate') %>" method="post" enctype="multipart/form-data" novalidate>
                 <div class="row">
                     <input type="hidden" name="id" value="<%= NewsEdits.id %>">
 
-                    <div class="col-md-6">
+                    <div class="col-md-6 mb-3">
                         <label for="inputTitle" class="form-label">Title <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="inputTitle"  placeholder="Title" name="title" value="<%= NewsEdits.title %>" required>
                         <div class="invalid-feedback">Please enter a Title.</div>
                     </div>
                     
-                    <div class="col-md-6">
+                    <div class="col-md-6 mb-3">
                         <label for="inputPriority" class="form-label">Priority <span class="text-danger">*</span></label>
                         <select class="form-select" id="inputPriority" name="priority" required>
                             <option>New Priority</option>  
@@ -31,7 +31,7 @@
                         <div class="invalid-feedback">Please enter a Priority.</div>
                     </div>
 
-                    <div class="col-md-6">
+                    <div class="col-md-6 mb-3">
                         <label for="inputCategory" class="form-label">Category <span class="text-danger">*</span></label>
                         <select class="form-select"  name="category_id" required>
                             <option value="">New Category</option>
@@ -52,7 +52,7 @@
                     </div>
 
                     <div class="col-md-12">
-                        <div class="form-group mb-3">
+                        <div class="form-group">
                             <label>Image Upload <span class="text-danger"> * (Image size must be 1300x200)</span> </label>
                             <div class="form-file">
                                 <input type="file" class="form-control form-file-input" name="image" value="<%= NewsEdits.image %>" placeholder="News Image" id="form-file" view="preview" required>
@@ -69,7 +69,7 @@
                         <div class="invalid-feedback">Please enter a Description.</div>
                     </div>
 
-                    <div class="col-12 mb-2">
+                    <div class="col-12 mb-2 mt-3">
                         <button type="submit" class="btn btn-dark ">Submit</button>
                     </div>
                 </div>

@@ -62,7 +62,7 @@ class NewsNMMModel extends BaseModel{
         return new Promise((resolve, reject) => {
             const query = 'INSERT INTO nmm_news (title, priority, image, category_id, date, description, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)';
             const values = [data.title, data.priority, image[0].thumbUrl, data.category_id, data.date, data.description, timestamp];
-            // console.error('Error executing query1:', values);
+            
             
             super.db.query(query, values, (err, result) => {
                 if (err) {
@@ -187,6 +187,64 @@ class NewsNMMModel extends BaseModel{
                 if (err) {
                     console.error('Error executing delete query:', err);
                     return reject({ error: 'Error deleting banner', details: err });
+                }
+    
+                resolve(results);
+            });
+        });
+    }
+
+    static async BannerUpdate(id, title, priority, display, popup, button_text, button_link, description, content, image) {
+        const timestamp = Math.floor(Date.now() / 1000); 
+        
+        return new Promise((resolve, reject) => {
+            let query;
+            let values;
+            
+            if(image){
+                query = `
+                UPDATE nmm_banner 
+                SET 
+                image = ?,
+                title = ?, 
+                priority = ?, 
+                display = ?,
+                popup = ?,
+                button_text = ?,
+                button_link = ?,
+                description = ?,
+                content = ?,
+                updated_at = ?
+                WHERE 
+                id = ?`;
+                
+                values = [image, title, priority, display, popup, button_text, button_link, description, content, timestamp, id];
+                // console.error('getting data:', values);
+
+            }else{
+
+            query = `
+                UPDATE nmm_banner 
+                SET 
+                    title = ?, 
+                    priority = ?, 
+                    display = ?,
+                    popup = ?,
+                    button_text = ?,
+                    button_link = ?,
+                    description = ?,
+                    content = ?,
+                    updated_at = ?
+                WHERE 
+                    id = ?`;
+
+             values = [title, priority, display, popup, button_text, button_link, description, content, timestamp, id];
+          }
+    
+            super.db.query(query, values, (err, results) => {
+                if (err) {
+                    console.error('Error executing update query:', err);
+                    return reject({ error: 'Error updating news details', details: err });
                 }
     
                 resolve(results);
