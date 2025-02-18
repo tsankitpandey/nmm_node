@@ -1,0 +1,63 @@
+
+<div class="row row-cols-1 row-cols-lg-2 row-cols-xl-2">
+    <div class="col-xl-12">
+        <h2 class="mb-0 ">What's New</h2>
+        <hr/>
+         <!-- <pre><%= JSON.stringify(NewsIndex,null,2) %></pre> -->
+        <div class="card">
+            <div class="card-body">
+                <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner mb-3">
+                        <% if (NewsIndex.banners && NewsIndex.banners.length > 0) { %>
+                            <% NewsIndex.banners.forEach((newsItem) => { %> <!-- Fixed missing parentheses -->
+                                <div class="carousel-item active">
+                                    <img src="<%= newsItem.image %>" class="d-block" 
+                                        style="width: 100%; height: 200px; object-fit: cover" 
+                                        alt="News Image">
+                                </div>
+                            <% }); %> <!-- Corrected closing EJS tags -->
+                        <% } else { %>
+                            <p>No news available.</p>
+                        <% } %>
+                    </div>
+                </div>
+                          
+
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4 mb-4">
+                <div class="col-md-12">
+                    <h2 class="">Insights</h2>
+                    <hr />
+                </div>
+                    <% if (NewsIndex.news && NewsIndex.news.length > 0) { %>
+                        <% NewsIndex.news.forEach((newsItem) => { %>
+                            <div class="col">
+                                <div class="card rounded-4 overflow-hidden bg-gradient-moonlit">
+                                    <div class="card-body text-white">
+                                        <img src="<%= newsItem.image %>" class="img-fluid rounded-4" 
+                                            style="width: 100%; height: 200px; object-fit: cover" alt="News Image">  
+                                        <div class="d-flex align-items-center gap-4 mt-4">
+                                            <div class="posted-date">
+                                                <p class="mb-0"><i class="bx bx-calendar-alt me-2"></i>
+                                                    <%= new Date(newsItem.created_at * 1000).toLocaleString() %>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <h5 class="card-title mt-3 text-white"><%= newsItem.title %></h5>
+                                        <p class="mb-0"><%= newsItem.description %></p>
+                                        <a href="" class="btn btn-light btn-ecomm mb-3 rounded-4 px-4">Read More</a>
+                                    </div>
+                                </div>
+                            </div>
+                        <% }); %>
+                    <% } else { %>
+                        <p>No news available.</p>
+                    <% } %>
+                </div><!--end row-->
+                
+
+
+            </div>
+        </div>
+    </div>
+
+</div>

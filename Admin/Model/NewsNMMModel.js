@@ -1,14 +1,10 @@
 const BaseModel=require('./BaseModel');
+
 class NewsNMMModel extends BaseModel{
 
-    static async NewsIndex() {
+    static async NewsIndex12() {
         return new Promise((resolve, reject) => {
-            const query = `
-                SELECT nmm_news.*, 
-                nmm_category.type 
-                FROM nmm_news
-                INNER JOIN nmm_category ON nmm_news.category_id = nmm_category.id
-                `;
+            const query = `SELECT * FROM nmm_banner, nmm_news`;
 
             super.db.query(query, (err, results) => {
                 if (err) {
@@ -20,6 +16,36 @@ class NewsNMMModel extends BaseModel{
             });
         });
     }
+
+    static async NewsIndex() {
+        return new Promise((resolve, reject) => {
+            const query1 = "SELECT * FROM nmm_banner";
+            const query2 = `
+            SELECT nmm_news.*, nmm_category.type 
+            FROM nmm_news
+            INNER JOIN nmm_category ON nmm_news.category_id = nmm_category.id
+            ORDER BY nmm_news.created_at DESC
+        `;
+            
+            super.db.query(query1, (err1, banners) => {
+                if (err1) {
+                    console.error("Error fetching banners:", err1);
+                    return reject(err1);
+                }
+    
+                super.db.query(query2, (err2, news) => {
+                    if (err2) {
+                        console.error("Error fetching news:", err2);
+                        return reject(err2);
+                    }
+    
+                    // Merge results into an object
+                    resolve({ banners, news });
+                });
+            });
+        });
+    }
+    
     
     static async NewsList() {
         return new Promise((resolve, reject) => {

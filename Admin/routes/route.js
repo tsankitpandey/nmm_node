@@ -109,6 +109,8 @@ route.post('/ProspectAdd', CrmNMMController.ProspectAdd);
 // Business Impact Router---
 route.get('/ViewImpact', BusinessNMMController.ViewIndex);
 route.get('/Transaction', BusinessNMMController.TransactionIndex);
+route.post('/save', BusinessNMMController.TransactionSave);
+
 
 // Business Impact Router---
 route.get('/PlanList', PlanNMMController.PlanIndex);

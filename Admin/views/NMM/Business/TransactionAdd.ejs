@@ -9,41 +9,51 @@
 					</div>
 
                     <div class="card-body">
-                        <form class="g-3" method="">
+                        <form class="g-3 needs-validation form submit" action="<%=AdminRoute('/save') %>" method="post" enctype="multipart/form-data" novalidate>
                             <div class="row ">
                             <div class="col-md-6 mb-3">
-                                <label for="inputFirstName" class="form-label">To Company Name <span class="text-danger">*</span></label>
-                                <select class="form-select" >
-                                    <option >Company name</option>
-                                    <option value="">Logistic</option>
-                                    <option value="">Techsimba</option>
-                                    
+                                <label for="inputCompany" class="form-label">To Company Name <span class="text-danger">*</span></label>
+                                <select class="form-select" id="inputCompany" name="receiver_id" required>
+                                    <option>Company name</option>
+                                    <% Transaction.company.forEach(company => { %>
+                                        <option value="<%= company.company_id %>"><%= company.company_name %></option>
+                                    <% }) %>
                                 </select>
+                                <div class="invalid-feedback">Please enter a Company</div>
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label for="" class="form-label">From Company Name <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="">
+                                <label for="inputCompany" class="form-label">From Company Name <span class="text-danger">*</span></label>
+                                <select class="form-select" id="inputCompany" name="sender_id" required>
+                                    <option>Company name</option>
+                                    <% Transaction.from_company.forEach(from_company => { %>
+                                        <option value="<%= from_company.company_id %>"><%= from_company.company_name  %></option>
+                                    <% }) %>
+                                </select>
+                                <div class="invalid-feedback">Please enter a Company</div>
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label for="" class="form-label">Transaction Mode: <span class="text-danger">*</span></label>
-                                <select class="form-select" >
+                                <label for="inputTransaction" class="form-label">Transaction Mode: <span class="text-danger">*</span></label>
+                                <select class="form-select" id="inputTransaction" required>
                                     <option >select Transaction Mode</option>
                                     <option value="1">online</option>
                                     <option value="0">offline</option>
-                                    
                                 </select>
+                                <div class="invalid-feedback">Please enter a Transaction.</div>
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label for="" class="form-label">Amount <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="">
+                                <label for="inputAmount" class="form-label">Amount <span class="text-danger">*</span></label>
+                                <input type="text" name="amount" class="form-control" id="inputAmount" required>
+                                <div class="invalid-feedback">Please enter a Amount.</div>
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label class="form-label">Transaction Date <span class="text-danger">*</span></label>
-                                <input class="result form-control" type="date" id="date" placeholder="Date">
+                                <label for="inputDate" class="form-label">Transaction Date <span class="text-danger">*</span></label>
+                                <input class="result form-control" type="date" id="date" name="date" placeholder="Date" id="inputDate" required>
+                                <div class="invalid-feedback">Please enter date.</div>
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label for="" class="form-label">Comment<span class="text-danger">*</span></label>
-                                <textarea type="text" class="form-control" id=""></textarea>
+                                <label for="InputComment" class="form-label">Comment<span class="text-danger">*</span></label>
+                                <textarea type="text" name="comment" class="result form-control" id="InputComment" required></textarea>
+                                <div class="invalid-feedback">Please enter a Comment.</div>
                             </div>
                         </div>
 
