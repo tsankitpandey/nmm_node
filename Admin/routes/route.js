@@ -12,6 +12,7 @@ const PlanNMMController=require("../Controller/PlanNMMController");
 const ConferenceNMMController=require("../Controller/ConferenceNMMController");
 const DataController=require('../Controller/DataController');
 const FL_timelineController= require("../Controller/FL_timelineController");
+const MembershipController= require("../Controller/MembershippController");
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
@@ -25,33 +26,7 @@ route.get('/dashboard', verifyToken, DashboardController.index);
 route.get('/logout', logout);
 route.get("/timeline",FL_timelineController.fetchAllFeeds);
 
-route.get("/chat", (req, res) => {
-    const userProfile = {
-        avatar: 'path/to/avatar.jpg',
-        name: 'Rachel Zane'
-    };
 
-    const chats = [
-        { name: 'Louis Litt', avatar: 'path/to/avatar2.jpg', lastMessage: 'You just got LITT up, Mike.', lastMessageTime: '9:51 AM', isActive: false },
-        { name: 'Louis Litt', avatar: 'path/to/avatar2.jpg', lastMessage: 'You just got LITT up, Mike.', lastMessageTime: '9:51 AM', isActive: false },
-        { name: 'Louis Litt', avatar: 'path/to/avatar2.jpg', lastMessage: 'You just got LITT up, Mike.', lastMessageTime: '9:51 AM', isActive: false },
-        { name: 'Louis Litt', avatar: 'path/to/avatar2.jpg', lastMessage: 'You just got LITT up, Mike.', lastMessageTime: '9:51 AM', isActive: false },
-        { name: 'Louis Litt', avatar: 'path/to/avatar2.jpg', lastMessage: 'You just got LITT up, Mike.', lastMessageTime: '9:51 AM', isActive: false },
-        { name: 'Harvey Specter', avatar: 'path/to/avatar3.jpg', lastMessage: 'Let’s win this case, Mike.', lastMessageTime: '9:55 AM', isActive: true },
-    ];
-
-    const currentChat = { name: 'Harvey Specter' };
-
-    res.render("FreightLoungeViews/Chat/chat", {
-        title: "Timeline",
-        component_title: "Timeline Feeds",
-        icon: "<i class='fas fa-clock'></i>",
-        page_title: "Timeline Page",
-        userProfile: userProfile,
-        chats: chats,
-        currentChat: currentChat
-    });
-});
 
 //---------------- freight Lounge routes start-------------------- 
 
@@ -64,6 +39,16 @@ route.post("/updatetimeline/:id",upload.any(), FL_timelineController.updatetimel
 route.post("/commentinsert",  upload.any(),FL_timelineController.commentInsert);
 route.post("/comment/:id",FL_timelineController.fetchcomment);
 
+
+route.get("/chat", (req, res) => {
+    res.render("FreightLoungeViews/Chat/chat", {
+        title: "Timeline",
+        component_title: "Timeline Feeds",
+        icon: "<i class='fas fa-clock'></i>",
+        page_title: "Chat Page",
+       
+    });
+});
 
 
 // --------------- freight Lounge routes END -------------------- 
@@ -113,7 +98,12 @@ route.post('/save', BusinessNMMController.TransactionSave);
 
 
 // Business Impact Router---
-route.get('/PlanList', PlanNMMController.PlanIndex);
+
+route.get('/PlanList', MembershipController.MembershipGet);
+route.post("/planinsert",upload.any(),MembershipController.Membershipinsert);
+route.post("/planedit/:id",upload.any(),MembershipController.MembershipEdit);
+route.post("/planupdate/:id",upload.any(),MembershipController.Membershipinsert);
+route.post("/plandelete/:id", MembershipController.MembershipDelete);
 route.post('/PlanAdd', PlanNMMController.PlanAdd);
 
 // Conference Router---
@@ -123,7 +113,9 @@ route.get('/EventAdd', ConferenceNMMController.EventAdd);
 route.get('/member', ConferenceNMMController.MemberIndex);
 route.get('/guest', ConferenceNMMController.GuestIndex);
 
+
+
 //country
 route.get('/countrylist', DataController.countrylist);
-
+route.get('/citylist', DataController.citylist);
 module.exports = route;

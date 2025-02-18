@@ -70,7 +70,7 @@
                   />
                   <div>
                     <strong><%= comment.member_name ? comment.member_name : 'Ankit pandey' %></strong>
-                    <p class="mb-1 text-muted small"><%= comment.comment %></p>
+                    <p class="mb-1 text-muted small fw-bold"><%= comment.comment %></p>
                     <small class="text-muted"><%= new Date(comment.created_at * 1000).toLocaleString() %></small>
                   </div>
                 </div>

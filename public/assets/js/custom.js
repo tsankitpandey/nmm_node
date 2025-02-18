@@ -63,6 +63,7 @@ $(document).ready(function() {
           })
         );
       });
+      
       // If using select2, notify it to update the list of options
       $('.single-select').trigger('change');
     },

@@ -7,6 +7,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+                   <%= JSON.stringify(selectedMembership) %>
                 <div class="card">
                     <div class="card-body border border-1 rounded-3">
                         <form  action="<%=AdminRoute( '/planinsert' )%>"  method="POST" enctype="multipart/form-data">
@@ -16,7 +17,7 @@
                                     <div class="form-group ">
                                         <label class="mb-2">MemberShip Name <span class="text-danger">*</span></label>
                                         <input type="text" name="membership_plans[membership_name]" class="form-control"
-                                            placeholder="MemberShip Name" />
+                                            placeholder="MemberShip Name"  value="<%= selectedMembership.membership_name %>"  />
                                     </div>
                                 </div>
 
@@ -24,7 +25,7 @@
                                     <div class="form-group ">
                                         <label class="mb-2">Duration in Month <span class="text-danger">*</span></label>
                                         <input type="number" class="form-control mb-4"
-                                            name="membership_plans[duration_in_months]" placeholder="Month">
+                                            name="membership_plans[duration_in_months]" placeholder="Month"  value="<%= selectedMembership.duration_in_months %>" >
                                     </div>
                                 </div>
 
@@ -32,32 +33,33 @@
                                     <div class="form-group ">
                                         <label class="mb-2">Fees<span class="text-danger">*</span></label>
                                         <input type="text" class="form-control mb-4" name="membership_plans[fees]"
-                                            value="" placeholder="Fees">
+                                         placeholder="Fees" value="<%=selectedMembership.fees %>">
                                     </div>
                                 </div>
 
                                 <div class="col-xl-6 col-md-6">
-                                    <div class="form-group ">
+                                    <div class="form-group">
                                         <label class="">Status <span class="text-danger">*</span></label>
                                         <div class="radio-box form-check-inline">
                                             <input type="radio" class="form-check-input input-collapse mx-1 text-theme"
                                                 name="membership_plans[status]" value="0" placeholder="Active"
-                                                data-collapse="hide" checked>
+                                                data-collapse="hide" <%= selectedMembership.status == "0" ? "checked" : "" %>>
                                             <label class="form-check-label">Activate</label>
                                         </div>
-                                        <div class="radio-box form-check-inline ">
+                                        <div class="radio-box form-check-inline">
                                             <input type="radio" class="form-check-input input-collapse mx-1 text-theme"
                                                 name="membership_plans[status]" value="1" placeholder="Inactive"
-                                                data-collapse="hide">
+                                                data-collapse="hide" <%= selectedMembership.status == "1" ? "checked" : "" %>>
                                             <label class="form-check-label">Deactivate</label>
                                         </div>
                                     </div>
+                                    
                                 </div>
 
                                 <div class="col-xl-12 col-md-6">
                                     <div class="form-group mb-3">
                                         <label class="mb-2">Description <span class="text-danger">*</span></label>
-                                        <textarea id="elm1" name="area"></textarea>
+                                        <textarea id="elm1" name="area" > <%= selectedMembership.description %></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -69,28 +71,29 @@
                                     <div class="form-check form-check-inline">
                                         <input type="radio" class="form-check-input"
                                             name="membership_plans[gallery_access]" id="upload-yes" value="1"
-                                            onclick="toggleUploadExtra(true);" checked>
+                                            onclick="toggleUploadExtra(true);" 
+                                            <%= selectedMembership.gallery_access == "1" ? "checked" : "" %>>
                                         <label class="form-check-label" for="upload-yes">Yes</label>
                                     </div>
                                     <div class="form-check form-check-inline">
                                         <input type="radio" class="form-check-input"
                                             name="membership_plans[gallery_access]" id="upload-no" value="0"
-                                            onclick="toggleUploadExtra(false);">
+                                            onclick="toggleUploadExtra(false);" 
+                                            <%= selectedMembership.gallery_access == "0" ? "checked" : "" %>>
                                         <label class="form-check-label" for="upload-no">No</label>
                                     </div>
                                 </div>
-
-                                <div id="upload-extra" class="collapse show">
+                            
+                                <!-- Upload Extra Section -->
+                                <div id="upload-extra" class="<%= selectedMembership.gallery_access == '1' ? 'show' : 'collapse' %>">
                                     <div class="col-xl-7 mb-3">
-                                        <label for="upload-extra-photo" class="d-flex align-items-center">Upload Extra
-                                            Photo (Unlimited)
+                                        <label for="upload-extra-photo" class="d-flex align-items-center">Upload Extra Photo (Unlimited)
                                             <input type="number" class="form-control ms-2" id="upload-extra-photo"
                                                 name="membership_plans[uploade_photo]"
                                                 placeholder="Enter Upload Extra Photo"></label>
                                     </div>
                                     <div class="col-xl-7 mb-3">
-                                        <label for="upload-extra-video" class="d-flex align-items-center">Upload Extra
-                                            Video (Unlimited) &nbsp;
+                                        <label for="upload-extra-video" class="d-flex align-items-center">Upload Extra Video (Unlimited) &nbsp;
                                             <input type="number" class="form-control ms-2" id="upload-extra-video"
                                                 name="membership_plans[upload_video]"
                                                 placeholder="Enter Upload Extra Video"></label>
@@ -104,12 +107,12 @@
                                             class="text-danger"></span></label>&nbsp; &nbsp;
                                     <div class="form-check form-check-inline">
                                         <input type="radio" class="form-check-input"
-                                            name="membership_plans[personal_contact_details]" value="1" checked>
+                                            name="membership_plans[personal_contact_details]" value="1" <%= selectedMembership.personal_contact_details == "1" ? "checked" : "" %>>
                                         <label class="form-check-label">Yes</label>
                                     </div>
                                     <div class="form-check form-check-inline">
                                         <input type="radio" class="form-check-input"
-                                            name="membership_plans[personal_contact_details]" value="0">
+                                            name="membership_plans[personal_contact_details]" value="0"<%= selectedMembership.personal_contact_details == "0" ? "checked" : "" %>>
                                         <label class="form-check-label">No</label>
                                     </div>
                                 </div>
@@ -120,12 +123,12 @@
                                     <label>Mobile Access <span class="text-danger"></span></label> &nbsp; &nbsp;
                                     <div class="form-check form-check-inline">
                                         <input type="radio" class="form-check-input"
-                                            name="membership_plans[mobile_access]" value="1" checked>
+                                            name="membership_plans[mobile_access]" value="1"  <%= selectedMembership.mobile_access == "1" ? "checked" : "" %>>
                                         <label class="form-check-label">Yes</label>
                                     </div>
                                     <div class="form-check form-check-inline">
                                         <input type="radio" class="form-check-input"
-                                            name="membership_plans[mobile_access]" value="0">
+                                            name="membership_plans[mobile_access]" value="0"  <%= selectedMembership.mobile_access == "0" ? "checked" : "" %>>
                                         <label class="form-check-label">No</label>
                                     </div>
                                 </div>
@@ -136,12 +139,12 @@
                                     <label>Attend Events <span class="text-danger"></span></label> &nbsp; &nbsp;
                                     <div class="form-check form-check-inline">
                                         <input type="radio" class="form-check-input"
-                                            name="membership_plans[attend_event]" value="1" checked>
+                                            name="membership_plans[attend_event]" value="1"<%= selectedMembership.attend_event == "1" ? "checked" : "" %>>
                                         <label class="form-check-label">Yes</label>
                                     </div>
                                     <div class="form-check form-check-inline">
                                         <input type="radio" class="form-check-input"
-                                            name="membership_plans[attend_event]" value="0">
+                                            name="membership_plans[attend_event]" value="0" <%= selectedMembership.attend_event == "0" ? "checked" : "" %>>
                                         <label class="form-check-label">No</label>
                                     </div>
                                 </div>
@@ -153,13 +156,13 @@
                                     <div class="form-check form-check-inline">
                                         <input type="radio" class="form-check-input"
                                             name="membership_plans[extra_contact]" id="extra-yes" value="1"
-                                            onclick="toggleExtraLimits(true);" checked>
+                                            onclick="toggleExtraLimits(true);" <%= selectedMembership.gallery_access == "1" ? "checked" : "" %>>
                                         <label class="form-check-label" for="extra-yes">Yes</label>
                                     </div>
                                     <div class="form-check form-check-inline">
                                         <input type="radio" class="form-check-input"
                                             name="membership_plans[extra_contact]" id="extra-no" value="0"
-                                            onclick="toggleExtraLimits(false);">
+                                            onclick="toggleExtraLimits(false);" <%= selectedMembership.gallery_access == "0" ? "checked" : "" %>>
                                         <label class="form-check-label" for="feed-no">No</label>
                                     </div>
                                 </div>

@@ -1,50 +1,73 @@
-<%- contentFor('body') %>
 <section class="content">
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-md-12">
-				<div class="card card-theme card-outline shadow-sm">
-					<div class="card-header">
-						<h4 class="card-title mb-3">Plan List</h4>
-					</div>
-					
-                    <div class="card-body border-bottom">
-    					<div class="row">
-        					<div class="col-6">
-        						<button type="button" class="btn btn-sm btn-gradient-dark px-4 radius-30 float-lefty" data-route="<%= AdminRoute('/PlanAdd') %>" data-bs-toggle="modal" data-bs-target="#form-modal">
-                                    <i class='bx bx-edit'></i> ADD
-        						</button>
-                                
-						    </div>
-						</div>
-        			</div>
-                    
-                    <div class="card-body">  
-                        <div class="table-responsive">
-                            <table id="example" class="table table-striped table-bordered" style="width:100%">
-                                <thead>
-                                    <tr>
-                                        <th>Plan</th>
-                                        <th>Plan duration</th>
-                                        <th>Fee</th>         
-                                        <th>Status</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                            </tbody>        
-                            </table>
-                        </div>
-                    </div>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card card-theme card-outline shadow-sm">
+            <div class="card-header">
+              <h4 class="card-title mb-3">Plan List</h4>
+            </div>
+  
+            <div class="card-body border-bottom">
+              <div class="row">
+                <div class="col-6">
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-gradient-dark px-4 radius-30"
+                    data-route="<%= AdminRoute('/PlanAdd') %>"
+                    data-bs-toggle="modal"
+                    data-bs-target="#form-modal"
+                  >
+                    <i class="bx bx-edit"></i> ADD
+                  </button>
+                </div>
+              </div>
+            </div>
+  
+            <div class="card-body">
+                <div class="table-responsive">
+                  <table id="example" class="table table-striped table-bordered" style="width: 100%">
+                    <thead>
+                      <tr>
+                        <th>Plan</th>
+                        <th>Plan Duration</th>
+                        <th>Plan Description</th>
+                        <th>Fee</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                                 <!-- <%= JSON.stringify(Membership) %> -->
+                      <% if (Membership.data && Membership.data.length > 0) { %>
+                        <% Membership.data.forEach(plan => { %>
+                          <tr>
+                            <td><%= plan.membership_name %></td>
+                            <td><%= plan.duration_in_months %> Months</td>
+                            <td><%= plan.description %></td>
+                            <td>$<%= plan.fees %></td>
+                            <td><%= plan.status === 1 ? "Active" : "Inactive" %></td>
+                            <td>
+                              <button class="btn btn-sm btn-primary" data-route="<%= AdminRoute('/planedit/' + plan.id) %>"
+                                data-bs-toggle="modal" data-bs-target="#form-modal">Edit</button>
+                              <a class="btn btn-sm btn-danger " href="<%= AdminRoute('/plandelete/' + plan.id) %>"
+                               >Delete</a> 
+                            </td>
+                          </tr>
+                        <% }); %>
+                      <% } else { %>
+                        <tr>
+                          <td colspan="5" class="text-center">No Membership Plans Available</td>
+                        </tr>
+                      <% } %>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
