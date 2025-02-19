@@ -121,7 +121,7 @@ class MembershipModel extends BaseModel {
             upload_video = ?, 
             uploade_photo = ?, 
             updated_at = ?
-          WHERE membership_plans_id = ?`; 
+          WHERE id = ?`; 
   
         const values = [
           data.membership_plans.membership_name,

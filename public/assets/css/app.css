@@ -1083,7 +1083,7 @@ a {
 
 .chat-wrapper {
 	width: auto;
-	height: 600px;
+	height: 80vh;
 	border-radius: .25rem;
 	position: relative;
 	background: #fff;
@@ -1221,7 +1221,7 @@ a {
 
 .chat-list {
 	position: relative;
-	height: 300px
+	height: 80vh;
 }
 
 .chat-list .list-group-item {

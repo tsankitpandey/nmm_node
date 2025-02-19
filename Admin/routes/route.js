@@ -102,8 +102,8 @@ route.post('/save', BusinessNMMController.TransactionSave);
 route.get('/PlanList', MembershipController.MembershipGet);
 route.post("/planinsert",upload.any(),MembershipController.Membershipinsert);
 route.post("/planedit/:id",upload.any(),MembershipController.MembershipEdit);
-route.post("/planupdate/:id",upload.any(),MembershipController.Membershipinsert);
-route.post("/plandelete/:id", MembershipController.MembershipDelete);
+route.post("/planupdate/:id",upload.any(),MembershipController.MembershipUpdate);
+route.get("/plandelete/:id", MembershipController.MembershipDelete);
 route.post('/PlanAdd', PlanNMMController.PlanAdd);
 
 // Conference Router---

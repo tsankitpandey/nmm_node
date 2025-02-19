@@ -70,12 +70,12 @@ class MembershipController extends BaseController {
 
   static async MembershipUpdate(req, res) {
     const data = req.body;
-    membershipId = req.params.id;
+   const  membershipId = req.params.id;
     // return res.status(200).json({data});
 
     try {
       const result = await MembershipModel.MembershipUpdate(data, membershipId);
-
+      
       if (result && result.result.affectedRows > 0) {
         req.flash("success", "Membership plan Update successfully!");
 
@@ -96,12 +96,13 @@ class MembershipController extends BaseController {
 
   static async MembershipDelete(req,res){
     const planId=req.params.id;
-    return res.status(200).json({planId})
+    // return res.status(200).json({planId})
 
     try{
    const result = await MembershipModel.MembershipDelete(planId);
+  //  return res.status(200).json({result})
     
-   if(result && result.affectedRows>0){
+   if(result){
     req.flash("success", "Membership plan Deleted successfully!");
 
     return res.status(200).redirect(res.Admin("/PlanList"));

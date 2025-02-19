@@ -10,7 +10,7 @@
         .news-container {
             position: fixed;
             right: 0;
-            max-height: calc(60vh - 60px);
+            max-height: calc(80vh - 60px);
             overflow-y: auto;
             padding-left: 15px;
             padding-right: 15px;
@@ -70,9 +70,9 @@
         <!-- <%= JSON.stringify(feeds) %> -->
 
         <div class="row">
-            <div class="mb-5">
+            <div class="mb-5 d-flex justify-content-between">
                 <!-- Timeline Section -->
-                <div class="col-md-7 timeline-container mb-5">
+                <div class="col-md-6 col-xl-6 col-sm-7   timeline-container mb-5">
                     <form action="<%=AdminRoute('/insert') %>" method="post" enctype="multipart/form-data">
                         <div class="mb-3">
                             <textarea class="form-control" name="textarea" id="postText" rows="3"
