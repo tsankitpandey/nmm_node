@@ -90,6 +90,22 @@ class FL_timelineController extends BaseController {
         }
     }
 
+    static async likePost(req, res) {
+        const postId = req.params.id;
+        const action = req.body.action; 
+
+        
+        const result = await FL_timelineModel.updateLike(postId, action);
+
+        if (result) {
+            req.flash("success", `Post ${action}d successfully!`);
+            return res.status(200).redirect(res.Admin("/timeline"));
+        } else {
+            req.flash("error", `Error in ${action}ing post`);
+            return res.status(200).redirect(res.Admin("/timeline"));
+        }
+    }
+
     static async commentInsert(req, res) {
         try {
             const data = req.body;

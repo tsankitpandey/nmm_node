@@ -22,11 +22,16 @@ class AuthenticationController extends BaseController {
         if(username) {
 
             const data=await AuthenticationModel.loginVerify(username, password );
+
+         
             if (data.length>0) {
+                
                 const token = jwt.sign({ username }, process.env.JWT_SECRET, {
                     expiresIn: "1h", 
+                
                 });
-    
+                
+               
                 res.cookie("authToken", token, {
                     httpOnly: true,
                     secure: process.env.NODE_ENV === "production", 

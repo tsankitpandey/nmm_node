@@ -176,11 +176,15 @@
                                 <!-- Like, Comment, Share Buttons -->
                                 <div class="d-flex justify-content-between align-items-center mt-1 mb-5">
                                     <div class="btn-group" role="group">
-                                        <button class="btn btn-light btn-sm like-btn">
-                                            <i class="bx bx-like"></i> <span class="d-none d-md-inline">Like</span>
+                                        <button class="btn btn-light btn-sm like-btn" data-id="<%= feed.id %>" data-liked="false">
+                                            <i class="bx bx-like"></i> 
+                                            <span class="d-none d-md-inline">Like</span> 
+                                            <span class="like-count">0</span> 
                                         </button>
+                                        
+                                        
                                         <button class="btn btn-light btn-sm comment-btn" data-route="<%= AdminRoute('/comment/' + feed.id) %>"
-
+                                
                                             data-bs-toggle="modal" data-bs-target="#form-modal">
                                             <i class="bx bx-comment"></i> <span class="d-none d-md-inline">Comment</span>
                                         </button>
@@ -226,9 +230,52 @@
             </div>
         </div>
 
-        <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <script src="/public/assets/js/custom.js"></script>
-
+       
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const likeButtons = document.querySelectorAll(".like-btn");
+        
+                likeButtons.forEach(button => {
+                    button.addEventListener("click", function () {
+                        const postId = this.getAttribute("data-id"); // Get post ID
+                        const likeIcon = this.querySelector(".bx");
+                        const likeCount = this.querySelector(".like-count");
+                        let liked = this.getAttribute("data-liked") === "true";
+                        let count = parseInt(likeCount.textContent);
+        
+                        if (!liked) {
+                            count++;
+                            this.classList.add("btn-primary"); // Change button color to blue
+                            likeIcon.classList.add("bx-like-filled"); // Change icon
+                            likeIcon.classList.remove("bx-like");
+                            this.setAttribute("data-liked", "true");
+                        } else {
+                            count--;
+                            this.classList.remove("btn-primary");
+                            likeIcon.classList.add("bx-like");
+                            likeIcon.classList.remove("bx-like-filled");
+                            this.setAttribute("data-liked", "false");
+                        }
+        
+                        likeCount.textContent = count;
+        
+                        // ✅ Optional: Send Like Data to Server (Uncomment if needed)
+                        /*
+                        fetch("/like", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({ postId, liked: !liked })
+                        }).then(response => response.json())
+                          .then(data => {
+                              console.log("Like updated:", data);
+                          }).catch(error => console.error("Error:", error));
+                        */
+                    });
+                });
+            });
+        </script>
+        
+        
 
 
 </body>
