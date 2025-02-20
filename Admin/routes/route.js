@@ -121,4 +121,6 @@ route.get('/guest', ConferenceNMMController.GuestIndex);
 //country
 route.get('/countrylist', DataController.countrylist);
 route.get('/citylist', DataController.citylist);
+route.get('/timezone', DataController.timezonelist);
+
 module.exports = route;

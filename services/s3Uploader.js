@@ -27,7 +27,7 @@ class S3Uploader {
                 if (err) {
                     console.error('Error uploading to S3:', err);
                     reject(err);
-                } else {
+                } else {                                                                                                                              
                     resolve(data.Location);
                 }
             });

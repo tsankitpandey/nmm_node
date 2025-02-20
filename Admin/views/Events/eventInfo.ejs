@@ -47,21 +47,29 @@
                             <div class="col-md-4" >
                             <div class="mb-3 select2-sm select-country" data-route="<%=AdminRoute('/countrylist') %>">
                             <label class="form-label">Client Country</label>
-                            <select class="single-select name="country" required>
+                            <select class="single-select" name="country" required>
                             </select>
                             <div class="invalid-feedback">Please select Country.</div>
                             </div>
                             </div> 
                             <div class="col-md-4">
-                            <label for="inputCitie" class="form-label">City <span class="text-xs" data-tooltip="Select country first">(Note)</span></label>
-                            <input type="text" class="form-control" id="inputCitie">
+
+                                <div class="mb-3 select2-sm select-city" data-route="<%=AdminRoute('/citylist') %>">
+                                    <label class="form-label">Client City</label>
+                                    <select class="single-city-select" name="city" required>
+                                    </select>
+                                    <div class="invalid-feedback">Please select City.</div>
+                                </div>
+
                             </div>
                             <div class="col-md-4">
-                            <label for="inputState" class="form-label">TimeZone<span class="text-red">* <span class="text-xs" data-tooltip="Select country first">(Note)</span></span></label>
-                            <select id="inputState" class="form-select">
-                            <option selected>Choose...</option>
-                            <option>...</option>
-                            </select>
+                                <div class="mb-3 select2-sm select-timezone" data-route="<%=AdminRoute('/timezone') %>">
+                                    <label class="form-label">TimeZone</label>
+                                    <select class="single-timezone-select" name="TimeZone" required>
+                                    </select>
+                                    <div class="invalid-feedback">Please select TimeZone.</div>
+                                </div>
+                            
                             </div>
                             <div class="col-md-6">
                             <label for="inputstartdate" class="form-label">Event Start Date <span class="text-red">*</span></label>

@@ -38,41 +38,156 @@ $('.multiple-select').select2({
 });
 }
 
+// $(document).ready(function() {
+//   if ($('.single-select').length) {
+//   $('.single-select').select2({
+//     placeholder: "Select a country"
+//   });
+  
+//   // Get the data-route attribute from the parent div (or change the selector if attached elsewhere)
+//   var dataRoute = $('.select-country').data('route');
+  
+//   // Make an AJAX request to the URL provided in data-route
+//   $.ajax({
+//     url: dataRoute,
+//     method: 'GET',
+//     dataType: 'json',
+//     success: function(data) {
+//       // Loop through each country and append it as an option to the select element
+  
+//       data.forEach(function(country) {
+//         $('.single-select').append(
+//           $('<option>', {
+//             value: country.value,
+//             text: country.label
+//           })
+//         );
+//       });
+      
+//       // If using select2, notify it to update the list of options
+//       $('.single-select').trigger('change');
+//     },
+//     error: function(err) {
+//       console.error('Error fetching country data:', err);
+//     }
+//   });
+//   }
+// });
+
 $(document).ready(function() {
   if ($('.single-select').length) {
-  $('.single-select').select2({
-    placeholder: "Select a country"
-  });
-  
-  // Get the data-route attribute from the parent div (or change the selector if attached elsewhere)
-  var dataRoute = $('.select-country').data('route');
-  
-  // Make an AJAX request to the URL provided in data-route
-  $.ajax({
-    url: dataRoute,
-    method: 'GET',
-    dataType: 'json',
-    success: function(data) {
-      // Loop through each country and append it as an option to the select element
-  
-      data.forEach(function(country) {
-        $('.single-select').append(
-          $('<option>', {
-            value: country.value,
-            text: country.label
-          })
-        );
-      });
-      
-      // If using select2, notify it to update the list of options
-      $('.single-select').trigger('change');
-    },
-    error: function(err) {
-      console.error('Error fetching country data:', err);
+    $('.single-select').select2({
+      placeholder: "Select a country",
+      allowClear: true
+    }).html('<option value="">Please select a country</option>');
+
+    if ($('.single-city-select').length) {
+      $('.single-city-select').select2({
+        placeholder: "Select a city",
+        allowClear: true
+      }).html('<option value="">Please select a city</option>');
     }
-  });
+
+    if ($('.single-timezone-select').length) {
+      $('.single-timezone-select').select2({
+        placeholder: "Select a timezone",
+        allowClear: true
+      }).html('<option value="">Please select a timezone</option>');
+    }
+
+    var countryRoute = $('.select-country').data('route');
+    var cityRoute = $('.select-city').data('route');
+    var timezoneRoute = $('.select-timezone').data('route');
+
+    // Load countries
+    $.ajax({
+      url: countryRoute,
+      method: 'GET',
+      dataType: 'json',
+      success: function(data) {
+        $('.single-select').append('<option value="">Please select a country</option>');
+        data.forEach(function(country) {
+          $('.single-select').append(
+            $('<option>', {
+              value: country.value,
+              text: country.label
+            })
+          );
+        });
+        $('.single-select').val("").trigger('change');
+      },
+      error: function(err) {
+        console.error('Error fetching country data:', err);
+      }
+    });
+
+    // Handle country change event
+    $('.single-select').on('change', function() {
+      var countryId = $(this).val();
+      countryId = countryId ? countryId.split(":")[0] : ""; 
+
+      // Handle cities if city select exists
+      if ($('.single-city-select').length) {
+        if (!countryId) {
+          $('.single-city-select').html('<option value="">Please select a city</option>').trigger('change');
+        } else {
+          $.ajax({
+            url: cityRoute,
+            method: 'GET',
+            data: { country_id: countryId }, 
+            dataType: 'json',
+            success: function(data) {
+              $('.single-city-select').html('<option value="">Please select a city</option>'); 
+              data.forEach(function(city) {
+                $('.single-city-select').append(
+                  $('<option>', {
+                    value: city.value,
+                    text: city.label
+                  })
+                );
+              });
+              $('.single-city-select').val("").trigger('change');
+            },
+            error: function(err) {
+              console.error('Error fetching city data:', err);
+            }
+          });
+        }
+      }
+
+      // Handle timezones if timezone select exists
+      if ($('.single-timezone-select').length) {
+        if (!countryId) {
+          $('.single-timezone-select').html('<option value="">Please select a timezone</option>').trigger('change');
+        } else {
+          $.ajax({
+            url: timezoneRoute,
+            method: 'GET',
+            data: { country_id: countryId }, 
+            dataType: 'json',
+            success: function(data) {
+              $('.single-timezone-select').html('<option value="">Please select a timezone</option>'); 
+              data.forEach(function(timezone) {
+                $('.single-timezone-select').append(
+                  $('<option>', {
+                    value: timezone.value,
+                    text: timezone.label
+                  })
+                );
+              });
+              $('.single-timezone-select').val("").trigger('change');
+            },
+            error: function(err) {
+              console.error('Error fetching timezone data:', err);
+            }
+          });
+        }
+      }
+    });
   }
 });
+
+
 
 $(document).ready(function () {
 	dataModal();
