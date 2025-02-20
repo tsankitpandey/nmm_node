@@ -21,13 +21,18 @@ class NewsNMMModel extends BaseModel{
         return new Promise((resolve, reject) => {
             const query1 = "SELECT * FROM nmm_banner";
             const query2 = `
-            SELECT nmm_news.*, nmm_category.type 
-            FROM nmm_news
-            INNER JOIN nmm_category ON nmm_news.category_id = nmm_category.id
-            ORDER BY nmm_news.created_at DESC
-        `;
+                SELECT nmm_news.*, nmm_category.type , nmm_category.type
+                FROM nmm_news
+                INNER JOIN nmm_category ON nmm_news.category_id = nmm_category.id
+                ORDER BY nmm_news.created_at DESC`;
+            const query3 = `SELECT 
+                nmm_category.type AS category, 
+                COUNT(nmm_news.category_id) AS count 
+                FROM nmm_category
+                LEFT JOIN nmm_news ON nmm_news.category_id = nmm_category.id 
+                GROUP BY nmm_category.id, nmm_category.type`           
             
-            super.db.query(query1, (err1, banners) => {
+                super.db.query(query1, (err1, banners) => {
                 if (err1) {
                     console.error("Error fetching banners:", err1);
                     return reject(err1);
@@ -38,15 +43,19 @@ class NewsNMMModel extends BaseModel{
                         console.error("Error fetching news:", err2);
                         return reject(err2);
                     }
-    
-                    // Merge results into an object
-                    resolve({ banners, news });
+
+                    super.db.query(query3, (err3, details) => {
+                        if (err2) {
+                            console.error("Error fetching news:", err2);
+                            return reject(err3);
+                        }
+                        resolve({ banners, news, details});
+                    });
                 });
             });
         });
     }
-    
-    
+   
     static async NewsList() {
         return new Promise((resolve, reject) => {
             const query = `

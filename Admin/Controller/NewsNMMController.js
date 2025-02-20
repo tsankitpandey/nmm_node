@@ -13,6 +13,7 @@ class NewsNMMController extends BaseController{
                 icon:'<i class="bx bx-home-alt"></i>',
                 page_title: "News Index",
                 NewsIndex,
+                
             });
         } catch (error) {
             console.error("Error in News:", error);
@@ -156,6 +157,30 @@ class NewsNMMController extends BaseController{
             console.error('Error in news:', error);
             req.flash('error', 'An error occurred while Deleting Event.');
             return res.status(200).redirect(res.Admin('/newslist'));
+        }
+    }
+
+    static async NewsDetails(req, res) {
+        try {
+            const { id } = req.query; 
+            const details = await NewsNMMModel.NewsIndex(); 
+            const category = details.details
+            // return res.status(200).json({"data": category})
+            const newsDetail = details.news;
+            const newsDetails = newsDetail.find(news => news.id == id);
+            res.render("NMM/News/NewsDetails", {
+                title: "News",
+                component_title: "News",
+                icon: '<i class="bx bx-home-alt"></i>',
+                page_title: "News Details",
+                newsDetails,
+                category,
+            });
+    
+        } catch (error) {
+            console.error("Error in News:", error);
+            req.flash("error", "An error occurred while fetching the News.");
+            res.redirect(res.Admin("/news"));
         }
     }
 

@@ -9,13 +9,13 @@
                 <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner mb-3">
                         <% if (NewsIndex.banners && NewsIndex.banners.length > 0) { %>
-                            <% NewsIndex.banners.forEach((newsItem) => { %> <!-- Fixed missing parentheses -->
+                            <% NewsIndex.banners.forEach((newsItem) => { %>
                                 <div class="carousel-item active">
-                                    <img src="<%= newsItem.image %>" class="d-block" 
+                                    <img src="<%= newsItem.image.replace('/thumb', '') %>" class="d-block" 
                                         style="width: 100%; height: 200px; object-fit: cover" 
                                         alt="News Image">
                                 </div>
-                            <% }); %> <!-- Corrected closing EJS tags -->
+                            <% }); %>
                         <% } else { %>
                             <p>No news available.</p>
                         <% } %>
@@ -28,36 +28,48 @@
                     <h2 class="">Insights</h2>
                     <hr />
                 </div>
-                    <% if (NewsIndex.news && NewsIndex.news.length > 0) { %>
-                        <% NewsIndex.news.forEach((newsItem) => { %>
-                            <div class="col">
-                                <div class="card rounded-4 overflow-hidden bg-gradient-moonlit">
-                                    <div class="card-body text-white">
-                                        <img src="<%= newsItem.image %>" class="img-fluid rounded-4" 
-                                            style="width: 100%; height: 200px; object-fit: cover" alt="News Image">  
-                                        <div class="d-flex align-items-center gap-4 mt-4">
-                                            <div class="posted-date">
-                                                <p class="mb-0"><i class="bx bx-calendar-alt me-2"></i>
-                                                    <%= new Date(newsItem.created_at * 1000).toLocaleString() %>
-                                                </p>
-                                            </div>
+                <% if (NewsIndex.news && NewsIndex.news.length > 0) { %>
+                    <% let counter = 0; %>
+                    <% NewsIndex.news.forEach((item) => { %>
+                        <% if (counter >= 6) return; %>
+                        <% 
+                        let description = item.description.split(' '); 
+                        let short_desc = description.slice(0, 20).join(' '); 
+                        let title_word = item.title.split(' '); 
+                        let short_title = title_word.slice(0, 2).join(' '); 
+                        if (title_word.length > 2) short_title += '...'; 
+                        %>
+                
+                        <div class="col">
+                            <div class="card rounded-4 overflow-hidden bg-gradient-moonlit" style="height: 450px; display: flex; flex-direction: column;">
+                                <div class="card-body text-white d-flex flex-column overflow-auto">
+                                    <img src="<%= item.image.replace('/thumb', '') %>" class="img-fluid rounded-4" 
+                                        style="width: 100%; height: 200px; object-fit: cover;" alt="News Image">  
+                                    <div class="d-flex align-items-center gap-4 mt-4">
+                                        <div class="posted-date">
+                                            <p class="mb-0"><i class="bx bx-calendar-alt me-2"></i>
+                                                <%= new Date(item.created_at * 1000).toLocaleString() %>
+                                            </p>
                                         </div>
-                                        <h5 class="card-title mt-3 text-white"><%= newsItem.title %></h5>
-                                        <p class="mb-0"><%= newsItem.description %></p>
-                                        <a href="" class="btn btn-light btn-ecomm mb-3 rounded-4 px-4">Read More</a>
+                                    </div>
+                                    <h5 class="card-title mt-3 text-white"><%= short_title %></h5>
+                                    <div class="mb-0 flex-grow-1 text-truncate-clamp">
+                                        <%- short_desc + (description.length > 20 ? '...' : '') %>
+                                    </div>
+                                    <div class="form-row ">
+                                        <a href="<%= AdminRoute(`/details?id=${item.id}`) %>" class="btn btn-light btn-ecomm mb-3 rounded-4 px-4">Read More</a>
                                     </div>
                                 </div>
                             </div>
-                        <% }); %>
-                    <% } else { %>
-                        <p>No news available.</p>
-                    <% } %>
+                            
+                        </div>
+                        <% counter++; %>
+                    <% }); %>
+                <% } else { %>
+                    <p>No news available.</p>
+                <% } %>                
                 </div><!--end row-->
-                
-
-
             </div>
         </div>
     </div>
-
 </div>

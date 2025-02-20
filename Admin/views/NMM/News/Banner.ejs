@@ -45,10 +45,10 @@
                                     <td><%= banner.description %></td>
                                     
                                     <td>   
-                                    <button class="btn btn-sm btn-gradient-success waves-effect px-4 radius-30 waves-light" data-route="<%= AdminRoute(`/bannerEdit?id=${banner.id}`) %>" data-bs-toggle="modal" data-bs-target="#form-modal"><i class='bx bx-edit'></i>edit
+                                    <button class="btn btn-sm btn-primary" data-route="<%= AdminRoute(`/bannerEdit?id=${banner.id}`) %>" data-bs-toggle="modal" data-bs-target="#form-modal"><i class='bx bx-edit'></i>edit
                                     </button>
                                     
-                                    <a href="<%= AdminRoute(`/bannerDelete?id=${banner.id}`) %>" class="btn btn-sm btn-gradient-danger px-3 radius-30" onclick="return confirm('Are you sure you want to delete this banner ?')"><i class='bx bxs-trash' ></i>Delete
+                                    <a href="<%= AdminRoute(`/bannerDelete?id=${banner.id}`) %>" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this banner ?')"><i class='bx bxs-trash' ></i>Delete
                                     </a></td>
                                 </tr>
                                 <% }); %>

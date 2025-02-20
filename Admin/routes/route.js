@@ -85,7 +85,9 @@ route.post('/BannerAdd', NewsNMMController.BannerAdd);
 route.post('/BannerSave', upload.any(), NewsNMMController.BannerSave);
 route.post('/bannerEdit',  NewsNMMController.BannerEdit);
 route.get('/bannerDelete', upload.any(), NewsNMMController.BannerDelete);
-route.post('/bannerUpdate', upload.any(), NewsNMMController.BannerUpdate); 
+route.post('/bannerUpdate', upload.any(), NewsNMMController.BannerUpdate);
+route.post('/bannerUpdate', upload.any(), NewsNMMController.BannerUpdate);
+route.get('/details', NewsNMMController.NewsDetails);  
 
 // CRM Router---
 route.get('/CrmProsect', CrmNMMController.CrmIndex);
