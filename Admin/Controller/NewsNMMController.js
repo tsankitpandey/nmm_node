@@ -184,6 +184,31 @@ class NewsNMMController extends BaseController{
         }
     }
 
+    static async NewsAll(req, res) {
+        try {
+            
+            const details = await NewsNMMModel.NewsIndex(); 
+            const category = details.details
+            const NewsAll = details.news;
+            const current_page = parseInt(req.query.page) || 1; 
+            res.render("NMM/News/NewsAll", {
+                title: "News",
+                component_title: "News",
+                icon: '<i class="bx bx-home-alt"></i>',
+                page_title: "News List",
+                NewsAll,
+                category,
+                current_page,
+            });
+            // return res.status(200).json({"data": NewsAll})
+    
+        } catch (error) {
+            console.error("Error in News:", error);
+            req.flash("error", "An error occurred while fetching the News.");
+            res.redirect(res.Admin("/news"));
+        }
+    }
+
     static async Banner(req,res){
 
         try {
