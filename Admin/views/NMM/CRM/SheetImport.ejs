@@ -1,0 +1,85 @@
+<%- contentFor('body') %>
+<%- contentFor('body') %>
+
+<div class="modal-content">
+    <div class="modal-header">
+        	<h4 class="card-title ">import</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+		
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-12">
+						<form action="<%=AdminRoute('/importData') %>" method="post" enctype="multipart/form-data">
+						
+								
+								<div class="card-body">
+									<div class="form-content">
+										<div class="form-container">
+											<div class="row">
+												<div class="col-md-12">
+													<div class="alert alert-light color-black">
+														<span class="d-block">If you already have Member details in .csv formats, then use below import tool to add Member  into NMM Software:</span>
+													</div>
+												</div>
+												
+												<div class="col-md-6">
+													<div class="row">
+														<div class="col-md-12">
+															<div class="alert alert-light color-black">
+																Step 1 of 2 - Upload
+															</div>
+														</div>
+														
+														<div class="form-group col-md-12 ">
+															<a href="" class="btn btn-default" target="_blank">
+																<i class="fa fa-download" aria-hidden="true"></i> Download Sample
+															</a>
+														</div>
+													</div>
+												</div>
+												
+												<div class="col-md-6">
+													<div class="form-row">
+														<div class="form-group col-md-12">
+															<div class="form-check">
+																<div class="check-box form-check-block">
+																	<input type="checkbox" class="form-check-input" name="import[header]" value="1" checked placeholder="">
+																
+																	<label class="form-check-label">Do not import first/header row</label>
+																</div>
+															</div>
+														</div>
+														
+														<div class="form-group col-md-12">
+															<div class="form-file">
+																<input type="file" class="form-control form-file-input" name="import[file]" value="" placeholder="Upload File" multiple>
+																
+																<label class="form-file-label"></label>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								
+								<div class="card-footer">
+									<div class="row">
+										<div class="col-md-12">
+											<button type="submit" class="btn btn-dark waves-effect waves-light">
+												<i class="fa fa-file-import"></i> Import
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+</div>
+
+

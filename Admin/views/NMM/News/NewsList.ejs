@@ -37,7 +37,8 @@
                                             src="<%= NewsList.image %>"
                                             alt="image" style="width: 50px; height: 50px; object-fit: cover"/> </td>
                                             <td>
-                                            <%  let title_word = NewsList.title.split(' '); 
+                                            <%  
+                                                let title_word = NewsList.title.split(' '); 
                                                 let short_title = title_word.slice(0, 5).join(' '); 
                                                 if (title_word.length > 5) short_title += '...'; %>
                                                 <%= short_title %></td>

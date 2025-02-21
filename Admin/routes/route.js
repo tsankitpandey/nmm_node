@@ -100,6 +100,7 @@ route.get('/All', NewsNMMController.NewsAll);
 // CRM Router---
 route.get('/CrmProsect', CrmNMMController.CrmIndex);
 route.post('/ProspectAdd', CrmNMMController.ProspectAdd);
+route.post('/sheetImport', CrmNMMController.sheetImport);
 
 // Business Impact Router---
 route.get('/ViewImpact', BusinessNMMController.ViewIndex);
