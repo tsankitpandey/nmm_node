@@ -79,7 +79,7 @@ route.post('/NewsAdd', NewsNMMController.NewsAdd);
 route.post('/newsSave', upload.any(), NewsNMMController.NewsSave);
 route.post('/NewsEdit', NewsNMMController. NewsEdit);
 route.post('/NewsUpdate', upload.any(), NewsNMMController.NewsUpdate);
-route.get('/NewsDelete', upload.any(), NewsNMMController.NewsDelete);
+route.post('/NewsDelete', upload.any(), NewsNMMController.NewsDelete);
 route.get('/banner', NewsNMMController.Banner);
 route.post('/BannerAdd', NewsNMMController.BannerAdd);
 route.post('/BannerSave', upload.any(), NewsNMMController.BannerSave);

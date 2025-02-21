@@ -36,18 +36,26 @@
                                             <td><img
                                             src="<%= NewsList.image %>"
                                             alt="image" style="width: 50px; height: 50px; object-fit: cover"/> </td>
-                                            <td><%= NewsList.title %></td>
+                                            <td>
+                                            <%  let title_word = NewsList.title.split(' '); 
+                                                let short_title = title_word.slice(0, 5).join(' '); 
+                                                if (title_word.length > 5) short_title += '...'; %>
+                                                <%= short_title %></td>
                                             <td><%= NewsList.priority %></td>
                                             <td><%= NewsList.type %> </td>
                                             <td><%= NewsList.date %></td>
                                             
                                             
                                             <td>   
-                                            <button class="btn btn-sm btn-primary" data-route="<%= AdminRoute(`/NewsEdit?id=${NewsList.id}`) %>" data-bs-toggle="modal" data-bs-target="#form-modal"><i class='bx bx-edit'></i>edit
+                                            <button class="btn btn-sm btn-primary" data-route="<%= AdminRoute(`/NewsEdit?id=${NewsList.id}`) %>" data-bs-toggle="modal" data-bs-target="#form-modal"><i class='bx bx-edit'></i>
                                             </button>
                                             
-                                            <a href="<%= AdminRoute(`/NewsDelete?id=${NewsList.id}`) %>" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this News ?')"><i class='bx bxs-trash' ></i>Delete
-                                            </a></td>
+                                            <button type="button" class="btn btn-sm btn-danger confirm-box" data-route="<%= AdminRoute(`/NewsDelete?id=${NewsList.id}`) %>" data-tooltip="Delete" data-title="Member Remove" data-content="Are you sure want to delete this news!" data-type="red">
+                                                <i class='bx bxs-trash' ></i>
+                                            </button>
+
+
+                                           </td>
                                         </tr>
                                         <% }); %>
                                     <% }  %>

@@ -30,7 +30,7 @@ const current_page_news = news_data.slice(offset, offset + item_per_page);
                     let description = item.description.split(' ');
                     let short_desc = description.slice(0, 20).join(' ');
                     %>
-                    <img class="card-img img-fluid w-100 card-img-fit" style="height:250px;" src="<%= item.image %>">
+                    <img class="card-img img-fluid w-100 card-img-fit" style="height:250px;" src="<%= item.image.replace('/thumb', ''); %>">
                     <div class="card-body">
                         <p class="text-muted mb-2"><%= new Date(item.created_at * 1000).toLocaleString() %></p>
                         <h5 class=""><a href="#" class="text-body"><%= item.title %></a></h5>

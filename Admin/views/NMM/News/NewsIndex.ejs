@@ -11,7 +11,7 @@
                         <% if (NewsIndex.banners && NewsIndex.banners.length > 0) { %>
                             <% NewsIndex.banners.forEach((newsItem) => { %>
                                 <div class="carousel-item active">
-                                    <img src="<%= newsItem.image %>" class="d-block" 
+                                    <img src="<%= newsItem.image.replace('/thumb', '') %>" class="d-block" 
                                         style="width: 100%; height: 200px; object-fit: cover" 
                                         alt="News Image">
                                 </div>
@@ -43,7 +43,7 @@
                         <div class="col">
                             <div class="card rounded-4 overflow-hidden bg-gradient-moonlit" style="height: 450px; display: flex; flex-direction: column;">
                                 <div class="card-body text-white d-flex flex-column overflow-auto">
-                                    <img src="<%= item.image %>" class="img-fluid rounded-4" 
+                                    <img src="<%= item.image.replace('/thumb', '') %>" class="img-fluid rounded-4" 
                                         style="width: 100%; height: 200px; object-fit: cover;" alt="News Image">  
                                     <div class="d-flex align-items-center gap-4 mt-4">
                                         <div class="posted-date">

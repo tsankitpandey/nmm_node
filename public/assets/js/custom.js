@@ -38,41 +38,7 @@ $('.multiple-select').select2({
 });
 }
 
-// $(document).ready(function() {
-//   if ($('.single-select').length) {
-//   $('.single-select').select2({
-//     placeholder: "Select a country"
-//   });
-  
-//   // Get the data-route attribute from the parent div (or change the selector if attached elsewhere)
-//   var dataRoute = $('.select-country').data('route');
-  
-//   // Make an AJAX request to the URL provided in data-route
-//   $.ajax({
-//     url: dataRoute,
-//     method: 'GET',
-//     dataType: 'json',
-//     success: function(data) {
-//       // Loop through each country and append it as an option to the select element
-  
-//       data.forEach(function(country) {
-//         $('.single-select').append(
-//           $('<option>', {
-//             value: country.value,
-//             text: country.label
-//           })
-//         );
-//       });
-      
-//       // If using select2, notify it to update the list of options
-//       $('.single-select').trigger('change');
-//     },
-//     error: function(err) {
-//       console.error('Error fetching country data:', err);
-//     }
-//   });
-//   }
-// });
+
 
 $(document).ready(function() {
   if ($('.single-select').length) {
@@ -195,7 +161,84 @@ $(document).ready(function () {
   formFile();
   dataAppend();
   dataAppend1();
+  confirmBox();
 });
+
+function confirmBox() {
+  $(document).on('click', '.confirm-box', function (event) {
+      event.preventDefault();
+      
+      let confirmEvent = $(this);
+      let confirmUrl = $(confirmEvent).attr('data-route');
+      let confirmObject = $(confirmEvent).attr('data-object');
+      let confirmTitle = $(confirmEvent).attr('data-title');
+      let confirmContent = $(confirmEvent).attr('data-content');
+      let confirmType = $(confirmEvent).attr('data-type');
+      let confirmTable = $(confirmEvent).closest('.card').find('.table-ajax').attr('id');
+      
+      if (confirmObject) {
+          confirmObject = JSON.parse(confirmObject);
+      }
+      
+      $.confirm({
+          'title': confirmTitle,
+          'content': confirmContent,
+          'type': confirmType,
+          'draggable': false,
+          'animation': 'none',
+          'closeAnimation': 'none',
+          'closeIcon': true,
+          'typeAnimated': false,
+          'animateFromElement': false,
+          'backgroundDismiss': false,
+          'backgroundDismissAnimation': '',
+          'closeIconClass': 'fa-solid fa-times text-sm',
+          'buttons': {
+              'confirm': {
+                  'text': '<i class="fa-solid fa-check"></i> Confirm',
+                  'btnClass': 'btn-green ripple',
+                  'action': function (event) {
+                      $.ajax({
+                          'url': confirmUrl,
+                          'data': confirmObject,
+                          'type': 'post',
+                          'dataType': 'json',
+                          'cache': false,
+                          'success': function (response) {
+                              console.log(response);
+                              
+                              if (response.status == 'success') {
+                                  if (response.redirect) {
+                                      let dataFlash = JSON.stringify({'message': response.message, 'status': response.status});
+                                      
+                                      sessionStorage.setItem('dataFlash', dataFlash);
+                                      
+                                      window.open(response.redirect, '_self');
+                                  } else {
+                                      if (confirmTable) {
+                                          dataDraw(confirmTable);
+                                      }
+                                      
+                                      showToast(response.message, response.status);
+                                  }
+                              } else if (response.status == 'error') {
+                                  showToast(response.message, response.status);
+                              }
+                          },
+                          'error': function (error) {
+                              console.error(error);
+                          },
+                      });
+                  },
+              },
+              'cancel': {
+                  'text': '<i class="fa-solid fa-times"></i> Cancel',
+                  'btnClass': 'btn-red ripple',
+              },
+          },
+      });
+  });
+}
 
 function dataModal() {
 
