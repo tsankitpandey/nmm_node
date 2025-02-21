@@ -20,6 +20,7 @@ $(document).ready(function () {
   }
   }
 });
+
 if ($('.single-select').length) {
 $('.single-select').select2({
   theme: 'bootstrap4',
@@ -327,7 +328,7 @@ function formSubmit() {
   $(document).on('submit', '.form-submit', function (event) {
  
   event.preventDefault();
-  
+
   let formEvent = $(this);
   let formAction = $(formEvent).prop('action');
   let formMethod = $(formEvent).prop('method');
@@ -350,7 +351,7 @@ function formSubmit() {
     'contentType': false,
     'processData': false,
     'beforeSend': function (event) {
-              $('#status').removeClass('d-none');
+              $('#loader').removeClass('d-none');
          
       //$(formEvent).find('.card').busyLoad('show');
     },

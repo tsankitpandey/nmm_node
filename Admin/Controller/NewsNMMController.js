@@ -64,20 +64,14 @@ class NewsNMMController extends BaseController{
             const image = await super.uploadFiles(file,'DEMO');
             if(image){
                 const result = await NewsNMMModel.NewsSave(data, image);
-                // return res.status(200).json({"mesg": result})
                 if (result && result.affectedRows > 0) {
-                req.flash('success', 'News saved successfully!');
-                return res.status(200).redirect(res.Admin('/newslist'));
+                return res.status(200).json({status:"success", message:'News saved successfully!' , redirect:res.Admin('/newslist')});
             } else {
-                req.flash('error', 'Failed to save News. No rows were affected.');
-                return res.status(200).redirect(res.Admin('/newslist'));
+                return res.status(200).json({status:"error", message:'Failed to save News. No rows were affected.' });
             }
         }
         } catch (error) {
-            console.error('Error in News Save:', error.message);
-            console.error('Error details:', error);
-            req.flash('error', 'An error occurred while saving the news.');
-            return res.status(500).redirect(res.Admin('/newslist'));
+            return res.status(200).json({status:"error", message:'An error occurred while saving the news.' });
         }
         
     }
@@ -145,18 +139,17 @@ class NewsNMMController extends BaseController{
         //    return res.status(200).json({"msg": id})
             const result = await NewsNMMModel.NewsDelete(id);
             if (result && result.affectedRows > 0) { 
-                req.flash('success', 'news deleted successfully!');
-                return res.status(200).redirect(res.Admin('/newslist'));
+                return res.status(200).json({status:'success',message:"News Deleted Succeffully", redirect:res.Admin('/newslist')});
     
             } else {
-                req.flash('error', 'Failed to delete news. No rows were affected.');
-                return res.status(200).redirect(res.Admin('/newslist'));
+             
+                return res.status(200).json({status:'error',message:"Failed to delete news. No rows were affected.'"});
+              
             }
         }
          catch (error) {
             console.error('Error in news:', error);
-            req.flash('error', 'An error occurred while Deleting Event.');
-            return res.status(200).redirect(res.Admin('/newslist'));
+            return res.status(200).json({status:'error',message:"An error occurred while Deleting News."});
         }
     }
 
