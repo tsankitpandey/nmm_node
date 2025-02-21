@@ -106,6 +106,30 @@ class EventModel extends BaseModel {
     });
 }
 
+static async DeleteEvent(id){
+    return new Promise((resolve, reject) => {
+        try {
+       
+            const query = 'DELETE FROM nmm_event WHERE id = ?';
+
+          
+            super.db.query(query, [id], (error, results) => {
+                if (error) {
+                    reject({ success: false, message: 'Error deleting feed', error: error });
+                } else {
+                    if (results.affectedRows > 0) {
+                        resolve({ success: true, message: 'event deleted successfully' });
+                    } else {
+                        reject({ success: false, message: 'event not found or already deleted' });
+                    }
+                }
+            });
+        } catch (error) {
+            reject({ success: false, message: 'Unexpected error occurred', error: error });
+        }
+    });
+}
+
 static async FetchEvent() {
     return new Promise((resolve, reject) => {
         try {

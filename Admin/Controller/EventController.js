@@ -171,6 +171,29 @@ class EventController extends BaseController {
     }
   }
 
+  static async DeleteEvent(req,res){
+    const id = req.params.id;
+    try{
+      const result= await EventModel.DeleteEvent(id);
+      if(result){
+        req.flash("success", "Event deleted succesfully.");
+        return res.status(200).redirect(res.Admin("/Event"));
+      }
+      else{
+        req.flash("error", "Error in deleting event.");
+        return res.status(200).redirect(res.Admin("/Event"));
+      }
+
+    }
+    catch(error){
+      console.error(error)
+      req.flash("error",  "Error in event.");
+      return res.status(200).redirect(res.Admin("/Event"));
+    }
+     
+    
+  }
+
 
 
 }

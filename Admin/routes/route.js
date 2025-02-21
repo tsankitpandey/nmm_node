@@ -66,6 +66,7 @@ route.post('/EmsAdd', EventController.EmsAdd);
 route.post('/EventSave', upload.any(), EventController.EventSave);
 route.post('/AddEventConfrece', upload.any(), EventController.AddEvent);
 route.get('/EditEventConfrece/:id', upload.any(), EventController.EditEvent);
+route.get('/Eventdelete/:id', EventController.DeleteEvent);
 route.get('/Event', EventController.EventIndex); 
 route.get('/EventAdd', EventController.EventAdd);  
 
