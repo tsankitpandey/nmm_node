@@ -14,46 +14,64 @@
         					<div class="col-6 mb-3">
         						<a href="<%= AdminRoute('/EventAdd') %>" class="btn btn-sm btn-gradient-dark px-4 radius-30 float-lefty" >
                                      Add
-								</a>
+								</a> 
 						    </div>
-							<hr>
-						<div class="col-md-6">
-							<div class="card rounded-4 overflow-hidden">
-								<div class="card-body">
-									<img src="assets/images/gallery/07.png" class="img-fluid rounded-4" alt="">
-									<div class="d-flex align-items-center gap-4 mt-4">
-									  <div class="posted-by">
-										<p class="mb-0"><i class="bx bx-user me-2"></i>Virendra</p>
-									  </div>
-									  <div class="posted-date">
-										<p class="mb-0"><i class="bx bx-calendar-alt me-2"></i>15 Aug, 2022</p>
-									  </div>
-									</div>
-									<h5 class="card-title mt-3">Blog title here</h5>
-									<p class="mb-0">Some quick example text to build on the card title and make.</p>
-									<a href="javascript:;" class="btn btn-gradient-primary btn-ecomm mt-3 rounded-4 px-4">Read More</a>
-								  </div>
-							</div>
-						</div>
+                        <!-- <%= JSON.stringify(eventData) %> -->
 
-						<div class="col-md-6">
-							<div class="card rounded-4 overflow-hidden">
-								<div class="card-body">
-									<img src="assets/images/gallery/08.png" class="img-fluid rounded-4" alt="">
-									<div class="d-flex align-items-center gap-4 mt-4">
-									  <div class="posted-by">
-										<p class="mb-0"><i class="bx bx-user me-2"></i>Virendra</p>
-									  </div>
-									  <div class="posted-date">
-										<p class="mb-0"><i class="bx bx-calendar-alt me-2"></i>15 Aug, 2022</p>
-									  </div>
-									</div>
-									<h5 class="card-title mt-3">Blog title here</h5>
-									<p class="mb-0">Some quick example text to build on the card title and make.</p>
-									<a href="javascript:;" class="btn btn-gradient-danger btn-ecomm mt-3 rounded-4 px-4">Read More</a>
-								  </div>
+							<hr>
+							<div class="table-responsive">
+								<table class="table table-bordered">
+									<thead class="table-dark">
+										<tr>
+											<th>Event Title</th>
+											<th>Event Name</th>
+											<th>Country</th>
+											<th>Timezone</th>
+											<th>Status</th>
+											<th>Start Date</th>
+											<th>End Date</th>
+											<th>Action</th>
+										</tr>
+									</thead>
+									<tbody>
+										<% if (eventData.data && eventData.data.length > 0) { %>
+											<% eventData.data.forEach(event => { %>
+												<tr>
+													<td><%= event.Event_Title %></td>
+													<td><%= event.Event_Name %></td>
+													<td><%= event.Location.split(":")[1] %></td> 
+													<td><%= event.timeZone %></td>
+													<td><%= event.status %></td>
+													<td>
+														<i class="bx bx-calendar-alt me-2"></i>
+														<%= new Date(event.start_date).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) %>
+													</td>
+													<td>
+														<i class="bx bx-calendar-alt me-2"></i>
+														<%= new Date(event.end_date).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) %>
+													</td>
+													<td>
+														<a href="<%= AdminRoute('/EditEventConfrece/' + event.id) %>"
+													    class="btn btn-primary btn-sm rounded-3">
+															<i class="bx bx-edit"></i> Edit
+														</a>
+														<a href="/delete/<%= event.id %>" class="btn btn-danger btn-sm rounded-3">
+															<i class="bx bx-trash"></i> Delete
+														</a>
+													</td>
+												</tr>
+											<% }) %>
+										<% } else { %>
+											<tr>
+												<td colspan="8" class="text-center">No events found</td>
+											</tr>
+										<% } %>
+									</tbody>
+								</table>
 							</div>
-						</div>
+							
+							
+							
 						</div>
         			</div>
 				</div>

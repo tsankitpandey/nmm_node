@@ -54,23 +54,29 @@ route.get("/chat", (req, res) => {
 // --------------- freight Lounge routes END -------------------- 
 
 
-
-// Sponser Router---
-route.get('/sponsor', EventController.sponsorIndex);
-route.post('/sponserAdd', EventController.sponserAdd);
-
-
-
-// Event Router---
+// --------------------Event Router-----------------------
 route.get('/EventInfo', EventController.EventInfoIndex);
 route.get('/EventOrg', EventController.EventOrgIndex);
-route.post('/EventOrgInsert',upload.any(), EventController.EventorgInsert);
+route.post('/EventOrgUpdate/:id',upload.any(), EventController.EventorgUpdate);
 route.get('/sponsor', EventController.sponsorIndex);
 route.post('/sponserAdd', EventController.sponserAdd);
 route.post('/sponserManage', EventController.sponserManage);
 route.get('/Ems', EventController.EmsDetails);
 route.post('/EmsAdd', EventController.EmsAdd);
 route.post('/EventSave', upload.any(), EventController.EventSave);
+route.post('/AddEventConfrece', upload.any(), EventController.AddEvent);
+route.get('/EditEventConfrece/:id', upload.any(), EventController.EditEvent);
+route.get('/Event', EventController.EventIndex); 
+route.get('/EventAdd', EventController.EventAdd);  
+
+//------------------ Event Routes END----------------------
+
+
+// Sponser Router---
+route.get('/sponsor', EventController.sponsorIndex);
+route.post('/sponserAdd', EventController.sponserAdd);
+
+
 
 // News Router---
 route.get('/news', NewsNMMController.NewsIndex);
@@ -109,10 +115,12 @@ route.post("/planupdate/:id",upload.any(),MembershipController.MembershipUpdate)
 route.get("/plandelete/:id", MembershipController.MembershipDelete);
 route.post('/PlanAdd', PlanNMMController.PlanAdd);
 
+// Sponser Router---
+route.get('/sponsor', EventController.sponsorIndex);
+route.post('/sponserAdd', EventController.sponserAdd);
+
 // Conference Router---
 route.get('/AttendeeList', ConferenceNMMController.AttendeeIndex);
-route.get('/Event', ConferenceNMMController.EventIndex);
-route.get('/EventAdd', ConferenceNMMController.EventAdd);
 route.get('/member', ConferenceNMMController.MemberIndex);
 route.get('/guest', ConferenceNMMController.GuestIndex);
 

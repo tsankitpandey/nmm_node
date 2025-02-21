@@ -237,7 +237,7 @@
         
                 likeButtons.forEach(button => {
                     button.addEventListener("click", function () {
-                        const postId = this.getAttribute("data-id"); // Get post ID
+                        const postId = this.getAttribute("data-id"); 
                         const likeIcon = this.querySelector(".bx");
                         const likeCount = this.querySelector(".like-count");
                         let liked = this.getAttribute("data-liked") === "true";
@@ -245,8 +245,8 @@
         
                         if (!liked) {
                             count++;
-                            this.classList.add("btn-primary"); // Change button color to blue
-                            likeIcon.classList.add("bx-like-filled"); // Change icon
+                            this.classList.add("btn-primary"); 
+                            likeIcon.classList.add("bx-like-filled"); 
                             likeIcon.classList.remove("bx-like");
                             this.setAttribute("data-liked", "true");
                         } else {
@@ -259,17 +259,7 @@
         
                         likeCount.textContent = count;
         
-                        // ✅ Optional: Send Like Data to Server (Uncomment if needed)
-                        /*
-                        fetch("/like", {
-                            method: "POST",
-                            headers: { "Content-Type": "application/json" },
-                            body: JSON.stringify({ postId, liked: !liked })
-                        }).then(response => response.json())
-                          .then(data => {
-                              console.log("Like updated:", data);
-                          }).catch(error => console.error("Error:", error));
-                        */
+                        
                     });
                 });
             });
