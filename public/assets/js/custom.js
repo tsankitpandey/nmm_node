@@ -193,8 +193,8 @@ $(document).ready(function () {
 	dataModal();
   formSubmit();
   formFile();
-  console.log("check");
-  console.log('custom.js loaded from:', document.currentScript);
+  dataAppend();
+  dataAppend1();
 });
 
 function dataModal() {
@@ -540,6 +540,464 @@ function formFile() {
       } else {
           $(fileEvent).closest('.form-group').find('.form-file-label').html('<span>'+fileLabel+'</span>');
       }
+  });
+}
+
+function dataAppend() {
+  $.initialize('.form-append', function () {
+    let appendEvent = $(this);
+      let appendLength = $(appendEvent).children('.form-container').length;
+      let appendCount = $(appendEvent).children('.form-container').length;
+    let appendType = $(appendEvent).attr('data-append');
+    let appendLimit = $(appendEvent).attr('data-limit');
+    let appendHide = appendType == 'false' ? 'd-none' : '';
+    
+      appendLimit = appendLimit ? appendLimit : 100;
+      
+      $(appendEvent).children('.form-container').each(function (index, data) {
+          let groupData = data;
+          let groupIndex = index;
+          // let titleIndex = (groupIndex + 1) + '. ';
+          let titleIndex = (groupIndex + 1);
+          
+          $(groupData).find('.form-title').prepend('<span class="title-index">'+titleIndex+'</span>');
+          
+          if (groupIndex != 0) {
+              $(groupData).find('[data-append="delete"]').closest('.form-row').removeClass('d-none');
+          }
+          
+          $(groupData).find('.form-group').each(function (key, value) {
+              let groupEvent = $(this);
+              
+              $(groupEvent).find('[name]').each(function (key, value) {
+                  let groupName = $(this);
+                  let appendName = $(groupName).attr('name').replace('[', '['+groupIndex+'][');
+                  let appendIndex = $(groupName).attr('id');
+                  
+                  $(groupName).attr('name', appendName);
+                  
+                  if (appendIndex) {
+                      $(groupName).attr('id', appendIndex+'-'+groupIndex);
+                      $(groupName).next('label').attr('for', appendIndex+'-'+groupIndex);
+                  }
+              });
+          });
+      });
+      
+      let appendClone = $(appendEvent).children('.form-container').first().clone();
+      
+      $(appendEvent).append('<div class="form-row '+appendHide+'"><div class="form-group text-right col-md-12 data-append-button " ><button type="button" class="btn btn-success radius-30  " data-append="add"><i class="fa-solid fa-plus"></i> Add More</button></div></div>');
+      
+      $(appendEvent).on('click', '[data-append="add"]', function (event) {
+          event.preventDefault();
+          
+          let addEvent = $(this);
+          
+          if (appendCount < appendLimit) {
+              $(appendClone).find('select.select2-hidden-accessible').removeAttr('data-live-search');
+              $(appendClone).find('select.select2-hidden-accessible').removeAttr('data-select2-id');
+              $(appendClone).find('select.select2-hidden-accessible').find('option').removeAttr('data-select2-id');
+              
+              $(addEvent).closest('.form-append').children('.form-container').last().after(appendClone.clone());
+              
+              $(appendEvent).find('.form-title').each(function (index, data) {
+                  let titleEvent = $(this);
+                  // let titleIndex = (index + 1) + '. ';
+                  let titleIndex = (index + 1);
+                  
+                  $(titleEvent).find('.title-index').html(titleIndex);
+              });
+              
+              $(addEvent).closest('.form-append').children('.form-container').last().find('.form-group').each(function (key, value) {
+                  let groupEvent = $(this);
+                  
+                  $(groupEvent).find('[name]').each(function (key, value) {
+                      let groupName = $(this);
+                      let appendName = $(groupName).attr('name').replace('[0]', '['+appendLength+']');
+                      let appendIndex = $(groupName).attr('id');
+                      
+                      $(groupName).attr('name', appendName);
+                      
+                      if (appendIndex) {
+                          appendIndex = appendIndex.replace(/0$/g, appendLength);
+                          
+                          $(groupName).attr('id', appendIndex);
+                          $(groupName).next('label').attr('for', appendIndex);
+                      }
+                  });
+                  
+                  formReset(groupEvent);
+              });
+              
+              $(addEvent).closest('.form-append').children('.form-container').last().append('<div class="form-row"><div class="form-group text-right col-md-12 "><button type="button" class="btn btn-danger radius-30" data-append="remove"><i class="fa-solid fa-minus"></i> Remove</button></div></div>');
+              
+              appendLength++;
+              appendCount++;
+          } else {
+              $.alert({
+                  'title': 'Alert!',
+                  'content': 'Can not add more then '+appendLimit+' rows!',
+                  'type': 'yellow',
+                  'draggable': false,
+                  'animation': 'none',
+                  'closeAnimation': 'none',
+                  'closeIcon': true,
+                  'typeAnimated': false,
+                  'animateFromElement': false,
+                  'backgroundDismiss': false,
+                  'backgroundDismissAnimation': '',
+                  'closeIconClass': 'fa-solid fa-times text-sm',
+                  'buttons': {
+                      'close': {
+                          'text': '<i class="fa-solid fa-times"></i> Close',
+                          'btnClass': 'btn-blue ripple',
+                      },
+                  },
+              });
+          }
+      });
+      
+      $(appendEvent).on('click', '[data-append="remove"]', function (event) {
+          event.preventDefault();
+          
+          let removeEvent = $(this);
+          
+          $.confirm({
+              'title': 'Confirm!',
+              'content': 'Are you sure want to remove this!',
+              'type': 'red',
+              'draggable': false,
+              'animation': 'none',
+              'closeAnimation': 'none',
+              'closeIcon': true,
+              'typeAnimated': false,
+              'animateFromElement': false,
+              'backgroundDismiss': false,
+              'backgroundDismissAnimation': '',
+              'closeIconClass': 'fa-solid fa-times text-sm',
+              'buttons': {
+                  'confirm': {
+                      'text': '<i class="fa-solid fa-check"></i> Confirm',
+                      'btnClass': 'btn-green ripple',
+                      'action': function (event) {
+                          $(removeEvent).closest('.form-container').remove();
+                          
+                          $(appendEvent).find('.form-title').each(function (index, data) {
+                              let titleEvent = $(this);
+                              // let titleIndex = (index + 1) + '. ';
+                              let titleIndex = (index + 1);
+                              
+                              $(titleEvent).find('.title-index').html(titleIndex);
+                          });
+                          
+                          appendCount--;
+                      },
+                  },
+                  'cancel': {
+                      'text': '<i class="fa-solid fa-times"></i> Cancel',
+                      'btnClass': 'btn-red ripple',
+                  },
+              },
+          });
+      });
+      
+      $(appendEvent).on('click', '[data-append="delete"]', function (event) {
+          event.preventDefault();
+          
+          let deleteEvent = $(this);
+          let deleteUrl = $(deleteEvent).attr('data-route');
+          let deleteTable = $(deleteEvent).closest('#form-modal').attr('data-table-ajax');
+          
+          $.confirm({
+              'title': 'Confirm!',
+              'content': 'Are you sure want to delete this!',
+              'type': 'red',
+              'draggable': false,
+              'animation': 'none',
+              'closeAnimation': 'none',
+              'closeIcon': true,
+              'typeAnimated': false,
+              'animateFromElement': false,
+              'backgroundDismiss': false,
+              'backgroundDismissAnimation': '',
+              'closeIconClass': 'fa-solid fa-times text-sm',
+              'buttons': {
+                  'confirm': {
+                      'text': '<i class="fa-solid fa-check"></i> Confirm',
+                      'btnClass': 'btn-green ripple',
+                      'action': function (event) {
+                    $.ajax({
+                        'url': deleteUrl,
+                        'type': 'post',
+                        'dataType': 'json',
+                        'cache': false,
+                        'success': function (response) {
+                            console.log(response);
+                            
+                                  if (response.status == 'success') {
+                                      $(deleteEvent).closest('.form-container').remove();
+                                      
+                                      $(appendEvent).find('.form-title').each(function (index, data) {
+                                          let titleEvent = $(this);
+                                          // let titleIndex = (index + 1) + '. ';
+                                          let titleIndex = (index + 1);
+                                          
+                                          $(titleEvent).find('.title-index').html(titleIndex);
+                                      });
+                                  
+                                      if (deleteTable) {
+                                          dataDraw(deleteTable);
+                                      }
+                                  
+                                  showToast(response.message, response.status);
+                                      
+                                      appendCount--;
+                                  } else if (response.status == 'error') {
+                                      showToast(response.message, response.status);
+                                  }
+                        },
+                        'error': function (error) {
+                            console.error(error);
+                        },
+                    });
+                      },
+                  },
+                  'cancel': {
+                      'text': '<i class="fa-solid fa-times"></i> Cancel',
+                      'btnClass': 'btn-red ripple',
+                  },
+              },
+          });
+      });
+  });
+}
+
+function dataAppend1() {
+  $.initialize('.form-append1', function () {
+    let appendEvent = $(this);
+      let appendLength = $(appendEvent).children('.form-container1').length;
+      let appendCount = $(appendEvent).children('.form-container1').length;
+    let appendType = $(appendEvent).attr('data-append1');
+    let appendLimit = $(appendEvent).attr('data-limit1');
+    let appendHide = appendType == 'false' ? 'd-none' : '';
+    
+      appendLimit = appendLimit ? appendLimit : 100;
+      
+      $(appendEvent).children('.form-container1').each(function (index, data) {
+          let groupData = data;
+          let groupIndex = index;
+          // let titleIndex = (groupIndex + 1) + '. ';
+          let titleIndex = (groupIndex + 1);
+          
+          // console.log(groupIndex)
+          $(groupData).find('.form-title1').prepend('<span class="title-index1">'+titleIndex+'</span>');
+          
+          if (groupIndex != 0) {
+              $(groupData).find('[data-append1="delete"]').closest('.form-row').removeClass('d-none');
+          }
+          
+          $(groupData).find('.form-group').each(function (key, value) {
+              let groupEvent = $(this);
+              
+              $(groupEvent).find('[name]').each(function (key, value) {
+                  let groupName = $(this);
+                  let appendName = $(groupName).attr('name').replace('[companion]', '[companion]['+groupIndex+']');
+                  let appendIndex = $(groupName).attr('id');
+                  $(groupName).attr('name', appendName);
+                  
+                  if (appendIndex) {
+                      $(groupName).attr('id', appendIndex+'-'+groupIndex);
+                      $(groupName).next('label').attr('for', appendIndex+'-'+groupIndex);
+                  }
+              });
+          });
+      });
+      
+      let appendClone = $(appendEvent).children('.form-container1').first().clone();
+      
+      $(appendEvent).append('<div class="col-md-12 mb-3 text-right '+appendHide+'"><div class="form-group"><button type="button" class="btn btn-green ripple" data-append1="add"><i class="fa-solid fa-plus"></i> Add Companion</button></div></div>');
+      
+      $(appendEvent).on('click', '[data-append1="add"]', function (event) {
+          event.preventDefault();
+          
+          let addEvent1 = $(this);
+          
+          if (appendCount < appendLimit) {
+              $(appendClone).find('select.select2-hidden-accessible').removeAttr('data-live-search');
+              $(appendClone).find('select.select2-hidden-accessible').removeAttr('data-select2-id');
+              $(appendClone).find('select.select2-hidden-accessible').find('option').removeAttr('data-select2-id');
+              
+              $(addEvent1).closest('.form-append1').children('.form-container1').last().after(appendClone.clone());
+              
+              $(appendEvent).find('.form-title1').each(function (index, data) {
+                  let titleEvent = $(this);
+                  // let titleIndex = (index + 1) + '. ';
+                  let titleIndex = (index + 1);
+                  
+                  $(titleEvent).find('.title-index1').html(titleIndex);
+              });
+              
+              $(addEvent1).closest('.form-append1').children('.form-container1').last().find('.form-group').each(function (key, value) {
+                  let groupEvent = $(this);
+                  
+                  $(groupEvent).find('[name]').each(function (key, value) {
+                      let groupName = $(this);
+                      let appendName = $(groupName).attr('name').replace('[companion][0]', '[companion]['+appendLength+']');
+                      let appendIndex = $(groupName).attr('id');
+                      
+                      $(groupName).attr('name', appendName);
+                      
+                      if (appendIndex) {
+                          appendIndex = appendIndex.replace(/0$/g, appendLength);
+                          
+                          $(groupName).attr('id', appendIndex);
+                          $(groupName).next('label').attr('for', appendIndex);
+                      }
+                  });
+                  
+                  formReset(groupEvent);
+              });
+              
+              $(addEvent1).closest('.form-append1').children('.form-container1').last().append('<div class="form-row"><div class="form-group text-right col-md-12"><button type="button" class="btn btn-red ripple" data-append1="remove"><i class="fa-solid fa-minus"></i> Remove Companion</button></div></div>');
+              
+              appendLength++;
+              appendCount++;
+          } else {
+              $.alert({
+                  'title': 'Alert!',
+                  'content': 'Can not add more then '+appendLimit+' rows!',
+                  'type': 'yellow',
+                  'draggable': false,
+                  'animation': 'none',
+                  'closeAnimation': 'none',
+                  'closeIcon': true,
+                  'typeAnimated': false,
+                  'animateFromElement': false,
+                  'backgroundDismiss': false,
+                  'backgroundDismissAnimation': '',
+                  'closeIconClass': 'fa-solid fa-times text-sm',
+                  'buttons': {
+                      'close': {
+                          'text': '<i class="fa-solid fa-times"></i> Close',
+                          'btnClass': 'btn-blue ripple',
+                      },
+                  },
+              });
+          }
+      });
+      
+      $(appendEvent).on('click', '[data-append1="remove"]', function (event) {
+          event.preventDefault();
+          
+          let removeEvent = $(this);
+          
+          $.confirm({
+              'title': 'Confirm!',
+              'content': 'Are you sure want to remove this!',
+              'type': 'red',
+              'draggable': false,
+              'animation': 'none',
+              'closeAnimation': 'none',
+              'closeIcon': true,
+              'typeAnimated': false,
+              'animateFromElement': false,
+              'backgroundDismiss': false,
+              'backgroundDismissAnimation': '',
+              'closeIconClass': 'fa-solid fa-times text-sm',
+              'buttons': {
+                  'confirm': {
+                      'text': '<i class="fa-solid fa-check"></i> Confirm',
+                      'btnClass': 'btn-green ripple',
+                      'action': function (event) {
+                          $(removeEvent).closest('.form-container1').remove();
+                          
+                          $(appendEvent).find('.form-title1').each(function (index, data) {
+                              let titleEvent = $(this);
+                              // let titleIndex = (index + 1) + '. ';
+                              let titleIndex = (index + 1);
+                              
+                              $(titleEvent).find('.title-index1').html(titleIndex);
+                          });
+                          
+                          appendCount--;
+                      },
+                  },
+                  'cancel': {
+                      'text': '<i class="fa-solid fa-times"></i> Cancel',
+                      'btnClass': 'btn-red ripple',
+                  },
+              },
+          });
+      });
+      
+      $(appendEvent).on('click', '[data-append1="delete"]', function (event) {
+          event.preventDefault();
+          
+          let deleteEvent = $(this);
+          let deleteUrl = $(deleteEvent).attr('data-route');
+          let deleteTable = $(deleteEvent).closest('#form-modal').attr('data-table-ajax');
+          
+          $.confirm({
+              'title': 'Confirm!',
+              'content': 'Are you sure want to delete this!',
+              'type': 'red',
+              'draggable': false,
+              'animation': 'none',
+              'closeAnimation': 'none',
+              'closeIcon': true,
+              'typeAnimated': false,
+              'animateFromElement': false,
+              'backgroundDismiss': false,
+              'backgroundDismissAnimation': '',
+              'closeIconClass': 'fa-solid fa-times text-sm',
+              'buttons': {
+                  'confirm': {
+                      'text': '<i class="fa-solid fa-check"></i> Confirm',
+                      'btnClass': 'btn-green ripple',
+                      'action': function (event) {
+                    $.ajax({
+                        'url': deleteUrl,
+                        'type': 'post',
+                        'dataType': 'json',
+                        'cache': false,
+                        'success': function (response) {
+                            console.log(response);
+                            
+                                  if (response.status == 'success') {
+                                      $(deleteEvent).closest('.form-container1').remove();
+                                      
+                                      $(appendEvent).find('.form-title1').each(function (index, data) {
+                                          let titleEvent = $(this);
+                                          // let titleIndex = (index + 1) + '. ';
+                                          let titleIndex = (index + 1);
+                                          
+                                          $(titleEvent).find('.title-index1').html(titleIndex);
+                                      });
+                                  
+                                      if (deleteTable) {
+                                          dataDraw(deleteTable);
+                                      }
+                                  
+                                  showToast(response.message, response.status);
+                                      
+                                      appendCount--;
+                                  } else if (response.status == 'error') {
+                                      showToast(response.message, response.status);
+                                  }
+                        },
+                        'error': function (error) {
+                            console.error(error);
+                        },
+                    });
+                      },
+                  },
+                  'cancel': {
+                      'text': '<i class="fa-solid fa-times"></i> Cancel',
+                      'btnClass': 'btn-red ripple',
+                  },
+              },
+          });
+      });
   });
 }
 
