@@ -38,7 +38,7 @@ route.get("/timeline",FL_timelineController.fetchAllFeeds);
 route.post("/updatetimeline/:id",upload.any(), FL_timelineController.updatetimeline);
 route.post("/commentinsert",  upload.any(),FL_timelineController.commentInsert);
 route.post("/comment/:id",FL_timelineController.fetchcomment);
-
+const EmailTemplateNMMController= require("../Controller/EmailTemplateNMMController");
 
 route.get("/chat", (req, res) => {
     res.render("FreightLoungeViews/Chat/chat", {
@@ -131,11 +131,12 @@ route.get('/AttendeeList', ConferenceNMMController.AttendeeIndex);
 route.get('/member', ConferenceNMMController.MemberIndex);
 route.get('/guest', ConferenceNMMController.GuestIndex);
 
-
-
 //country
 route.get('/countrylist', DataController.countrylist);
 route.get('/citylist', DataController.citylist);
 route.get('/timezone', DataController.timezonelist);
+
+//Email Template Router
+route.get('/emailList', EmailTemplateNMMController.EmailIndex);
 
 module.exports = route;

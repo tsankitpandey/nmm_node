@@ -1,0 +1,221 @@
+<div class="card">
+    <div class="card-body">
+        <div class="accordion" id="accordionExample">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        Standard Email
+                    </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"   data-bs-parent="#accordionExample">
+                    <div class="row mb-5">
+                        <div class="col-md-6">
+                            <a href="<%= AdminRoute(`/emailActivate`) %>"
+                                class="btn btn-sm btn-primary waves-effect waves-light mx-2 mt-3"
+                                onclick="return confirm('Are you sure want to activate email?')">
+                                <i class='bx bx-check'></i>Activate
+                            </a>
+
+                            <a href="<%= AdminRoute(`/emailDeactivate`) %>"
+                                class="btn btn-sm btn-danger waves-effect waves-light mt-3"
+                                onclick="return confirm('Are you sure want to Deactivate email?')">
+                                <i class='bx bx-x'></i>Deactivate
+                            </a>
+                        </div>
+                        <div class="col-md-4 offset-md-2 mt-3">
+                            <div class="input-group float-right mt-md-0">
+                                <input type="email" class="form-control" name="email[test]"
+                                    id="test-email-input-stand" placeholder="Test Email">
+                                <div class="input-group-append me-2">
+                                    <span class="input-group-text input-click ripple bg-dark text-light"
+                                        id="send-test-email-stand">
+                                        <i class='bx bxs-share bx-flip-horizontal' ></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body border-bottom">
+                            <div class="table-container">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    <div class="form-check">
+                                                        <div class="check-box form-check-block">
+                                                            <input type="checkbox" class="form-check-input form-check-all">
+                                                            <label class="form-check-label"></label>
+                                                        </div>
+                                                    </div>
+                                                </th>
+                                                <th>Purpose</th>
+                                                <th>Subject</th>
+                                                <th>From</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% if (Standards && Standards.length > 0) { %>
+                                                <% Standards.forEach(EmailTem => { %>
+                                                <tr>
+                                                    <td>
+                                                        <div class="form-check">
+                                                            <div class="check-box form-check-block">
+                                                                <input type="checkbox" class="form-check-input form-check-this" value="<%= EmailTem.id %>">
+                                                                <label class="form-check-label"></label>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td><%= EmailTem.purpose %></td>
+                                                    <td><%= EmailTem.subject %></td>
+                                                    <td><%= EmailTem.from %></td>
+                                                    <td>
+                                                    <button class="btn btn-sm btn-success"
+                                                        data-route="<%= AdminRoute(`/EmailEdit?id=${EmailTem.id}`) %>"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#form-modal">
+                                                        <i class='bx bx-edit'></i>
+                                                    </button>
+                                                    
+                                                    <button type="button" class="btn btn-sm btn-danger confirm-box" data-route="<%= AdminRoute(`/EmailView?id=${EmailTem.id}`) %>" data-tooltip="Delete" data-title="Member Remove" data-content="Are you sure want to delete this news!" data-type="red">
+                                                        <i class='bx bxs-trash' ></i>
+                                                    </button>
+                                                    </td>
+                                                </tr>
+                                                <% }); %>
+                                            <% } else { %>
+                                                <tr>
+                                                    <td colspan="5" class="text-center">No Active Member found.</td>
+                                                </tr>
+                                            <% } %>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div><!-- accordion-item close -->
+                </div><!-- accordion close -->
+            </div>
+        </div>
+        <!-- custom Email -->
+        <div class="card card-theme card-outline shadow-sm">
+            <div class="card-body">
+                <div class="accordion" id="accordionExample_1">
+                    <div class="accordion-item border rounded">
+                        <h2 class="accordion-header" id="headingTwo">
+                            <button class="accordion-button fw-medium" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                                Custom Email
+                            </button>
+                        </h2>
+                        <hr class="horizon">
+                        <div id="collapseTwo" class="accordion-collapse collapse show"
+                            aria-labelledby="headingTwo" data-bs-parent="#accordionExample_1">
+                            <div class="row mb-5">
+                                <div class="col-md-6">
+                                    <button class="btn btn-md btn-primary mx-2"
+                                        data-route="<%= AdminRoute('/CustomAdd') %>" data-bs-toggle="modal"
+                                        data-bs-target="#form-modal">
+                                        <i class='bx bx-edit'></i>Add
+                                    </button>
+                                    <a href="<%= AdminRoute(`/CustomDelete`) %>"
+                                        class="btn btn-md btn-danger waves-effect waves-light"
+                                        onclick="return confirm('Are you sure you want to delete this Email?')">
+                                        <i class='bx bxs-trash' ></i>Delete
+                                    </a>
+
+                                </div>
+                                <div class="col-md-4 offset-md-2">
+                                    <div class="input-group float-right mt-2 mt-md-0">
+                                        <input type="email" class="form-control" name="email[test]"
+                                            id="test-email-input-stand" placeholder="Test Email">
+                                        <div class="input-group-append me-2">
+                                            <span class="input-group-text input-click ripple bg-dark text-light"
+                                                id="send-test-email-stand">
+                                                <i class='bx bxs-share bx-flip-horizontal' ></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                <hr class="horizon">
+                <div class="card-body border-bottom">
+                    <div class="table-container">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <div class="form-check">
+                                                <div class="check-box form-check-block">
+                                                    <input type="checkbox"
+                                                        class="form-check-input form-check-all">
+                                                    <label class="form-check-label"></label>
+                                                </div>
+                                            </div>
+                                        </th>
+                                        <th>Purpose</th>
+                                        <th>Subject</th>
+                                        <th>From</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% if (customs && customs.length> 0) { %>
+                                        <% customs.forEach(EmailTem_2=> { %>
+                                            <tr>
+                                                <td>
+                                                    <!-- <pre><%= JSON.stringify(EmailTem_2.id) %></pre> -->
+                                                    <div class="form-check">
+                                                        <div class="check-box form-check-block">
+                                                            <input type="checkbox"
+                                                                class="form-check-input form-check-this"
+                                                                value="<%= EmailTem_2.id %>">
+                                                            <label class="form-check-label"></label>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <%= EmailTem_2.purpose %>
+                                                </td>
+                                                <td>
+                                                    <%= EmailTem_2.subject %>
+                                                </td>
+                                                <td>
+                                                    <%= EmailTem_2.from %>
+                                                </td>
+                                                <td>
+                                                    <button class="btn btn-sm btn-success"
+                                                        data-route="<%= AdminRoute(`/CustomEdit?id=${EmailTem_2.id}`) %>"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#form-modal">
+                                                        <i class='bx bx-edit'></i>
+                                                    </button>
+                                                    
+                                                    <button class="btn btn-md btn-warning waves-effect waves-light text-light"
+                                                        data-route="<%= AdminRoute(`/CustomView?id=${EmailTem_2.id}`) %>"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#form-modal">
+                                                        <i class='bx bx-low-vision'></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <% }); %>
+                                                <% } else { %>
+                                                    <tr>
+                                                        <td colspan="5" class="text-center">No
+                                                            Active Member found.</td>
+                                                    </tr>
+                                                    <% } %>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
