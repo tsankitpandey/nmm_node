@@ -1119,4 +1119,14 @@ function getCookie(name) {
   document.addEventListener('DOMContentLoaded', function() {
       enableFormValidation();
   });
-})();
+})()
+
+function previewImage(event) {
+    const reader = new FileReader();
+    reader.onload = function() {
+        const imagePreview = document.getElementById("imagePreview");
+        imagePreview.src = reader.result;
+        imagePreview.style.display = "block"; // Show image preview
+    }
+    reader.readAsDataURL(event.target.files[0]); // Convert file to base64 URL
+}

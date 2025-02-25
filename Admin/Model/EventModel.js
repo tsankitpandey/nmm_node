@@ -181,7 +181,7 @@ static async AddEvent(data, image) {
             data.start_date,
             data.end_date,
             data.Location,
-            data.timeZone || "UTC", 
+            data.timeZone , 
             data.eventStatus,
             timestamp  
         ];
@@ -198,14 +198,13 @@ static async AddEvent(data, image) {
 
 static async UpdateEvent(eventId, data, image) {
     const timestamp = Math.floor(Date.now() / 1000);
-
+    
     return new Promise((resolve, reject) => {
-        const query = `
+        let query = `
             UPDATE nmm_event 
             SET 
                 Event_Title = ?, 
                 Event_Name = ?, 
-                file_url = ?, 
                 description = ?, 
                 start_date = ?, 
                 end_date = ?, 
@@ -213,25 +212,31 @@ static async UpdateEvent(eventId, data, image) {
                 timeZone = ?, 
                 status = ?, 
                 updated_at = ?
-            WHERE event_id = ?
         `;
 
-        const imageUrl = image.length > 0 ? image[0].thumbUrl : data.existingImageUrl; 
-
-        const values = [
+        let values = [
             data.Event_tittle,
             data.Event_Name,
-            imageUrl,
             data.Event_Description,
             data.start_date,
             data.end_date,
             data.Location,
-            data.timezone ,
+            data.timezone || "UTC",
             data.eventStatus,
-            timestamp, 
-            eventId 
+            timestamp
         ];
 
+        // If image exists, add file_url to query
+        if (image && image.length > 0) {
+            query += `, file_url = ?`;
+            values.push(image[0].thumbUrl);
+        }
+
+        // Add WHERE condition
+        query += ` WHERE id = ?`;
+        values.push(eventId);
+
+        // Execute query
         super.db.query(query, values, (err, result) => {
             if (err) {
                 console.error("Error executing update query:", err);
@@ -241,6 +246,7 @@ static async UpdateEvent(eventId, data, image) {
         });
     });
 }
+
 
 
 static async EmsInsert(data) {

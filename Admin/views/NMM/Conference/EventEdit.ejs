@@ -7,100 +7,100 @@
                     <div class="card-body">
                         <div class="accordion" id="accordionExample">
                             <div class="accordion-item">
-                                <h2 class="accordion-header " id="headingOne">
+                                <h2 class="accordion-header" id="headingOne">
                                     <button class="accordion-button mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                                         Create New Conference
                                     </button>
                                 </h2>
+
+                                <!-- Debugging: Show the event data -->
+                                <!-- <pre><%= JSON.stringify(selectedEvent, null, 2) %></pre> -->
+
                                 <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                     <div class="accordion-body">
-                                        <form class="g-3" action="/AddEventConfrece/%>" method="POST" enctype="multipart/form-data">
-                                        <div class="row ">
-                                            <div class="col-md-12 mb-3">
-                                                <label for="inputFirstName" class="form-label">Event Title <span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control" name="Event_tittle" id="">
-                                            </div>
-
-                                            <div class="col-md-6 mb-3">
-                                                <label for="" class="form-label">Event Name <span class="text-danger">*</span></label>
-                                                <input type="text" name="Event_Name" class="form-control" id="">
-                                            </div>
-
-                                            <div class="col-md-6 mb-3">
-                                                <label for="" class="form-label"> <span class="text-danger">* (Image size must be 1300x200)</span></label>
-                                                <div class="input-group ">
-                                                    <input type="file" class="form-control" name="image" id="inputGroupFile02">
-                                                    <label class="input-group-text" for="inputGroupFile02">Upload</label>
+                                        <form class="g-3" action="/Eventupdate" method="POST" enctype="multipart/form-data">
+                                            <div class="row">
+                                                <div class="col-md-12 mb-3">
+                                                    <label for="inputFirstName" class="form-label">Event Title <span class="text-danger">*</span></label>
+                                                    <input type="text" class="form-control" name="Event_tittle" value="<%= selectedEvent.Event_Title %>" id="">
                                                 </div>
-                                            </div>
 
-                                            <div class="col-md-12 mb-3">
-                                                <label for="" class="form-label">Description<span class="text-danger">*</span></label>
-                                                <textarea type="text" class="form-control" name="Event_Description" id="" ></textarea>
-                                            </div>
-                                        
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="" class="form-label">Event Name <span class="text-danger">*</span></label>
+                                                    <input type="text" name="Event_Name" class="form-control" value="<%= selectedEvent.Event_Name %>" id="">
+                                                </div>
+                                                <input type="hidden" id="EventId" name="EventId" value="<%= selectedEvent.id %>">
 
-                                            <div class="col-md-6 mb-3">
-                                                <label class="form-label">Start Date<span class="text-danger">*</span></label>
-                                                <input class="form-control" type="date"  name="start_date" placeholder="start Date">
-                                            </div>
-
-                                            <div class="col-md-6 mb-3">
-                                                <label class="form-label">End Date<span class="text-danger">*</span></label>
-                                                <input class="form-control" type="date" placeholder="End Date"  name="end_date">
-                                            </div>
-
-                                            <div class="col-md-6">
-
-                                               
-                                                    <div class="mb-3 select2-sm select-country" data-route="<%= AdminRoute('/countrylist') %>">
-                                                        <label class="form-label">Location (Country)</label>
-                                                        <select class="single-select form-select" name="Location" required>
-                                                            <option value="" selected disabled>Choose...</option>
-                                                        </select>
-                                                        <div class="invalid-feedback">Locationis required.</div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="" class="form-label">
+                                                        <span class="text-danger">* (Image size must be 1300x200)</span>
+                                                    </label>
+                                                    <div class="input-group">
+                                                        <input type="file" class="form-control" name="image" id="inputGroupFile02" accept="image/*" onchange="previewImage(event)">
+                                                        <label class="input-group-text" for="inputGroupFile02">Upload</label>
                                                     </div>
+                                                
+                                                    <!-- Image Preview -->
+                                                    <img id="imagePreview" 
+                                                         src="<%= selectedEvent.file_url %>" 
+                                                         class="mt-3 img-thumbnail" 
+                                                         style="max-width: 300px; display: <%= selectedEvent.file_url ? 'block' : 'none' %>;">
+                                                </div>
+                                                
+                                                
+
+                                                <div class="col-md-12 mb-3">
+                                                    <label for="" class="form-label">Description <span class="text-danger">*</span></label>
+                                                    <textarea class="form-control" name="Event_Description"><%= selectedEvent.description %></textarea>
+                                                </div>
+
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Start Date<span class="text-danger">*</span></label>
+                                                    <input class="form-control" type="date" name="start_date" value="<%= selectedEvent.start_date.split('T')[0] %>">
+                                                </div>
+
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">End Date<span class="text-danger">*</span></label>
+                                                    <input class="form-control" type="date" name="end_date" value="<%= selectedEvent.end_date.split('T')[0] %>">
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <label class="form-label">Location (Country)</label>
+                                                    <input class="form-control" type="text" name="Location" value="<%= selectedEvent.Location %>">
+                                                </div>
+
+                                                <div class="col-md-6">
                                                     <label class="form-label mt-3">Event Status <span class="text-danger">*</span></label>
                                                     <div class="d-flex align-items-center">
                                                         <div class="form-check me-3">
-                                                            <input class="form-check-input" type="radio" name="eventStatus" id="currentEvent" value="current">
-                                                            <label class="form-check-label" for="currentEvent">
-                                                                Current Event
-                                                            </label>
+                                                            <input class="form-check-input" type="radio" name="eventStatus" value="current" 
+                                                                <%= selectedEvent.status === 'current' ? 'checked' : '' %>>
+                                                            <label class="form-check-label">Current Event</label>
                                                         </div>
                                                         <div class="form-check">
-                                                            <input class="form-check-input" type="radio" name="eventStatus" id="pastEvent" value="past">
-                                                            <label class="form-check-label" for="pastEvent">
-                                                                Past Event
-                                                            </label>
+                                                            <input class="form-check-input" type="radio" name="eventStatus" value="past" 
+                                                                <%= selectedEvent.status === 'past' ? 'checked' : '' %>>
+                                                            <label class="form-check-label">Past Event</label>
                                                         </div>
                                                     </div>
+                                                </div>
 
-                                                
-
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="" class="form-label">Timezone <span class="text-danger">*</span></label>
+                                                    <select class="form-select" name="timezone">
+                                                        <option value="UTC" <%= selectedEvent.timeZone === 'UTC' ? 'selected' : '' %>>UTC</option>
+                                                        <option value="Asia/Kolkata" <%= selectedEvent.timeZone === 'Asia/Kolkata' ? 'selected' : '' %>>Asia/Kolkata</option>
+                                                        <option value="America/New_York" <%= selectedEvent.timeZone === 'America/New_York' ? 'selected' : '' %>>America/New_York</option>
+                                                    </select>
+                                                </div>
                                             </div>
 
-                                            <div class="col-md-6 mb-3">
-                                                <label for="" class="form-label">Timezone <span class="text-danger">*</span></label>
-                                                <select class="form-select" name="timezone">
-                                                    <option value="">Select Timezone</option>
-                                                    <option value="UTC">UTC</option>
-                                                    <option value="Asia/Kolkata">Asia/Kolkata</option>
-                                                    <option value="America/New_York">America/New_York</option>
-                                                </select>
-                                                
-                                           
-                                           
-                                               
+                                            <hr>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <button type="submit" class="btn btn-primary float-end">Submit</button>
+                                                </div>
                                             </div>
-                                            
-                                        </div>
-                                    <hr>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                            <button type="submit" class="btn btn-primary float-end">Submit</button>
-                                        </div>
-                                    </div>
                                         </form>
                                     </div>
                                 </div>

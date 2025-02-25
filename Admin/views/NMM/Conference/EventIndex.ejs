@@ -51,7 +51,9 @@
 														<%= new Date(event.end_date).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) %>
 													</td>
 													<td>
-														<a href="<%= AdminRoute('/EventEdit/' + event.id) %>"
+														<a href="<%= AdminRoute(`/EventEdit?id=${event.id}`) %>"
+														
+
 													    class="btn btn-primary btn-sm rounded-3">
 															<i class="bx bx-edit"></i> Edit
 														</a>
