@@ -29,7 +29,6 @@
             margin-right: 0;
         }
 
-
         input[type="file"] {
             display: none;
         }
@@ -61,18 +60,26 @@
             padding: 5px;
             cursor: pointer;
         }
+
+        @media (max-width: 768px) {
+    .news-container,
+    .timeline-container {
+        position: static; 
+        max-height: none; 
+    }
+}
+
     </style>
 </head>
 
 <body>
 
     <div class="container-fluid mt-5">
-        <!-- <%= JSON.stringify(feeds) %> -->
 
         <div class="row">
-            <div class="mb-5 d-flex justify-content-between">
+            <div class="mb-5 d-flex flex-column flex-md-row">
                 <!-- Timeline Section -->
-                <div class="col-md-6 col-xl-6 col-sm-7   timeline-container mb-5">
+                <div class="col-sm-12 col-md-6 col-xl-6 timeline-container mb-5">
                     <form action="<%=AdminRoute('/insert') %>" method="post" enctype="multipart/form-data">
                         <div class="mb-3">
                             <textarea class="form-control" name="textarea" id="postText" rows="3"
@@ -92,13 +99,11 @@
                                 <button class="btn btn-outline-secondary btn-sm me-2" id="addVideoBtn" type="button">
                                     <i class="bx bx-video"></i> Add Video
                                 </button>
-                                <!-- Hidden file input for video -->
                                 <input type="file" id="videoInput" name="video" accept="video/*" />
 
                                 <button class="btn btn-outline-secondary btn-sm" id="addMusicBtn" type="button">
                                     <i class="bx bx-music"></i> Add Music
                                 </button>
-                                <!-- Hidden file input for music -->
                                 <input type="file" id="musicInput" name="music" accept="audio/*" />
                             </div>
 
@@ -110,17 +115,13 @@
                         </div>
                     </form>
 
-                    <!-- File preview section -->
                     <div id="previewContainer" class="preview-container"></div>
-
-
 
                     <!-- Timeline Posts (Scrollable) -->
                     <ul class="list-group mb-5">
                         <% feeds.feeds.map(feed => { %>
                             <li class="list-group-item mb-5">
                                 <div class="d-flex align-items-center justify-content-between mb-2">
-                                    <!-- User Info -->
                                     <div class="d-flex align-items-center">
                                         <img src="https://media.istockphoto.com/id/2152939474/photo/mature-man-contemplating-on-balcony-at-home.jpg?s=2048x2048&w=is&k=20&c=C-GkDF-ONBKEzwbTlr2zwMa6_k4NI8K2xJkJjtzxYlE="
                                             alt="<%= feed.user %>'s logo" class="rounded-circle"
@@ -128,14 +129,12 @@
                                         <strong class="ms-3 fs-6">Ankit Sharma || Techsimba Pvt Ltd</strong>
                                     </div>
                     
-                                    <!-- Three Dots Dropdown -->
                                     <div class="dropdown">
                                         <button class="btn btn-light btn-sm" type="button" id="dropdownMenuButton<%= feed.id %>" 
                                             data-bs-toggle="dropdown" aria-expanded="false">
                                             <i class="bx bx-dots-horizontal-rounded fs-4"></i>
                                         </button>
                                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton<%= feed.id %>">
-                                           
                                             <li> <button class="btn btn-light btn-sm w-100 comment-btn" data-route="<%= AdminRoute('/feedsedit/' + feed.id) %>"
                                                 data-bs-toggle="modal" data-bs-target="#form-modal">
                                                 <i class="bx bx-edit" ></i>  <span class="d-none d-md-inline">Edit</span>
@@ -146,18 +145,15 @@
                                         </ul>
                                     </div>
                                 </div>
-                    
-                                <!-- Post Time -->
+
                                 <span class="text-muted float-center ms-5">
                                     <%= new Date(feed.created_at * 1000).toLocaleString() %>
                                 </span>
-                    
-                                <!-- Post Content -->
+
                                 <p class="mt-4 mb-2">
                                     <%= feed.textarea %>
                                 </p>
-                    
-                                <!-- File Display -->
+
                                 <% if (feed.file_extension == "photo") { %>
                                     <img src="<%= feed.file_url.replace('/thumb', '') %>" alt="Post Image"
                                         class="w-100 mb-3" style="max-height: 500px; object-fit: contain;" />
@@ -172,8 +168,7 @@
                                         Your browser does not support the video tag.
                                     </video>
                                 <% } %>
-                    
-                                <!-- Like, Comment, Share Buttons -->
+
                                 <div class="d-flex justify-content-between align-items-center mt-1 mb-5">
                                     <div class="btn-group" role="group">
                                         <button class="btn btn-light btn-sm like-btn" data-id="<%= feed.id %>" data-liked="false">
@@ -181,10 +176,7 @@
                                             <span class="d-none d-md-inline">Like</span> 
                                             <span class="like-count">0</span> 
                                         </button>
-                                        
-                                        
                                         <button class="btn btn-light btn-sm comment-btn" data-route="<%= AdminRoute('/comment/' + feed.id) %>"
-                                
                                             data-bs-toggle="modal" data-bs-target="#form-modal">
                                             <i class="bx bx-comment"></i> <span class="d-none d-md-inline">Comment</span>
                                         </button>
@@ -200,31 +192,31 @@
                 </div>
 
                 <!-- News Section -->
-                <div class="col-md-3 offset-md-1 news-container">
+                <div class="col-sm-12 col-md-3 offset-md-1 news-container">
                     <div class="card">
                         <h3 class="mb-3 text-center p-3">News</h3>
                     </div>
 
-                    <% news.forEach(news=> { %>
+                    <% news.forEach(news => { %>
                         <div class="card mb-3">
                             <% if (news.image) { %>
                                 <img src="<%= news.image.replace('/thumb', '') %>" class="card-img-top"
                                     alt="<%= news.title %>"
                                     style="max-height: 200px; width: 100%; object-fit: contain;">
-                                <% }%>
-                                    <div class="card-body">
-                                        <h5 class="card-title">
-                                            <%= news.title %>
-                                        </h5>
-                                        <p class="card-text">
-                                            <%= news.description %>
-                                        </p>
-                                        <a href="<%= news.link %>" class="btn btn-secondary text-center">
-                                            <i class="bx bx-book-reader"></i> Read More
-                                        </a>
-                                    </div>
+                            <% }%>
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <%= news.title %>
+                                </h5>
+                                <p class="card-text">
+                                    <%= news.description %>
+                                </p>
+                                <a href="<%= news.link %>" class="btn btn-secondary text-center">
+                                    <i class="bx bx-book-reader"></i> Read More
+                                </a>
+                            </div>
                         </div>
-                        <% }); %>
+                    <% }); %>
                 </div>
 
             </div>
@@ -258,16 +250,12 @@
                         }
         
                         likeCount.textContent = count;
-        
-                        
                     });
                 });
             });
         </script>
         
-        
-
-
 </body>
 
 </html>
+
