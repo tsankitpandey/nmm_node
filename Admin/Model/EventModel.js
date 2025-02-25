@@ -243,6 +243,101 @@ static async UpdateEvent(eventId, data, image) {
 }
 
 
+static async EmsInsert(data) {
+    // const timestamp = Math.floor(Date.now() / 1000);
+    return new Promise((resolve, reject) => {
+        const query = `
+            INSERT INTO ems_detail 
+            (purpose, message) 
+            VALUES (?, ?)
+        `;
+
+        const values = [
+            data.purpose,  
+            data.message_description,  
+            // timestamp  
+        ];
+
+        super.db.query(query, values, (err, result) => {
+            if (err) {
+                console.error("Error executing query:", err);
+                return reject(err);
+            }
+            resolve(result);
+        });
+    });
+}
+
+static async EmsUpdate(data,id) {
+    return new Promise((resolve, reject) => {
+        const query = `
+            UPDATE ems_detail 
+            SET purpose = ?, message = ?
+            WHERE id = ?
+        `;
+
+        const values = [
+            data.purpose,  
+            data.message_description,
+            id  
+        ];
+
+        super.db.query(query, values, (err, result) => {
+            if (err) {
+                console.error("Error executing query:", err);
+                return reject(err);
+            }
+            resolve(result);
+        });
+    });
+}
+
+static async EmsDelete(id) {
+    return new Promise((resolve, reject) => {
+        const query = `
+            DELETE FROM ems_detail 
+            WHERE id = ?
+        `;
+
+        super.db.query(query, [id], (err, result) => {
+            if (err) {
+                console.error("Error executing query:", err);
+                return reject(err);
+            }
+            resolve(result);
+        });
+    });
+}
+
+
+static async FetchEms() {
+    return new Promise((resolve, reject) => {
+        try {
+            const query = `SELECT * FROM ems_detail ORDER BY created_at DESC`;
+
+            super.db.query(query, (err, results) => {
+                if (err) {
+                    console.error("Database Error:", err);
+                    return reject({
+                        success: false,
+                        message: "Database fetch failed",
+                        error: err,
+                    });
+                }
+
+                resolve({
+                    success: true,
+                    message: "Data fetched successfully",
+                    data: results,
+                });
+            });
+        } catch (error) {
+            console.error("Fetch Error:", error);
+            reject({ success: false, message: "Unexpected error occurred", error });
+        }
+    });
+}
+
 }
 
 

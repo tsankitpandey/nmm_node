@@ -1,22 +1,23 @@
 <div class="modal-content">
     <div class="modal-header">
-        <h4 class="card-title">Add EMS detail</h4>
+        <h4 class="card-title">Edit EMS detail</h4>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
     </div>
     <div class="modal-body">
+        <!-- <%= JSON.stringify(selectedEvent)%> -->
         <div class="card">
             <div class="card-body border border-1 rounded-3">
-				
-                <form class="row g-3 needs-validation" action="<%=AdminRoute('/Emsinsert') %>" method="post" enctype="multipart/form-data" novalidate>
+               
+                <form class="row g-3 needs-validation" action="<%=AdminRoute('/updateEms/'+ selectedEvent.id) %>" method="post" enctype="multipart/form-data" novalidate>
                     <div class="col-md-12">
                         <label for="inputPurpose" class="form-label">Purpose <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="inputPurpose" name="purpose" placeholder="Enter Purpose" required>
+                        <input type="text" class="form-control" id="inputPurpose" name="purpose" placeholder="Enter Purpose" value="<%=selectedEvent.purpose %>" required>
                         <div class="invalid-feedback">Please enter a purpose.</div>
                     </div>
 
                     <div class="col-md-12">
                         <label for="inputMessage" class="form-label">Message Description <span class="text-danger">*</span></label>
-                        <textarea id="elm1" name="message_description" required></textarea>
+                        <textarea id="elm1" name="message_description" required><%= selectedEvent.message%></textarea>
                         <div class="invalid-feedback">Please enter a message description.</div>
                     </div>
 

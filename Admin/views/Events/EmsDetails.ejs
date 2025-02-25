@@ -18,31 +18,38 @@
 						    </div>
 						</div>
         			</div>
-					<div class="card-body">
+                    <!-- <%=JSON.stringify(Ems)%> -->
+                    <div class="card-body">
                         <div class="table-responsive">
                             <table id="example" class="table table-striped table-bordered" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th>#</th>
                                         <th>Purpose</th>
-                                        <th>Content</th>
+                                        <th>Description</th>
                                         <th>Action</th>
-                                      </tr>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>System Architect</td>
-                                        <td></td>
-                                        <td></td>
-                                       
-                                    </tr>
-                                    
+                                    <%Ems.data.forEach((item, index) => { %>
+                                        <tr>
+                                            <td><%= index + 1 %></td>
+                                            <td><%= item.purpose %></td>
+                                            <td><%= item.message %></td>
+                                            <td>
+                                                <button class="btn btn-sm btn-primary" data-route="<%= AdminRoute('/editEms/' + item.id) %>"
+                                                  data-bs-toggle="modal" data-bs-target="#form-modal">Edit</button>
+                                                <a class="btn btn-sm btn-danger " href="<%= AdminRoute('/EmsDelete/' + item.id) %>"
+                                                 >Delete</a> 
+                                              </td>
+                                        </tr>
+                                    <% }) %>
                                 </tbody>
-                            
                             </table>
                         </div>
                     </div>
+                    
+                    
 				</div>
 			</div>
 		</div>

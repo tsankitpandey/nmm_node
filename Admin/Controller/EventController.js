@@ -61,11 +61,15 @@ class EventController extends BaseController {
   }
 
   static async EmsDetails(req, res) {
+
+    const Ems= await EventModel.FetchEms();
+
     res.render("Events/EmsDetails", {
       title: "Events",
       component_title: "Event",
       icon: '<i class="bx bx-home-alt"></i>',
       page_title: "EMS Details",
+      Ems
     });
   }
 
@@ -73,6 +77,91 @@ class EventController extends BaseController {
     res.render("Events/EmsAdd", { layout: "layout/layout-model" });
   }
 
+ static async EmsInsert(req,res){
+  const data= req.body;
+  // return res.status(200).json({data});
+  try{
+   const result= await EventModel.EmsInsert(data);
+
+ if(result && result.affectedRows){
+  req.flash("success","EMS detail inserted successfully");
+  return res.status(200).redirect(res.Admin("/Ems"));
+ }
+ else{
+  req.flash("error","error in EMS detail ");
+  return res.status(200).redirect(res.Admin("/Ems"));
+ }
+
+  }
+  catch(error){
+    console.error(error,"error");
+    req.flash("error","error in try block ");
+  }
+ }
+
+ static async EditEms(req,res){
+
+  const id = parseInt(req.params.id);
+  // return req.status(200).json({id})
+  const EmsData = await EventModel.FetchEms();
+
+  const selectedEvent = EmsData.data.find(event => event.id === id);
+  // return res.status(200).json({selectedEvent})
+  // console.log(selectedEvent,"selectedEvent")
+if(selectedEvent){
+  res.render("Events/EditEms",  { layout: "layout/layout-model",selectedEvent } )
+}
+ 
+ }
+
+ static async UpdateEms(req, res) {
+  const data = req.body;
+  const id = req.params.id;
+  //  return res.status(200).json({id});
+  try {
+    const result = await EventModel.EmsUpdate(data, id);
+
+    if (result && result.affectedRows > 0) {
+      req.flash("success", "EMS updated..");
+      return res.status(200).redirect(res.Admin("/Ems"));
+    } else {
+      req.flash("error", "Failed to update. No rows were affected.");
+      return res.status(200).redirect(res.Admin("/Ems"));
+    }
+  } catch (error) {
+    console.error("Error updating EMS model:", error);
+    req.flash("error", "An error occurred while updating the EMS.");
+    return res.status(500).redirect(res.Admin("/Ems"));
+  }
+}
+catch(error) {
+  req.flash("error", "An error occurred while updating the EMS .");
+  return res.status(500).redirect(res.Admin("/Ems"));
+}
+
+static async EmsDelete(req, res) {
+  const id = req.params.id;
+  //  return res.status(200).json({id});
+  try {
+    const result = await EventModel.EmsDelete(id);
+
+    if (result && result.affectedRows > 0) {
+      req.flash("success", "EMS deleted..");
+      return res.status(200).redirect(res.Admin("/Ems"));
+    } else {
+      req.flash("error", "Failed to delete. No rows were affected.");
+      return res.status(200).redirect(res.Admin("/Ems"));
+    }
+  } catch (error) {
+    console.error("Error updating EMS model:", error);
+    req.flash("error", "An error occurred while deleting the EMS.");
+    return res.status(500).redirect(res.Admin("/Ems"));
+  }
+}
+catch(error) {
+  req.flash("error", "An error occurred while deleting the EMS .");
+  return res.status(500).redirect(res.Admin("/Ems"));
+}
 
   static async EventorgUpdate(req, res) {
     const data = req.body;
@@ -152,23 +241,15 @@ class EventController extends BaseController {
 
 
   static async EditEvent(req, res) {
-    try {
-      const id = parseInt(req.params.id);
+   
+      const id = req.params.id;
       const eventData = await EventModel.FetchEvent();
       const selectedEvent = eventData.data.find(event => event.id === id);
    
-      res.render("NMM/Conference/EventEdit", { title: "Conference", component_title: 'Conference', icon: '<i class="bx bx-home-alt"></i>', page_title: 'Events', eventData: selectedEvent })
+      res.render("NMM/Conference/EventEdit", {layout: "layout/layout-model"  , eventData: selectedEvent })
 
-    } catch (error) {
-      console.error("Error fetching event:", error);
-      res.status(500).render("NMM/Conference/EventEdit", {
-        title: "Conference",
-        component_title: "Conference",
-        icon: '<i class="bx bx-home-alt"></i>',
-        page_title: "EventEdit",
-        error: "Internal Server Error"
-      });
-    }
+    
+    
   }
 
   static async DeleteEvent(req,res){
