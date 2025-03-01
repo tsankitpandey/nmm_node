@@ -1,0 +1,30 @@
+<%- contentFor('body') %>
+<%- contentFor('body') %>
+
+<div class="modal-content">
+    <div class="modal-header">
+        	<h4 class="card-title ">Add</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body mb-3">
+        <div class="card">
+            <div class="card-body border border-1 rounded-3 mb-3">
+                <form action="" method="post" enctype="multipart/form-data" data-parsley-validate>
+                    <div class="card card-teal card-outline shadow-sm">
+                        
+                        <div class="card-body">
+                            <!-- <pre><%= JSON.stringify(CustomViews, null, 2) %></pre> -->
+                            <div class="table-responsive">
+                                <div class="table ">
+                                    <%- CustomViews.message %>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </form>
+            </div>
+        </div>
+
+	</div>
+</div>	

@@ -13,6 +13,7 @@ const ConferenceNMMController=require("../Controller/ConferenceNMMController");
 const DataController=require('../Controller/DataController');
 const FL_timelineController= require("../Controller/FL_timelineController");
 const MembershipController= require("../Controller/MembershippController");
+const SettingNMMController= require("../Controller/SettingNMMController");
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
@@ -138,6 +139,20 @@ route.get('/citylist', DataController.citylist);
 route.get('/timezone', DataController.timezonelist);
 
 //Email Template Router
-route.get('/emailList', EmailTemplateNMMController.EmailIndex);
+route.get('/emailList', EmailTemplateNMMController.EmailTemIndex);
+route.post('/EmailEdit',upload.any(),EmailTemplateNMMController.EmailTemEdit);
+route.post('/updateEmail', upload.any(), EmailTemplateNMMController.EmailTemUpdate);
+route.post('/EmailTemView', EmailTemplateNMMController.EmailTemView);
+route.post('/CustomAdd', EmailTemplateNMMController.CustomTemAdd);
+route.post('/CustomTemSave', upload.any(), EmailTemplateNMMController.CustomTemSave);
+route.post('/CustomTemEdit', EmailTemplateNMMController.CustomTemEdit);
+route.post('/CustomTemView', EmailTemplateNMMController.CustomTemView);
+route.post('/CustomTemUpdate', upload.any(), EmailTemplateNMMController.CustomTemUpdate);
+route.post('/CustomTemDelete', EmailTemplateNMMController.CustomTemDelete);
+route.post('/emailActivate', upload.any(), EmailTemplateNMMController.ActivateTemEmail);
+route.post('/emailDeactivate', upload.any(), EmailTemplateNMMController.DeactivateTemEmail);
+
+//setting 
+route.get('/setting', SettingNMMController.SettingIndex);
 
 module.exports = route;

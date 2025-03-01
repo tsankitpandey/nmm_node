@@ -1,0 +1,243 @@
+<%- contentFor('body') %>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-theme card-outline shadow-sm">
+                    <div class="card-header">
+                        <h4 class="card-title mb-3">Manage Settings</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-row">
+                            <ul class="nav nav-tabs" id="settingsTab">
+                                <li class="nav-item">
+                                    <a class="nav-link active" data-bs-toggle="tab" href="#general">General</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-bs-toggle="tab" href="#account">Account</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="tab-content mt-3">
+                            <!-- General Tab -->
+                            <div class="tab-pane fade show active" id="general">
+                                <form class="g-3 needs-validation form-submit" action="<%=AdminRoute('/save') %>" method="post" enctype="multipart/form-data" novalidate>
+                                    <div class="mx-3">
+                                        <div class="row mb-3">
+                                            <div class="col-6">
+                                                <label>Auto Expire <span class="text-danger">*</span></label>
+                                                <div class="form-check form-check-inline mx-5">
+                                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" checked>
+                                                    <label class="form-check-label" for="inlineRadio1">Yes</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                                                    <label class="form-check-label" for="inlineRadio2">No</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-4">
+                                            <div class="col-4">
+                                                <label>Welcome Email Template <span class="text-danger">*</span></label>
+                                            </div>
+                                            <div class="col-4">
+                                                <select class="form-select" id="inputCompany" name="" required>
+                                                    <option>Company name</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-4">
+                                                <button class="btn btn-primary" data-route="<%= AdminRoute('/CustomAdd') %>" data-bs-toggle="modal" data-bs-target="#form-modal">
+                                                    <i class='bx bx-edit'></i> Add Email Template
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-4">
+                                            <div class="col-4">
+                                                <label>Active User Email Template <span class="text-danger">*</span></label>
+                                            </div>
+                                            <div class="col-4">
+                                                <select class="form-select" id="inputCompany" name="" required>
+                                                    <option>Company name</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-4">
+                                                <button class="btn btn-primary" data-route="<%= AdminRoute('/CustomAdd') %>" data-bs-toggle="modal" data-bs-target="#form-modal">
+                                                    <i class='bx bx-edit'></i> Add Email Template
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-4">
+                                            <div class="col-4">
+                                                <label>Cancel Member Email Template <span class="text-danger">*</span></label>
+                                            </div>
+                                            <div class="col-4">
+                                                <select class="form-select" id="inputCompany" name="" required>
+                                                    <option>Company name</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-4">
+                                                <button class="btn btn-primary" data-route="<%= AdminRoute('/CustomAdd') %>" data-bs-toggle="modal" data-bs-target="#form-modal">
+                                                    <i class='bx bx-edit'></i> Add Email Template
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-4">
+                                            <div class="col-4">
+                                                <label>Deactive User Email Template <span class="text-danger">*</span></label>
+                                            </div>
+                                            <div class="col-4">
+                                                <select class="form-select" id="inputCompany" name="receiver_id" required>
+                                                    <option>Company name</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-4">
+                                                <button class="btn btn-primary" data-route="<%= AdminRoute('/CustomAdd') %>" data-bs-toggle="modal" data-bs-target="#form-modal">
+                                                    <i class='bx bx-edit'></i> Add Email Template
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-4">
+                                            <div class="col-4">
+                                                <label>Prospect Email Template <span class="text-danger">*</span></label>
+                                            </div>
+                                            <div class="col-4">
+                                                <select class="form-select" id="inputCompany" name="receiver_id" required>
+                                                    <option>Company name</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-4">
+                                                <button class="btn btn-primary" data-route="<%= AdminRoute('/CustomAdd') %>" data-bs-toggle="modal" data-bs-target="#form-modal">
+                                                    <i class='bx bx-edit'></i> Add Email Template
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-5">
+                                            <div class="col-4">
+                                                <label>Custom Email Template <span class="text-danger">*</span></label>
+                                            </div>
+                                            <div class="col-4">
+                                                <select class="form-select" id="inputCompany" name="receiver_id" required>
+                                                    <option>Company name</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-4">
+                                                <button class="btn btn-primary" data-route="<%= AdminRoute('/CustomAdd') %>" data-bs-toggle="modal" data-bs-target="#form-modal">
+                                                    <i class='bx bx-edit'></i> Add Email Template
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                          <div class="col-12">
+                                              <label>Auto Email Notification To Expiring Members <span class="text-danger">*</span></label>
+                                              <div class="form-check form-check-inline mx-5">
+                                                  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" checked>
+                                                  <label class="form-check-label" for="inlineRadio1">Yes</label>
+                                              </div>
+                                              <div class="form-check form-check-inline">
+                                                  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                                                  <label class="form-check-label" for="inlineRadio2">No</label>
+                                              </div>
+                                          </div>
+                                      </div>
+                                    </div>
+                                    <hr>
+                                    <div class="col-12">
+                                        <button type="submit" class="btn btn-primary float-end">Update</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <!-- Account Tab (Placeholder) -->
+                            <div class="tab-pane fade" id="account">
+                                <form class="g-3 needs-validation form-submit" action="<%= AdminRoute('/AccountUpdate') %>" method="post" enctype="multipart/form-data" novalidate>
+                                  <div class="mx-3">
+                                    <div class="form-row">
+                                      <div class="col-12">
+                                          <div class="mb-4">
+                                              <h6 class="d-block text-md text-bold mb-2">Account Details</h6>
+                                              <hr>
+                                          </div>
+                                      </div>
+                                    </div> 
+                                    <div class="row">
+                                      <!-- <pre><%= JSON.stringify(3,null,2) %></pre> -->
+                                  <div class="col-md-6 mb-3">
+                                    <label for="inputName" class="form-label">Admin Name <span class="text-danger">*</span></label>
+                                    <input type="text" name="admin_name" class="form-control" id="inputName" placeholder="Admin Name" value="<%= accounts.admin_name %>" required>
+                                    <div class="invalid-feedback">Please enter a Admin Name.</div>
+                                  </div>
+                                  <div class="col-md-6 mb-3">
+                                    <label for="inputEmail" class="form-label">Email <span class="text-danger">*</span></label>
+                                    <input type="email" name="admin_email" class="form-control" id="inputEmail" placeholder="admin email" value="<%= accounts.admin_email %>" required>
+                                    <div class="invalid-feedback">Please enter a Email.</div>
+                                  </div>
+                                  <div class="col-md-12 mb-3">
+                                    <label for="inputAddress" class="form-label">Company Address <span class="text-danger">*</span></label>
+                                    <textarea type="email" name="company_address" class="form-control" id="inputAddress" placeholder="company Address" value="<%= accounts.company_address %>" required>
+                                  </textarea>
+                                    <div class="invalid-feedback">Please enter a address.</div>
+                                  </div>
+                                  <div class="col-md-6 mb-4">
+                                    <label for="inputCompanyContact" class="form-label">Company Contact <span class="text-danger">*</span></label>
+                                    <input type="text" name="company_contact" class="form-control" id="inputCompanyContact" placeholder="Admin Contact" value="<%= accounts.company_contact %>" required>
+                                    <div class="invalid-feedback">Please enter a contact</div>
+                                  </div>
+                                  <div class="col-md-6 mb-4">
+                                    <label for="inputCompanyName" class="form-label">Company Name <span class="text-danger">*</span></label>
+                                    <input type="email" name="company_name" class="form-control" id="inputCompanyName" placeholder="Company Name" value="<%= accounts.company_name %>" required>
+                                    <div class="invalid-feedback">Please enter a Company Name.</div>
+                                  </div>
+                                  <div class="col-md-6 mb-4">
+                                    <label for="inputShortName" class="form-label">Company Short Name <span class="text-danger">*</span></label>
+                                    <input type="text" name="short_name" class="form-control" id="inputShortName" placeholder="Short name" value="<%= accounts.company_short_name %>" required>
+                                    <div class="invalid-feedback">Please enter a short name</div>
+                                  </div>
+                                  <div class="col-md-6 mb-4">
+                                    <label for="inputTitle" class="form-label">Title <span class="text-danger">*</span></label>
+                                    <input type="email" name="email" class="form-control" id="inputTitle" placeholder="title" value="<%= accounts.title %>" required>
+                                    <div class="invalid-feedback">Please enter a Title.</div>
+                                  </div>
+                                  <div class="col-md-6 mb-4">
+                                    <label for="inputFooterContent" class="form-label">Footer Content <span class="text-danger">*</span></label>
+                                    <input type="text" name="amount" class="form-control" id="inputFooterContent" placeholder="Content" value="<%= accounts.footer_content %>" required>
+                                    <div class="invalid-feedback">Please enter a short name</div>
+                                  </div>
+                                  <div class="col-md-6 mb-4">
+                                    <label for="inputAmount" class="form-label">Footer Title <span class="text-danger">*</span></label>
+                                    <input type="email" name="footer_title" class="form-control" id="inputAmount" placeholder="Footer title" value="<%= accounts.footer_title %>" required>
+                                    <div class="invalid-feedback">Please enter a Title.</div>
+                                  </div>
+                                  <div class="col-md-6">
+                                    <div class="form-group mb-4">
+                                        <label>Profile Upload <span class="text-danger" style="font-size:smaller"> * (Image size must be 1300x200)</span> </label>
+                                        <div class="form-file">
+                                            <input type="file" class="form-control form-file-input w-100" name="profile" value="<%= accounts.profile %>" placeholder="Profile Upload" id="form-file" view="preview" required>
+                                            <label class="form-file-label"></label>
+                                        </div>
+                                    </div>
+                                    <div class="invalid-feedback">Please enter a image.</div>
+                                </div>
+                                <div class="col-md-6">
+                                  <div class="form-group mb-4">
+                                    <label>Company logo <span class="text-danger" style="font-size:smaller"> * (Image size must be 1300x200)</span> </label>
+                                    <div class="form-file">
+                                      <input type="file" class="form-control form-file-input w-100" name="company_logo" value="<%= accounts.company_logo %>" placeholder="Company logo" id="form-file" view="preview" required>
+                                      <label class="form-file-label"></label>
+                                    </div>
+                                  </div>
+                                    <div class="invalid-feedback">Please enter a image.</div>
+                                  </div>
+                                </div>
+                              </div>
+                                  <hr>
+                                  <div class="col-12">
+                                      <button type="submit" class="btn btn-primary float-end">Update</button>
+                                  </div>
+                              </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

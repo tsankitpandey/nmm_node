@@ -1,0 +1,85 @@
+<%- contentFor('HeaderCss') %>
+
+<%- contentFor('body') %>
+
+<div class="modal-content">
+    <div class="modal-header">
+        	<h4 class="card-title ">Edit</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+		
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-12">
+						<form action="<%=AdminRoute('/CustomTemUpdate') %>" method="post" enctype="multipart/form-data" data-parsley-validate>
+							<div class="card card-teal card-outline shadow-sm">
+								
+								<div class="card-body">
+                                    <!-- <pre><%= JSON.stringify(CustomEdits, null, 2) %></pre> -->
+									<div class="form-content">
+										<div class="form-container">
+											<div class="row">
+                                                <input type="hidden" name="id" value="<%= CustomEdits.id %>">
+                                                <div class="col-md-12 mb-3">
+                                                    <label for="purpose" class="form-label">Email Purpose <span class="text-danger">*</span></label>
+                                                    <input class="form-control" type="text" placeholder="purpose" name="purpose" value="<%= CustomEdits.purpose %>" required data-parsley-required-message="Please enter the purpose">
+                                                </div>
+                                                <div class="col-md-12 mb-3">
+                                                    <label for="subject" class="form-label">Email Subject <span class="text-danger">*</span> </label>
+                                                    <input class="form-control" type="text" placeholder="subject" name="subject" value="<%= CustomEdits.subject %>" required data-parsley-required-message="Please enter the subject">
+                                                </div>
+                    
+                                                <!-- <div class="col-md-12 mb-3">
+                                                    <label for="elm1" class="form-label">Email Description
+                                                        <span class="text-danger">*</span>
+                                                    </label>
+                                                    <textarea 
+                                                        id="elm1" 
+                                                        name="description" 
+                                                        class="form-control"
+                                                    ><%= CustomEdits.description %></textarea>
+                                                </div> -->
+                        
+                                                <div class="col-md-12 mb-3">
+                                                    <label for="Emailfrom" class="form-label">Email From 
+                                                        <span class="text-danger">*</span>
+                                                    </label>
+                                                    <input 
+                                                        class="form-control" 
+                                                        type="text" 
+                                                        placeholder="Email from" 
+                                                        name="from"
+                                                        value="<%= CustomEdits.from %>" 
+                                                        required 
+                                                        data-parsley-required-message="Please enter the Email from"
+                                                        data-parsley-maxlength="100"
+                                                        data-parsley-maxlength-message="Title should not exceed 100 characters">
+                                                </div>
+                        
+                                                <div class="col-md-12 mb-3">
+                                                    <label for="elm1" class="form-label">Email Message
+                                                        <span class="text-danger">*</span>
+                                                    </label>
+                                                    <textarea 
+                                                        id="elm1" 
+                                                        name="message" 
+                                                        class="form-control"
+                                                    ><%= CustomEdits.message %></textarea>
+                                                </div>
+
+                                                <div class="col-md-5 mb-3">
+                                                    <button class="btn btn-primary disable" type="submit">Submit</button>
+                                                </div>
+                                            </div>
+										</div>
+									</div>
+								</div>
+								
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+</div>
+
