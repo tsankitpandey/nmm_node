@@ -1,4 +1,6 @@
 const BaseController =require('./BaseController');
+const jwt = require("jsonwebtoken");
+
 const AuthenticationModel=require('../Model/AuthenticationModel');
 
 class AuthenticationController extends BaseController{
@@ -33,6 +35,11 @@ class AuthenticationController extends BaseController{
         
             }
          
+        }else{
+            return res.status(200).json({
+                status:'error',
+                message:'User Not Found'
+            })
         }
        
         

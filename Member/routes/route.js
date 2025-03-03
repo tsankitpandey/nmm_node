@@ -10,7 +10,7 @@ const upload = multer({ storage: storage });
 const AuthenticationController=require('../Controller/AuthenticationController');
 
 
-route.post('/login',  upload.none(),  AuthenticationController.loginVerify);
+route.post('/login',  upload.none(), AuthenticationController.loginVerify);
 
 
 
