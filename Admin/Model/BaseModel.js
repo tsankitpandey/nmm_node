@@ -7,6 +7,6 @@ class BaseModel {
     static deleteFiles = deleteFiles; 
     static EmailSetup = EmailSetup;   
     static db = pool;  
-}
+} 
 
 module.exports = BaseModel;

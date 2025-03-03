@@ -1,11 +1,10 @@
-// const { uploadFiles ,deleteFiles} = require('../services/imageUploader');
-// const EmailSetup = require('../../services/EmailSetup');
-const EmailSetup=require('../../services/EmailSetup')
+const { uploadFiles ,deleteFiles} = require('../../services/imageUploader');
+const EmailSetup = require('../../services/EmailSetup');
 const pool = require('../../Utils/db');
 
 class BaseController {
-    // static uploadFiles = uploadFiles; 
-    // static deleteFiles = deleteFiles; 
+    static uploadFiles = uploadFiles; 
+    static deleteFiles = deleteFiles; 
     static EmailSetup = EmailSetup;   
     static db = pool;  
 }
