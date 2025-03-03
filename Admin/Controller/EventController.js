@@ -105,7 +105,7 @@ class EventController extends BaseController {
     // return req.status(200).json({id})
     const EmsData = await EventModel.FetchEms();
 
-    const selectedEvent = EmsData.data.find(event => event.id === id);
+    const selectedEvent = await EmsData.data.find(event => event.id === id);
     // return res.status(200).json({selectedEvent})
     // console.log(selectedEvent,"selectedEvent")
     if (selectedEvent) {

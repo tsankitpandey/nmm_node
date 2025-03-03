@@ -35,9 +35,12 @@
                                                     <label for="" class="form-label">
                                                         <span class="text-danger">* (Image size must be 1300x200)</span>
                                                     </label>
-                                                    <div class="input-group">
-                                                        <input type="file" class="form-control" name="image" id="inputGroupFile02" accept="image/*" onchange="previewImage(event)">
+                                                    <div 
+                                                    class="input-group">
+                                                        <input type="file" class="form-control" name="image" id="inputGroupFile02" accept="image/*" value="<%= selectedEvent.file_url%>" onchange="previewImage(event)">
                                                         <label class="input-group-text" for="inputGroupFile02">Upload</label>
+
+                                                        
                                                     </div>
                                                 
                                                     <!-- Image Preview -->
@@ -52,6 +55,7 @@
                                                 <div class="col-md-12 mb-3">
                                                     <label for="" class="form-label">Description <span class="text-danger">*</span></label>
                                                     <textarea class="form-control" name="Event_Description"><%= selectedEvent.description %></textarea>
+                                                    
                                                 </div>
 
                                                 <div class="col-md-6 mb-3">
@@ -60,7 +64,7 @@
                                                 </div>
 
                                                 <div class="col-md-6 mb-3">
-                                                    <label class="form-label">End Date<span class="text-danger">*</span></label>
+                                                                                                                                              <label class="form-label">End Date<span class="text-danger">*</span></label>
                                                     <input class="form-control" type="date" name="end_date" value="<%= selectedEvent.end_date.split('T')[0] %>">
                                                 </div>
 

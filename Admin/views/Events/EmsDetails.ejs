@@ -35,7 +35,8 @@
                                         <tr>
                                             <td><%= index + 1 %></td>
                                             <td><%= item.purpose %></td>
-                                            <td><%= item.message %></td>
+                                            <td><%= item.message.split(" ").slice(0, 10).join(" ") + (item.message.split(" ").length > 10 ? "..." : "") %></td>
+
                                             <td>
                                                 <button class="btn btn-sm btn-primary" data-route="<%= AdminRoute('/editEms/' + item.id) %>"
                                                   data-bs-toggle="modal" data-bs-target="#form-modal">Edit</button>

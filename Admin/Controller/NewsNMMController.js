@@ -156,9 +156,10 @@ class NewsNMMController extends BaseController{
     static async NewsDetails(req, res) {
         try {
             const { id } = req.query; 
+            //  return res.status(200).json({id})
             const details = await NewsNMMModel.NewsIndex(); 
             const category = details.details
-            // return res.status(200).json({"data": category})
+           
             const newsDetail = details.news;
             const newsDetails = newsDetail.find(news => news.id == id);
             res.render("NMM/News/NewsDetails", {
