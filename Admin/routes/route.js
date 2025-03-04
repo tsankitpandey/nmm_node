@@ -154,5 +154,7 @@ route.post('/emailDeactivate', upload.any(), EmailTemplateNMMController.Deactiva
 
 //setting 
 route.get('/setting', SettingNMMController.SettingIndex);
+route.post('/AccountUpdate/:id', upload.any(), SettingNMMController.SettingUpdate);
+route.post('/emailUpdate/:id', upload.any(), SettingNMMController.EmailUpdate);
 
 module.exports = route;
