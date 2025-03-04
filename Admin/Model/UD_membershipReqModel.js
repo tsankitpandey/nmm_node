@@ -1,5 +1,4 @@
 const BaseModel=require('./BaseModel');
-const bcrypt = require('bcrypt');
 class UD_membershipReqModel extends BaseModel {
 
     static async MembershipReqIndex() {
@@ -118,7 +117,7 @@ class UD_membershipReqModel extends BaseModel {
                     if (err) return reject({ error: 'Error inserting Member', details: err });
 
                     const deleteQuery = `DELETE FROM membership_request WHERE id = ?`;
-                    
+
                     super.db.query(deleteQuery, [id], (err, deleteResult) => {
                         if (err) return reject({ error: 'Error deleting Membership Request', details: err });
     
