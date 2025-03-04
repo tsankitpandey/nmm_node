@@ -27,23 +27,18 @@ class SettingNMMController extends BaseController{
         }
     }
     
-    static async SettingUpdate(req, res) {
+    static async SettingUpdate12(req, res) {
         const data = req.body;
-        const id = req.params.id;
-        let profile = req.files;
-        // return res.status(200).json({"msg": id})
+        const file = req.files;
+        const accountId = req.params.AccountId;
+        let profile = null;
         try {
-            if (req.files && req.files.length > 0) {
-                const uploadedFiles = await super.uploadFiles(profile, "DEMO");
-                profile = uploadedFiles[0].thumbUrl;
-            } else {
-                profile = null;
-            }
-    
-            console.log("Final Profile URL:", profile);
-    
-            const updateResult = await SettingModel.SettingUpdate(data, id, profile);
-            console.log("Update Result:", updateResult);
+ 
+            if (file && Object.keys(file).length > 0) {
+                profile = await super.uploadFiles(file, "DEMO");
+              } 
+
+            const updateResult = await SettingModel.SettingUpdate(accountId, data, profile);
     
             if (updateResult?.affectedRows > 0) {
                 req.flash("success", "Settings updated successfully!");
@@ -59,6 +54,34 @@ class SettingNMMController extends BaseController{
             return res.redirect('/emailList');
         }
     }
+
+    static async SettingUpdate(req, res) {
+        const data = req.body;
+        const file = req.files;
+        const accountId = req.body.AccountId;
+        let profile = null;
+      
+        
+        if (file && Object.keys(file).length > 0) {
+            profile = await super.uploadFiles(file, "DEMO");
+        } 
+      
+        try {
+          const result = await SettingModel.SettingUpdate(accountId, data, profile);
+      
+          if (result && result.affectedRows > 0) {
+            req.flash("success", "Settings updated successfully!");
+            return res.status(200).redirect(res.Admin("/emailList"));
+          } else {
+            req.flash("error", "Error in updating Settings.");
+            return res.status(200).redirect(res.Admin("/emailList"));
+          }
+        } catch (error) {
+          console.error("Error  Settings Update:", error);
+          req.flash("error", "Error in updating Settings.");
+          return res.status(200).redirect(res.Admin("/emailList"));
+        }
+      }
     
 
     static async EmailUpdate(req, res) {

@@ -66,9 +66,8 @@ class SettingModel extends BaseModel {
     }
     
 
-    static async SettingUpdate(data, id,  profile) {
+    static async SettingUpdate(accountId, data, profile) {
         const timestamp = Math.floor(Date.now() / 1000);
-        // console.error('Error executing update query:', profile);
         return new Promise((resolve, reject) => {
             let query;
             let values;
@@ -91,7 +90,7 @@ class SettingModel extends BaseModel {
                         updated_at = ?
                     WHERE id = ?`;
     
-                values = [data.admin_name, data.company_address, data.company_contact, data.admin_email, profile, data.company_name, data.company_short_name, data.title, profile, data.footer_content, data.footer_title, timestamp, id];
+                values = [data.admin_name, data.company_address, data.company_contact, data.admin_email, profile, data.company_name, data.company_short_name, data.title, profile, data.footer_content, data.footer_title, timestamp, accountId];
     
             } else {
                 query = `
@@ -109,7 +108,7 @@ class SettingModel extends BaseModel {
                         updated_at = ?
                     WHERE id = ?`;
     
-                values = [data.admin_name, data.company_address, data.company_contact, data.admin_email, data.company_name, data.company_short_name, data.title, data.footer_content, data.footer_title, timestamp, id];
+                values = [data.admin_name, data.company_address, data.company_contact, data.admin_email, data.company_name, data.company_short_name, data.title, data.footer_content, data.footer_title, timestamp, accountId];
             }
     
             super.db.query(query, values, (err, results) => {

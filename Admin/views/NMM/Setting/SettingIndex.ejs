@@ -182,7 +182,7 @@
                             <!-- Account Tab (Placeholder) -->
                             <div class="tab-pane fade" id="account">
                                 <!-- <pre><%= JSON.stringify(accounts,null,2) %></pre> -->
-                                <form class="g-3 needs-validation form-submit" action="/AccountUpdate/<%= accounts[0].id %>"   method="post" enctype="multipart/form-data" novalidate>
+                                <form class="g-3 needs-validation form-submit" action="/AccountUpdate"   method="post" enctype="multipart/form-data" novalidate>
                                   <div class="mx-3">
                                     <div class="form-row">
                                       <div class="col-12">
@@ -193,6 +193,7 @@
                                       </div>
                                     </div> 
                                     <div class="row">
+                                    <input type="hidden" id="AccountId" name="AccountId" value="<%= accounts[0].id %>">    
                                   <div class="col-md-6 mb-3">
                                     <label for="inputName" class="form-label">Admin Name <span class="text-danger">*</span></label>
                                     <input type="text" name="admin_name" class="form-control" id="inputName" placeholder="Admin Name" value="<%= accounts[0].admin_name %>" required>

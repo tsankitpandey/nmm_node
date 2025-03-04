@@ -14,6 +14,7 @@ const DataController=require('../Controller/DataController');
 const FL_timelineController= require("../Controller/FL_timelineController");
 const MembershipController= require("../Controller/MembershippController");
 const SettingNMMController= require("../Controller/SettingNMMController");
+const UD_membershipReqController= require("../Controller/UD_membershipReqController");
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
@@ -154,7 +155,12 @@ route.post('/emailDeactivate', upload.any(), EmailTemplateNMMController.Deactiva
 
 //setting 
 route.get('/setting', SettingNMMController.SettingIndex);
-route.post('/AccountUpdate/:id', upload.any(), SettingNMMController.SettingUpdate);
+route.post('/AccountUpdate', upload.any(), SettingNMMController.SettingUpdate);
 route.post('/emailUpdate/:id', upload.any(), SettingNMMController.EmailUpdate);
+
+// User Directory
+route.get('/MembershipReq', UD_membershipReqController.MembershipReqIndex);
+route.post('/RequestDelete', UD_membershipReqController.MembershipReqDelete);
+route.post('/Approve', UD_membershipReqController.MembershipReqAprrove);
 
 module.exports = route;
