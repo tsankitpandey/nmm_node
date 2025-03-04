@@ -6,16 +6,17 @@ const AuthenticationModel=require('../Model/AuthenticationModel');
 class AuthenticationController extends BaseController{
 
     static async loginVerify(req,res){
-        const {username, password} = req.body;
+        const {email, password} = req.body;
+       
       
-        if(username) {
+        if(email) {
 
-            const data=await AuthenticationModel.loginVerify(username, password );
+            const data=await AuthenticationModel.loginVerify(email, password );
 
          
             if (data.length>0) {
                 
-                const token = jwt.sign({ username }, process.env.JWT_SECRET, {
+                const token = jwt.sign({ email }, process.env.JWT_SECRET, {
                     expiresIn: "1h", 
                 
                 });
@@ -43,6 +44,26 @@ class AuthenticationController extends BaseController{
         }
        
         
+    }
+
+    static async signup(req,res){
+        const data = req.body;
+        // return res.status(200).json({data})
+
+        try{
+            const result =  await AuthenticationModel.signup(data);
+            if (result) {
+                return res.status(200).json({status:"success",msg:"data inserted succesfully"})
+               
+            } else {
+                return res.status(200).json({status:"error",msg:"error while inserting data"})
+                
+            }
+        } catch (error) {
+            return res.status(200).json({status:"error",msg:"error in model try-catch"})
+           
+        }
+
     }
 }
 

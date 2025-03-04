@@ -11,6 +11,12 @@ const AuthenticationController=require('../Controller/AuthenticationController')
 
 
 route.post('/login',  upload.none(), AuthenticationController.loginVerify);
+route.post('/signup',  upload.any(),  AuthenticationController.signup);
+
+
+
+
+
 
 
 

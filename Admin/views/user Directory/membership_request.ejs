@@ -1,0 +1,73 @@
+<%- contentFor('body') %>
+<section class="content">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card card-theme card-outline shadow-sm">
+					<div class="card-header">
+						<h4 class="card-title mb-3">Membership Request List</h4>
+					</div>
+
+                    <div class="card-body">
+                        <div class="row">
+                            <!-- <div class="col-6 mb-4">
+                                <button type="button" class="btn btn-sm btn-gradient-dark px-4 radius-30 float-left" data-route="<%= AdminRoute('/NewsAdd') %>" data-bs-toggle="modal" data-bs-target="#form-modal">
+                                    <i class='bx bx-edit'></i>  ADD
+                                </button>
+                            </div> -->
+                            <hr class="mb-3">
+                            <div class="table-responsive mb-3">
+                                <table  id="example2" class=" display table table-striped table-bordered mb-5">
+                                    <thead class="mb-2 border-1">
+                                        <tr>
+                                            <th>Image</th>
+                                            <th>Title</th>
+                                            <th>Priority</th>
+                                            <th>Category</th>
+                                            <th>Date</th>
+                                            
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    <% if (NewsList && NewsList.length > 0) { %>
+                                        <% NewsList.forEach(NewsList => { %>
+                                        <tr>
+                                            <td><img
+                                            src="<%= NewsList.image %>"
+                                            alt="image" style="width: 50px; height: 50px; object-fit: cover"/> </td>
+                                            <td>
+                                            <%  
+                                                let title_word = NewsList.title.split(' '); 
+                                                let short_title = title_word.slice(0, 5).join(' '); 
+                                                if (title_word.length > 5) short_title += '...'; %>
+                                                <%= short_title %></td>
+                                            <td><%= NewsList.priority %></td>
+                                            <td><%= NewsList.type %> </td>
+                                            <td><%= NewsList.date %></td>
+                                            
+                                            
+                                            <td>   
+                                            <button class="btn btn-sm btn-primary" data-route="<%= AdminRoute(`/NewsEdit?id=${NewsList.id}`) %>" data-bs-toggle="modal" data-bs-target="#form-modal"><i class='bx bx-edit'></i>
+                                            </button>
+                                            
+                                            <button type="button" class="btn btn-sm btn-danger confirm-box" data-route="<%= AdminRoute(`/NewsDelete?id=${NewsList.id}`) %>" data-tooltip="Delete" data-title="Member Remove" data-content="Are you sure want to delete this news!" data-type="red">
+                                                <i class='bx bxs-trash' ></i>
+                                            </button>
+
+
+                                           </td>
+                                        </tr>
+                                        <% }); %>
+                                    <% }  %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
