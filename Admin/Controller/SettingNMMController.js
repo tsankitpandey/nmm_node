@@ -9,7 +9,6 @@ class SettingNMMController extends BaseController{
             const email = setting.emails;
             const accounts = setting.accounts;
             const settings = setting.settings;
-            // return res.status(200).json({"msg": settings})
             
             res.render("NMM/Setting/SettingIndex", {
                 title: "Email Template List",
@@ -26,34 +25,6 @@ class SettingNMMController extends BaseController{
             res.redirect(res.Admin("/setting"));
         }
     }
-    
-    static async SettingUpdate12(req, res) {
-        const data = req.body;
-        const file = req.files;
-        const accountId = req.params.AccountId;
-        let profile = null;
-        try {
- 
-            if (file && Object.keys(file).length > 0) {
-                profile = await super.uploadFiles(file, "DEMO");
-              } 
-
-            const updateResult = await SettingModel.SettingUpdate(accountId, data, profile);
-    
-            if (updateResult?.affectedRows > 0) {
-                req.flash("success", "Settings updated successfully!");
-            } else {
-                req.flash("warning", "No changes were made.");
-            }
-    
-            return res.redirect('/emailList');
-    
-        } catch (error) {
-            console.error("Error in Settings Update:", error);
-            req.flash("error", "An error occurred while updating settings.");
-            return res.redirect('/emailList');
-        }
-    }
 
     static async SettingUpdate(req, res) {
         const data = req.body;
@@ -68,33 +39,30 @@ class SettingNMMController extends BaseController{
       
         try {
           const result = await SettingModel.SettingUpdate(accountId, data, profile);
-      
           if (result && result.affectedRows > 0) {
-            req.flash("success", "Settings updated successfully!");
-            return res.status(200).redirect(res.Admin("/emailList"));
+            req.flash("success", "data updated successfully!");
+            return res.status(200).redirect(res.Admin("/setting"));
           } else {
-            req.flash("error", "Error in updating Settings.");
-            return res.status(200).redirect(res.Admin("/emailList"));
+            req.flash("error", "Error in updating data.");
+            return res.status(200).redirect(res.Admin("/setting"));
           }
         } catch (error) {
-          console.error("Error  Settings Update:", error);
-          req.flash("error", "Error in updating Settings.");
-          return res.status(200).redirect(res.Admin("/emailList"));
+          console.error("Error  data Update:", error);
+          req.flash("error", "Error in updating data.");
+          return res.status(200).redirect(res.Admin("/setting"));
         }
-      }
-    
+    }
 
     static async EmailUpdate(req, res) {
 
         const data = req.body;
-        const id = req.params.id;
-        return res.status(200).json({id})
+        const id = req.body.settingId;
         try {
             
             const updateResult = await SettingModel.EmailUpdate(data, id);
     
             if (updateResult.affectedRows > 0) {
-                req.flash("success", "Settings updated successfully!");
+                req.flash("success", "Emails updated successfully!");
             } else {
                 req.flash("warning", "No changes were made.");
             }
@@ -102,8 +70,8 @@ class SettingNMMController extends BaseController{
             return res.redirect('/setting');
     
         } catch (error) {
-            console.error("Error in Settings Update:", error);
-            req.flash("error", "An error occurred while updating settings.");
+            console.error("Error in Emails Update:", error);
+            req.flash("error", "An error occurred while updating Emails.");
             return res.redirect('/setting');
         }
     }

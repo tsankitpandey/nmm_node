@@ -42,60 +42,35 @@ class UD_membershipReqController extends BaseController{
             return res.status(200).json({status:'error',message:"An error occurred while Deleting Membership Request."});
         }
     }
+    
 
     static async MembershipReqAprrove(req, res) {
         try {
-            const { id } = req.query; 
+            const { id } = req.query;
     
             const result = await UD_membershipReqModel.MembershipReqAprrove(id);
-            return res.status(200).json({result});
-            if (result && result.success) { 
+    
+            if (result.deleteResult.affectedRows > 0) {
                 return res.status(200).json({
                     status: 'success',
                     message: "Membership Request Approved Successfully",
                     redirect: res.Admin('/MembershipReq')
                 });
             } else {
-                return res.status(400).json({
+                return res.status(200).json({
                     status: 'error',
-                    message: "Failed to Approve Membership Request."
+                    message: "Failed to Approved Membership Request. No rows were affected."
                 });
             }
         } catch (error) {
-            console.error('Error Approving Membership Request:', error);
-            res.status(500).json({ message: 'Internal server error', error });
+            console.error('Error in Membership Request:', error);
+            return res.status(500).json({
+                status: 'error',
+                message: "An error occurred while Approved Membership Request.",
+                details: error
+            });
         }
     }
-    
-
-    static async MembershipReqAprrove132(req, res) {
-        try {
-            const { id } = req.query;
-            const RqApprove = await UD_membershipReqModel.MembershipReqAprrove();
-            // return res.status(200).json({"msg": RqApprove})
-            const result = RqApprove.find(RqApprove => RqApprove.id == id);
-
-            if (result && result.affectedRows > 0) { 
-                return res.status(200).json({status:'success',message:"Membership Request Approve Succeffully", redirect:res.Admin('/MembershipReq')});
-    
-            } else {
-             
-                return res.status(200).json({status:'error',message:"Failed to Approve Membership Request. No rows were affected.'"});
-              
-            }
-       
-        } catch (error) {
-            console.error('Error fetching Membership Request:', error);
-            res.status(500).json({ message: 'Internal server error', error });
-        }
-    }
-
-
-
-
-    
-    
-
 
 }
 module.exports = UD_membershipReqController;

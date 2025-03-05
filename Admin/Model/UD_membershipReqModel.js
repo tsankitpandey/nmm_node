@@ -34,54 +34,52 @@ class UD_membershipReqModel extends BaseModel {
         });
     }
 
-
-    static async MembershipReqAprrove12(id) {
+    static async MembershipReqAprrove(id) {
         const timestamp = Math.floor(Date.now() / 1000);
+    
         return new Promise((resolve, reject) => {
-
             const query = `SELECT * FROM membership_request WHERE id = ?`;
     
-            super.db.query(query, [id], (err, results) => {
+            super.db.query(query, [id], async (err, results) => {
+                if (err) return reject({ error: 'Error fetching data', details: err });
     
-                const memberData = results; 
-                const insertQuery = `
-                INSERT INTO member (first_name, last_name, country, email, password, country_code, contact, login_attempt, created_at)
-                VALUES (?, ?, ?, ?, ?, ?, ?)`;
-                
+                const memberData = results[0];
+                const membershipRequestId = memberData.id;
+                const plainPassword = `100${membershipRequestId}00`;
+    
+                const insert = `
+                    INSERT INTO member (first_name, last_name, country, email, password, country_code, contact, login_attempt, created_at)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+    
                 const values = [
                     memberData.first_name,
                     memberData.last_name,
                     memberData.country,
                     memberData.email,
+                    plainPassword,
                     memberData.country_code,
                     memberData.contact,
-                    memberData.login_attempt = '0',
+                    '0',
                     timestamp
                 ];
-                
-                super.db.query(insertQuery, values, (err, insertResult) => {
-                    console.log(insertResult);
-                    if (err) {
-                        console.error('Error inserting into Member table:', err);
-                        return reject({ error: 'Error inserting Member', details: err });
-                    }
+    
+                super.db.query(insert, values, (err, insertResult) => {
+                    if (err) return reject({ error: 'Error inserting Member', details: err });
     
                     const deleteQuery = `DELETE FROM membership_request WHERE id = ?`;
     
                     super.db.query(deleteQuery, [id], (err, deleteResult) => {
-                        if (err) {
-                            console.error('Error deleting from Membership Request:', err);
-                            return reject({ error: 'Error deleting Membership Request', details: err });
-                        }
+                        if (err) return reject({ error: 'Error deleting Membership Request', details: err });
     
-                        resolve({ success: true, insertResult, deleteResult });
+                        resolve({ insertResult, deleteResult, generatedPassword: plainPassword });
                     });
                 });
             });
         });
     }
+    
 
-    static async MembershipReqAprrove(id) {
+    static async MembershipReqAprrove12(id) {
 
         const timestamp = Math.floor(Date.now() / 1000);
 
@@ -121,7 +119,7 @@ class UD_membershipReqModel extends BaseModel {
                     super.db.query(deleteQuery, [id], (err, deleteResult) => {
                         if (err) return reject({ error: 'Error deleting Membership Request', details: err });
     
-                        resolve({ success: true, insertResult, deleteResult, generatedPassword: plainPassword });
+                        resolve({ insertResult, deleteResult, generatedPassword: plainPassword });
                     });
                 });
             });

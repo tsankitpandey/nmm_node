@@ -156,7 +156,7 @@ route.post('/emailDeactivate', upload.any(), EmailTemplateNMMController.Deactiva
 //setting 
 route.get('/setting', SettingNMMController.SettingIndex);
 route.post('/AccountUpdate', upload.any(), SettingNMMController.SettingUpdate);
-route.post('/emailUpdate/:id', upload.any(), SettingNMMController.EmailUpdate);
+route.post('/emailUpdate', upload.any(), SettingNMMController.EmailUpdate);
 
 // User Directory
 route.get('/MembershipReq', UD_membershipReqController.MembershipReqIndex);
