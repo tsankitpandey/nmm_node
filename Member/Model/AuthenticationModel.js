@@ -14,28 +14,30 @@ class AuthenticationModel extends BaseModel{
         });
     }
 
-    static async signup(data,image) {
+    static async signup(data, image) {
         return new Promise((resolve, reject) => {
             try {
                 const timestamp = Math.floor(Date.now() / 1000);
     
-                data.member_countryCodeMobile = data.member_countryCodeMobile.replace(/[^\x00-\x7F]/g, '');
+                // Remove emoji characters from country codes
+                data.contact = data.contact.replace(/[\uD800-\uDFFF]./g, '').trim(); 
+                data.mobile = data.mobile.replace(/[\uD800-\uDFFF]./g, '').trim();
+                data.telephone = data.telephone.replace(/[\uD800-\uDFFF]./g, '').trim(); 
     
-              
                 const memberQuery = `INSERT INTO membership_request 
                     (first_name, last_name, job_tittle, country, email, contact_country_code, contact_number, mobile_country_code, mobile_number, created_at) 
                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
     
                 const memberValues = [
-                    data.member_firstName ,
-                    data.member_lastName ,
-                    data.member_jobTitle ,
-                    data.member_Country ,
-                    data.member_email ,
-                    data.member_countryCode ,
-                    data.member_contactNumber ,
-                    data.member_countryCodeMobile,
-                    data.member_mobile ,
+                    data.member_firstName,
+                    data.member_lastName,
+                    data.member_jobTitle,
+                    data.member_Country,
+                    data.member_email,
+                    data.contact, // Fixed
+                    data.member_contactNumber,
+                    data.mobile, // Fixed
+                    data.member_mobile,
                     timestamp
                 ];
     
@@ -47,26 +49,24 @@ class AuthenticationModel extends BaseModel{
     
                     const membershipId = memberResult.insertId;
     
-                 
                     const companyQuery = `INSERT INTO company_request 
-                    (member_id, company_name, company_email, country_code, contact_number, branches, city, number_employees, establish_date, membership_plan, Adress_company, about_company,company_logo, created_at) 
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+                        (member_id, company_name, company_email, country_code, contact_number, branches, city, number_employees, establish_date, membership_plan, Adress_company, about_company, company_logo, created_at) 
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
     
                     const companyValues = [
-                        membershipId,            
-                        data.companyName ,       
-                        data.email ,      
-                        data.Company_countryCode = data.Company_countryCode.replace(/[\uD800-\uDFFF]./g, ''), 
-
-                        data.company_telephone ,
-                        data.branches ,       
-                        data.city ,  
+                        membershipId,
+                        data.companyName,
+                        data.email,
+                        data.telephone, // Fixed
+                        data.company_telephone,
+                        data.branches,
+                        data.city,
                         data.numEmployees || 0,
-                        data.companyEstablishmentDate , 
-                        data.membershipPlan ,    
-                        data.companyAddress ,   
-                        data.aboutCompany ,   
-                        image[0].thumbUrl, 
+                        data.companyEstablishmentDate,
+                        data.membershipPlan,
+                        data.companyAddress,
+                        data.aboutCompany,
+                        image[0].thumbUrl,
                         timestamp
                     ];
     
@@ -93,8 +93,5 @@ class AuthenticationModel extends BaseModel{
     }
     
     
-    
-
-
 }
 module.exports=AuthenticationModel;

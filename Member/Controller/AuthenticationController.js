@@ -49,7 +49,7 @@ class AuthenticationController extends BaseController{
     static async signup(req,res){
         const data = req.body;
         const file=req.files;
-        // return res.status(200).json({file})
+        // return res.status(200).json({data})
 
         try{
             const image = await super.uploadFiles(file, "DEMO");
