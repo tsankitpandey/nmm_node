@@ -48,7 +48,7 @@ class UD_membershipReqController extends BaseController{
         try {
             const { id } = req.query;
     
-            const result = await UD_membershipReqModel.MembershipReqAprrove(id);
+            const result = await UD_membershipReqModel.MembershipReqApprove(id);
     
             if (result.deleteResult.affectedRows > 0) {
                 return res.status(200).json({
