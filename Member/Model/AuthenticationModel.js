@@ -14,7 +14,7 @@ class AuthenticationModel extends BaseModel{
         });
     }
 
-    static async signup(data) {
+    static async signup(data,image) {
         return new Promise((resolve, reject) => {
             try {
                 const timestamp = Math.floor(Date.now() / 1000);
@@ -27,15 +27,15 @@ class AuthenticationModel extends BaseModel{
                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
     
                 const memberValues = [
-                    data.member_firstName || 'N/A',
-                    data.member_lastName || 'N/A',
-                    data.member_jobTitle || 'N/A',
-                    data.member_Country || 'N/A',
-                    data.member_email || 'N/A',
-                    data.member_countryCode || '+00',
-                    data.member_contactNumber || '0000000000',
+                    data.member_firstName ,
+                    data.member_lastName ,
+                    data.member_jobTitle ,
+                    data.member_Country ,
+                    data.member_email ,
+                    data.member_countryCode ,
+                    data.member_contactNumber ,
                     data.member_countryCodeMobile,
-                    data.member_mobile || '0000000000',
+                    data.member_mobile ,
                     timestamp
                 ];
     
@@ -49,23 +49,24 @@ class AuthenticationModel extends BaseModel{
     
                  
                     const companyQuery = `INSERT INTO company_request 
-                    (member_id, company_name, company_email, country_code, contact_number, branches, city, number_employees, establish_date, membership_plan, Adress_company, about_company, created_at) 
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+                    (member_id, company_name, company_email, country_code, contact_number, branches, city, number_employees, establish_date, membership_plan, Adress_company, about_company,company_logo, created_at) 
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
     
                     const companyValues = [
                         membershipId,            
-                        data.companyName || 'N/A',       
-                        data.email || 'N/A',      
+                        data.companyName ,       
+                        data.email ,      
                         data.Company_countryCode = data.Company_countryCode.replace(/[\uD800-\uDFFF]./g, ''), 
 
-                        data.company_telephone || '0000000000',
-                        data.branches || 'N/A',       
-                        data.city || 'N/A',  
+                        data.company_telephone ,
+                        data.branches ,       
+                        data.city ,  
                         data.numEmployees || 0,
-                        data.companyEstablishmentDate || '2000-01-01', 
-                        data.membershipPlan || 'Basic',    
-                        data.companyAddress || 'N/A',   
-                        data.aboutCompany || 'N/A',     
+                        data.companyEstablishmentDate , 
+                        data.membershipPlan ,    
+                        data.companyAddress ,   
+                        data.aboutCompany ,   
+                        image[0].thumbUrl, 
                         timestamp
                     ];
     

@@ -48,10 +48,13 @@ class AuthenticationController extends BaseController{
 
     static async signup(req,res){
         const data = req.body;
-        // return res.status(200).json({data})
+        const file=req.files;
+        // return res.status(200).json({file})
 
         try{
-            const result =  await AuthenticationModel.signup(data);
+            const image = await super.uploadFiles(file, "DEMO");
+           
+            const result =  await AuthenticationModel.signup(data,image);
             if (result) {
                 return res.status(200).json({status:"success",msg:"data inserted succesfully"})
                
