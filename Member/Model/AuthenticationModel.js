@@ -34,9 +34,9 @@ class AuthenticationModel extends BaseModel{
                     data.member_jobTitle,
                     data.member_Country,
                     data.member_email,
-                    data.contact, // Fixed
+                    data.contact, 
                     data.member_contactNumber,
-                    data.mobile, // Fixed
+                    data.mobile, 
                     data.member_mobile,
                     timestamp
                 ];
@@ -57,7 +57,7 @@ class AuthenticationModel extends BaseModel{
                         membershipId,
                         data.companyName,
                         data.email,
-                        data.telephone, // Fixed
+                        data.telephone, 
                         data.company_telephone,
                         data.branches,
                         data.city,

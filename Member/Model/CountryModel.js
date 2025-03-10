@@ -17,7 +17,7 @@ class CountryModel extends BaseModel{
 
     static async cityList() {
         return new Promise((resolve, reject) => {
-           super.db.query("SELECT name FROM country ", 
+           super.db.query("SELECT name FROM city", 
             (err, results) => {
                 if (err) {
                     reject(err);

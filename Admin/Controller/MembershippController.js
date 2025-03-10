@@ -29,9 +29,10 @@ class MembershipController extends BaseController {
   }
   static async Membershipinsert(req, res) {
     const data = req.body;
-    // return res.status(200).json({data});
+    
 
     try {
+      
       const result = await MembershipModel.PlanInsert(data);
 
       if (result && result.result.affectedRows > 0) {

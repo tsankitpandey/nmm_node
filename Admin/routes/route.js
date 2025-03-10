@@ -123,7 +123,7 @@ route.post("/planinsert",upload.any(),MembershipController.Membershipinsert);
 route.post("/planedit/:id",upload.any(),MembershipController.MembershipEdit);
 route.post("/planupdate/:id",upload.any(),MembershipController.MembershipUpdate);
 route.get("/plandelete/:id", MembershipController.MembershipDelete);
-route.post('/PlanAdd', PlanNMMController.PlanAdd);
+route.post('/PlanAdd',upload.any(), PlanNMMController.PlanAdd);
 
 // Sponser Router---
 route.get('/sponsor', EventController.sponsorIndex);
