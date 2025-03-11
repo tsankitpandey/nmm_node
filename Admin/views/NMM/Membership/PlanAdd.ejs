@@ -172,7 +172,7 @@
             </div>
 
             <!-- Upload Extra Section -->
-            <div class="collapse show" id="upload-extra">
+            <div class="collapse " id="upload-extra">
               <div class="col-xl-7 mb-3">
                 <label
                   for="upload-extra-photo"
@@ -591,22 +591,7 @@ function toggleFeedLimits(show) {
     }
   }
 
-  function toggleUploadExtra(show) {
-    var uploadExtra = document.getElementById("upload-extra");
-    var uploadPhotoInput = document.getElementById("upload-extra-photo");
-    var uploadVideoInput = document.getElementById("upload-extra-video");
-
-    if (show) {
-      uploadExtra.classList.add("show");
-      uploadExtra.classList.remove("collapse");
-    } else {
-      uploadExtra.classList.remove("show");
-      uploadExtra.classList.add("collapse");
-
-      uploadPhotoInput.value = null;
-      uploadVideoInput.value = null;
-    }
-  }
+  
 
   function toggleBranchOfficeAccess(show) {
     var branchOfficeAccess = document.getElementById(

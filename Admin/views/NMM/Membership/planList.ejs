@@ -30,7 +30,7 @@
                       <tr>
                         <th>Plan</th>
                         <th>Plan Duration</th>
-                        <th>Plan Description</th>
+
                         <th>Fee</th>
                         <th>Status</th>
                         <th>Action</th>
@@ -43,7 +43,7 @@
                           <tr>
                             <td><%= plan.membership_name %></td>
                             <td><%= plan.duration_in_months %> Months</td>
-                            <td><%= plan.description %></td>
+                        
                             <td>$<%= plan.fees %></td>
                             <td><%= plan.status === 1 ? "Active" : "Inactive" %></td>
                             <td>
