@@ -21,7 +21,7 @@ class MembershipController extends BaseController {
         res.send('Feed not found');
 
       }
-    } catch (error) {
+    } catch (error) {                                         
 
         console.error('Membership data is not an array!');
         res.send('Error: Membership data is not available or not an array.');
@@ -29,8 +29,7 @@ class MembershipController extends BaseController {
   }
   static async Membershipinsert(req, res) {
     const data = req.body;
-    
-
+      //  return res.status(200).json({ data});
     try {
       
       const result = await MembershipModel.PlanInsert(data);

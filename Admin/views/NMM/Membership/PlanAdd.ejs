@@ -1,358 +1,643 @@
-<%- contentFor('body') %>
-    <%- contentFor('body') %>
+<%- contentFor('body') %> <%- contentFor('body') %>
 
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="card-title ">Membership Plan</h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="card">
-                    <div class="card-body border border-1 rounded-3">
-                        <form  action="<%=AdminRoute( '/planinsert' )%>"  method="POST" enctype="multipart/form-data">
-                            <input type="hidden" />
-                            <div class="row">
-                                <div class="col-xl-6 col-md-6 ">
-                                    <div class="form-group ">
-                                        <label class="mb-2">MemberShip Name <span class="text-danger">*</span></label>
-                                        <input type="text" name="membership_plans[membership_name]" class="form-control"
-                                            placeholder="MemberShip Name" />
-                                    </div>
-                                </div>
-
-                                <div class="col-xl-6 col-md-6">
-                                    <div class="form-group ">
-                                        <label class="mb-2">Duration in Month <span class="text-danger">*</span></label>
-                                        <input type="number" class="form-control mb-4"
-                                            name="membership_plans[duration_in_months]" placeholder="Month">
-                                    </div>
-                                </div>
-
-                                <div class="col-xl-6 col-md-6">
-                                    <div class="form-group ">
-                                        <label class="mb-2">Fees<span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control mb-4" name="membership_plans[fees]"
-                                            value="" placeholder="Fees">
-                                    </div>
-                                </div>
-
-                                <div class="col-xl-6 col-md-6">
-                                    <div class="form-group ">
-                                        <label class="">Status <span class="text-danger">*</span></label>
-                                        <div class="radio-box form-check-inline">
-                                            <input type="radio" class="form-check-input input-collapse mx-1 text-theme"
-                                                name="membership_plans[status]" value="0" placeholder="Active"
-                                                data-collapse="hide" checked>
-                                            <label class="form-check-label">Activate</label>
-                                        </div>
-                                        <div class="radio-box form-check-inline ">
-                                            <input type="radio" class="form-check-input input-collapse mx-1 text-theme"
-                                                name="membership_plans[status]" value="1" placeholder="Inactive"
-                                                data-collapse="hide">
-                                            <label class="form-check-label">Deactivate</label>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-xl-12 col-md-6">
-                                    <div class="form-group mb-3">
-                                        <label class="mb-2">Description <span class="text-danger">*</span></label>
-                                        <textarea id="elm1" name="area"></textarea>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <div class="col-xl-8 col-md-6">
-                                <div class="form-group mb-3">
-                                    <label>Gallery Access <span class="text-danger"></span></label> &nbsp; &nbsp; &nbsp;
-                                    <div class="form-check form-check-inline">
-                                        <input type="radio" class="form-check-input"
-                                            name="membership_plans[gallery_access]" id="upload-yes" value="1"
-                                            onclick="toggleUploadExtra(true);" checked>
-                                        <label class="form-check-label" for="upload-yes">Yes</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input type="radio" class="form-check-input"
-                                            name="membership_plans[gallery_access]" id="upload-no" value="0"
-                                            onclick="toggleUploadExtra(false);">
-                                        <label class="form-check-label" for="upload-no">No</label>
-                                    </div>
-                                </div>
-
-                                <div id="upload-extra" class="collapse show">
-                                    <div class="col-xl-7 mb-3">
-                                        <label for="upload-extra-photo" class="d-flex align-items-center">Upload Extra
-                                            Photo (Unlimited)
-                                            <input type="number" class="form-control ms-2" id="upload-extra-photo"
-                                                name="membership_plans[uploade_photo]"
-                                                placeholder="Enter Upload Extra Photo"></label>
-                                    </div>
-                                    <div class="col-xl-7 mb-3">
-                                        <label for="upload-extra-video" class="d-flex align-items-center">Upload Extra
-                                            Video (Unlimited) &nbsp;
-                                            <input type="number" class="form-control ms-2" id="upload-extra-video"
-                                                name="membership_plans[upload_video]"
-                                                placeholder="Enter Upload Extra Video"></label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-xl-9 col-md-6">
-                                <div class="form-group mb-3">
-                                    <label>View Personal Contact on Other Profiles <span
-                                            class="text-danger"></span></label>&nbsp; &nbsp;
-                                    <div class="form-check form-check-inline">
-                                        <input type="radio" class="form-check-input"
-                                            name="membership_plans[personal_contact_details]" value="1" checked>
-                                        <label class="form-check-label">Yes</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input type="radio" class="form-check-input"
-                                            name="membership_plans[personal_contact_details]" value="0">
-                                        <label class="form-check-label">No</label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-xl-6 col-md-6">
-                                <div class="form-group mb-3">
-                                    <label>Mobile Access <span class="text-danger"></span></label> &nbsp; &nbsp;
-                                    <div class="form-check form-check-inline">
-                                        <input type="radio" class="form-check-input"
-                                            name="membership_plans[mobile_access]" value="1" checked>
-                                        <label class="form-check-label">Yes</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input type="radio" class="form-check-input"
-                                            name="membership_plans[mobile_access]" value="0">
-                                        <label class="form-check-label">No</label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-xl-6 col-md-6">
-                                <div class="form-group mb-3">
-                                    <label>Attend Events <span class="text-danger"></span></label> &nbsp; &nbsp;
-                                    <div class="form-check form-check-inline">
-                                        <input type="radio" class="form-check-input"
-                                            name="membership_plans[attend_event]" value="1" checked>
-                                        <label class="form-check-label">Yes</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input type="radio" class="form-check-input"
-                                            name="membership_plans[attend_event]" value="0">
-                                        <label class="form-check-label">No</label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-xl-10 col-md-6">
-                                <div class="form-group mb-3">
-                                    <label>Extra Contact <span class="text-danger"></span></label> &nbsp; &nbsp;
-                                    <div class="form-check form-check-inline">
-                                        <input type="radio" class="form-check-input"
-                                            name="membership_plans[extra_contact]" id="extra-yes" value="1"
-                                            onclick="toggleExtraLimits(true);" checked>
-                                        <label class="form-check-label" for="extra-yes">Yes</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input type="radio" class="form-check-input"
-                                            name="membership_plans[extra_contact]" id="extra-no" value="0"
-                                            onclick="toggleExtraLimits(false);">
-                                        <label class="form-check-label" for="feed-no">No</label>
-                                    </div>
-                                </div>
-                                <div id="extra-limits" class="collapse show">
-                                    <div class="col-xl-6 mb-3">
-                                        <label for="extra-per-week" class="d-flex align-items-center">Extra Contact
-                                            limit
-                                            <input type="number" class="form-control mx-3" id="extra-per-week"
-                                                name="membership_plans[extra_contact_limit]"
-                                                placeholder="Enter weekly extra limit"></label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-xl-8 col-md-6">
-                                <div class="form-group mb-3">
-                                    <label>Feed Access </label> &nbsp; &nbsp; &nbsp;
-                                    <div class="form-check form-check-inline">
-                                        <input type="radio" class="form-check-input"
-                                            name="membership_plans[post_access]" id="feed-yes" value="1"
-                                            onclick="toggleFeedLimits(true);" checked>
-                                        <label class="form-check-label" for="feed-yes">Yes</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input type="radio" class="form-check-input"
-                                            name="membership_plans[post_access]" id="feed-no" value="0"
-                                            onclick="toggleFeedLimits(false);">
-                                        <label class="form-check-label" for="feed-no">No</label>
-                                    </div>
-                                </div>
-
-                                <div id="feed-limits" class="collapse show">
-                                    <div class="col-xl-7 mb-3">
-                                        <label for="feed-per-week" class="d-flex align-items-center">Feed per week limit
-                                            <input type="number" class="form-control" id="feed-per-week"
-                                                name="membership_plans[post_per_weak]"
-                                                placeholder="Enter weekly feed limit"></label>
-                                    </div>
-                                    <div class="col-xl-7 mb-3">
-                                        <label for="feed-total" class="d-flex align-items-center">Feed total limit
-                                            &nbsp;
-                                            <input type="number" class="form-control ms-2" id="feed-total"
-                                                name="membership_plans[feeds_upload]"
-                                                placeholder="Enter total feed limit"></label>
-                                    </div>
-                                </div>
-                            </div>
-
-
-
-                            <div class="col-xl-6 col-md-6">
-                                <div class="form-group mb-3">
-                                    <label>Branch Office Access <span class="text-danger"></span></label> &nbsp; &nbsp;
-                                    &nbsp;
-
-                                    <div class="form-check form-check-inline">
-                                        <input type="radio" class="form-check-input "
-                                            name="membership_plans[branch_office_access]" id="branch_office_access-yes"
-                                            value="1" onclick="toggleBranchOfficeAccess(true);" checked>
-                                        <label class="form-check-label" for="branch_office_access-yes">Yes</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input type="radio" class="form-check-input "
-                                            name="membership_plans[branch_office_access]" id="branch_office_access-no"
-                                            value="0" onclick="toggleBranchOfficeAccess(false);">
-                                        <label class="form-check-label" for="branch_office_access-no">No</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-10 col-md-6">
-                                <div id="branch-office-access-limit" class="collapse show">
-                                    <div class="col-xl-6 mb-3">
-                                        <label for="branch-office-limit" class="d-flex align-items-center">Branch Office
-                                            limit
-                                            <input type="number" class="form-control mx-2" id="branch-office-limit"
-                                                name="membership_plans[branch_office_limit]"
-                                                placeholder="Enter branch-office-limit">
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-
-
-
-                            <div class="col-xl-6 col-md-6">
-                                <div class="form-group mb-3">
-                                    <label>Direct Chat </label>
-                                    <div class="form-check form-check-inline">
-                                        <input type="radio" class="form-check-input ms-1"
-                                            name="membership_plans[direct_chat]" value="1" checked> &nbsp;
-                                        <label class="form-check-label">Yes</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input type="radio" class="form-check-input"
-                                            name="membership_plans[direct_chat]" value="0">
-                                        <label class="form-check-label">No</label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-xl-6 col-md-6">
-                                <div class="form-group mb-3">
-                                    <label>Comment Feed<span class="text-danger"></span></label>
-                                    <div class="form-check form-check-inline">
-                                        <input type="radio" class="form-check-input"
-                                            name="membership_plans[comment_feed]" value="1" checked>
-                                        <label class="form-check-label">Yes</label>
-                                    </div>
-                                    <div class="form-check form-check-inline">
-                                        <input type="radio" class="form-check-input"
-                                            name="membership_plans[comment_feed]" value="0">
-                                        <label class="form-check-label">No</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="form-group mb-3">
-                                <button type="submit" class="btn btn-dark">Submit</button>
-                            </div>
-                        </form>
-                    </div>
+<div class="modal-content">
+  <div class="modal-header">
+    <h4 class="card-title">Membership Plan</h4>
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="modal"
+      aria-label="Close"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <div class="card">
+      <div class="card-body border border-1 rounded-3">
+        <form
+          class="needs-validation"
+          action="<%=AdminRoute( '/planinsert' )%>"
+          method="POST"
+          enctype="multipart/form-data"
+          novalidate
+        >
+          <input type="hidden" />
+          <div class="row">
+            <div class="col-xl-6 col-md-6">
+              <div class="form-group">
+                <label class="mb-2"
+                  >MemberShip Name <span class="text-danger">*</span></label
+                >
+                <input
+                  type="text"
+                  name="membership_plans[membership_name]"
+                  class="form-control"
+                  placeholder="MemberShip Name"
+                  required
+                />
+                <div class="invalid-feedback">
+                  Please enter membership name.
                 </div>
-
+              </div>
             </div>
-        </div>
+
+            <div class="col-xl-6 col-md-6">
+              <div class="form-group">
+                <label class="mb-2"
+                  >Duration in Month <span class="text-danger">*</span></label
+                >
+                <input
+                  type="number"
+                  class="form-control"
+                  name="membership_plans[duration_in_months]"
+                  placeholder="Month"
+                  required
+                />
+                <div class="invalid-feedback">Please enter duration.</div>
+              </div>
+            </div>
+
+            <div class="col-xl-6 col-md-6">
+              <div class="form-group">
+                <label class="mb-2 mt-2"
+                  >Fees<span class="text-danger">*</span></label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  name="membership_plans[fees]"
+                  value=""
+                  placeholder="Fees"
+                  required
+                />
+                <div class="invalid-feedback">Please enter Fees.</div>
+              </div>
+            </div>
+
+            <div class="col-xl-6 col-md-6">
+              <div class="form-group">
+                <label class="mt-2"
+                  >Status <span class="text-danger">*</span></label
+                >
+                <div class="radio-box form-check-inline">
+                  <input
+                    type="radio"
+                    class="form-check-input input-collapse mx-1 text-theme"
+                    name="membership_plans[status]"
+                    value="0"
+                    placeholder="Active"
+                    data-collapse="hide"
+                    checked
+                  />
+                  <label class="form-check-label">Activate</label>
+                </div>
+                <div class="radio-box form-check-inline">
+                  <input
+                    type="radio"
+                    class="form-check-input input-collapse mx-1 text-theme"
+                    name="membership_plans[status]"
+                    value="1"
+                    placeholder="Inactive"
+                    data-collapse="hide"
+                  />
+                  <label class="form-check-label">Deactivate</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-xl-12 col-md-6">
+              <div class="form-group mb-3">
+                <label class="mb-2"
+                  >Description <span class="text-danger">*</span></label
+                >
+                <textarea id="elm1" name="area" required></textarea>
+                <div class="invalid-feedback">Please enter Description.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xl-8 col-md-6">
+            <div class="form-group mb-3">
+              <label>Gallery Access</label> &nbsp; &nbsp; &nbsp;
+              <div class="form-check form-check-inline">
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  name="gallery_access"
+                  id="upload-yes"
+                  value="1"
+                  onclick="toggleUnlimited(true);"
+                  checked
+                />
+                <label class="form-check-label" for="upload-yes">Yes</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  name="gallery_access"
+                  id="upload-no"
+                  value="0"
+                  onclick="toggleUnlimited(false);"
+                />
+                <label class="form-check-label" for="upload-no">No</label>
+              </div>
+            </div>
+
+            <!-- Unlimited Access -->
+            <div class="form-group mb-3 collapse show" id="upload-unlimited">
+              <label> Unlimited Access </label> &nbsp; &nbsp; &nbsp;
+              <div class="form-check form-check-inline">
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  name="Gallery_unlimited_access"
+                  id="unlimited-yes"
+                  value="1"
+                  onclick="toggleUploadExtra(false);"
+                  checked
+                />
+                <label class="form-check-label" for="unlimited-yes">Yes</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  name="Gallery_unlimited_access"
+                  id="unlimited-no"
+                  value="0"
+                  onclick="toggleUploadExtra(true);"
+                />
+                <label class="form-check-label" for="unlimited-no">No</label>
+              </div>
+            </div>
+
+            <!-- Upload Extra Section -->
+            <div class="collapse show" id="upload-extra">
+              <div class="col-xl-7 mb-3">
+                <label
+                  for="upload-extra-photo"
+                  class="d-flex align-items-center"
+                  >Upload Extra Photo
+                  <input
+                    type="number"
+                    class="form-control ms-2"
+                    id="upload-extra-photo"
+                    name="upload_photo"
+                    placeholder="Enter Upload Extra Photo"
+                  />
+                </label>
+              </div>
+              <div class="col-xl-7 mb-3">
+                <label
+                  for="upload-extra-video"
+                  class="d-flex align-items-center"
+                  >Upload Extra Video
+                  <input
+                    type="number"
+                    class="form-control ms-2"
+                    id="upload-extra-video"
+                    name="upload_video"
+                    placeholder="Enter Upload Extra Video"
+                  />
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xl-9 col-md-6">
+            <div class="form-group mb-3">
+              <label
+                >View Personal Contact on Other Profiles
+                <span class="text-danger"></span></label
+              >&nbsp; &nbsp;
+              <div class="form-check form-check-inline">
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  name="membership_plans[personal_contact_details]"
+                  value="1"
+                  checked
+                />
+                <label class="form-check-label">Yes</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  name="membership_plans[personal_contact_details]"
+                  value="0"
+                />
+                <label class="form-check-label">No</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xl-6 col-md-6">
+            <div class="form-group mb-3">
+              <label>Mobile Access <span class="text-danger"></span></label>
+              &nbsp; &nbsp;
+              <div class="form-check form-check-inline">
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  name="membership_plans[mobile_access]"
+                  value="1"
+                  checked
+                />
+                <label class="form-check-label">Yes</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  name="membership_plans[mobile_access]"
+                  value="0"
+                />
+                <label class="form-check-label">No</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xl-6 col-md-6">
+            <div class="form-group mb-3">
+              <label>Attend Events <span class="text-danger"></span></label>
+              &nbsp; &nbsp;
+              <div class="form-check form-check-inline">
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  name="membership_plans[attend_event]"
+                  value="1"
+                  checked
+                />
+                <label class="form-check-label">Yes</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  name="membership_plans[attend_event]"
+                  value="0"
+                />
+                <label class="form-check-label">No</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xl-10 col-md-6">
+            <div class="form-group mb-3">
+              <label>Extra Contact <span class="text-danger"></span></label>
+              &nbsp; &nbsp;
+              <div class="form-check form-check-inline">
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  name="membership_plans[extra_contact]"
+                  id="extra-yes"
+                  value="1"
+                  onclick="toggleExtraLimits(true);"
+                  checked
+                />
+                <label class="form-check-label" for="extra-yes">Yes</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  name="membership_plans[extra_contact]"
+                  id="extra-no"
+                  value="0"
+                  onclick="toggleExtraLimits(false);"
+                />
+                <label class="form-check-label" for="feed-no">No</label>
+              </div>
+            </div>
+            <div id="extra-limits" class="collapse show">
+              <div class="col-xl-6 mb-3">
+                <label for="extra-per-week" class="d-flex align-items-center"
+                  >Extra Contact limit
+                  <input
+                    type="number"
+                    class="form-control mx-3"
+                    id="extra-per-week"
+                    name="membership_plans[extra_contact_limit]"
+                    placeholder="Enter weekly extra limit"
+                /></label>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xl-8 col-md-6">
+            <div class="form-group mb-3">
+                <label>Feed Access</label> &nbsp; &nbsp; &nbsp;
+                <div class="form-check form-check-inline">
+                    <input
+                        type="radio"
+                        class="form-check-input"
+                        name="membership_plans[post_access]"
+                        id="feed-yes"
+                        value="1"
+                        onclick="toggleUnlimitedAccess(true);"
+                        checked
+                    />
+                    <label class="form-check-label" for="feed-yes">Yes</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input
+                        type="radio"
+                        class="form-check-input"
+                        name="membership_plans[post_access]"
+                        id="feed-no"
+                        value="0"
+                        onclick="toggleUnlimitedAccess(false);"
+                    />
+                    <label class="form-check-label" for="feed-no">No</label>
+                </div>
+            </div>
+            
+           
+            <div id="unlimited-access" class="form-group mb-3">
+                <label>Unlimited Access</label> &nbsp; &nbsp; &nbsp;
+                <div class="form-check form-check-inline">
+                    <input
+                        type="radio"
+                        class="form-check-input"
+                        name="membership_plans[unlimited_access]"
+                        id="unlimited-yes"
+                        value="1"
+                        onclick="toggleFeedLimits(false);"
+
+                        checked
+                    />
+                    <label class="form-check-label" for="unlimited-yes">Yes</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input
+                        type="radio"
+                        class="form-check-input"
+                        name="membership_plans[unlimited_access]"
+                        id="unlimited-no"
+                        value="0"
+                        onclick="toggleFeedLimits(true);"
+
+                    />
+                    <label class="form-check-label" for="unlimited-no">No</label>
+                </div>
+            </div>
+            
+
+            <div id="feed-limits" class="d-none">
+
+              <div class="col-xl-7 mb-3">
+                <label for="feed-per-week" class="d-flex align-items-center"
+                  >Feed per week limit
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="feed-per-week"
+                    name="membership_plans[post_per_weak]"
+                    placeholder="Enter weekly feed limit"
+                /></label>
+              </div>
+              <div class="col-xl-7 mb-3">
+                <label for="feed-total" class="d-flex align-items-center"
+                  >Feed total limit &nbsp;
+                  <input
+                    type="number"
+                    class="form-control ms-2"
+                    id="feed-total"
+                    name="membership_plans[feeds_upload]"
+                    placeholder="Enter total feed limit"
+                /></label>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xl-6 col-md-6">
+            <div class="form-group mb-3">
+              <label
+                >Branch Office Access <span class="text-danger"></span
+              ></label>
+              &nbsp; &nbsp; &nbsp;
+
+              <div class="form-check form-check-inline">
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  name="membership_plans[branch_office_access]"
+                  id="branch_office_access-yes"
+                  value="1"
+                  onclick="toggleBranchOfficeAccess(true);"
+                  checked
+                />
+                <label class="form-check-label" for="branch_office_access-yes"
+                  >Yes</label
+                >
+              </div>
+              <div class="form-check form-check-inline">
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  name="membership_plans[branch_office_access]"
+                  id="branch_office_access-no"
+                  value="0"
+                  onclick="toggleBranchOfficeAccess(false);"
+                />
+                <label class="form-check-label" for="branch_office_access-no"
+                  >No</label
+                >
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-10 col-md-6">
+            <div id="branch-office-access-limit" class="collapse show">
+              <div class="col-xl-6 mb-3">
+                <label
+                  for="branch-office-limit"
+                  class="d-flex align-items-center"
+                  >Branch Office limit
+                  <input
+                    type="number"
+                    class="form-control mx-2"
+                    id="branch-office-limit"
+                    name="membership_plans[branch_office_limit]"
+                    placeholder="Enter branch-office-limit"
+                  />
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xl-6 col-md-6">
+            <div class="form-group mb-3">
+              <label>Direct Chat </label>
+              <div class="form-check form-check-inline">
+                <input
+                  type="radio"
+                  class="form-check-input ms-1"
+                  name="membership_plans[direct_chat]"
+                  value="1"
+                  checked
+                />
+                &nbsp;
+                <label class="form-check-label">Yes</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  name="membership_plans[direct_chat]"
+                  value="0"
+                />
+                <label class="form-check-label">No</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xl-6 col-md-6">
+            <div class="form-group mb-3">
+              <label>Comment Feed<span class="text-danger"></span></label>
+              <div class="form-check form-check-inline">
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  name="membership_plans[comment_feed]"
+                  value="1"
+                  checked
+                />
+                <label class="form-check-label">Yes</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  name="membership_plans[comment_feed]"
+                  value="0"
+                />
+                <label class="form-check-label">No</label>
+              </div>
+            </div>
+          </div>
+          <hr />
+          <div class="form-group mb-3">
+            <button type="submit" class="btn btn-dark">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function toggleUnlimitedAccess(show) {
+    var unlimitedAccessDiv = document.getElementById("unlimited-access");
+
+    if (show) {
+        unlimitedAccessDiv.classList.remove("d-none"); 
+    } else {
+        unlimitedAccessDiv.classList.add("d-none"); 
+    }
+}
+
+function toggleFeedLimits(show) {
+    var feedLimits = document.getElementById("feed-limits");
+    var feedPerWeekInput = document.getElementById("feed-per-week");
+    var feedTotalInput = document.getElementById("feed-total");
+
+    if (show) {
+        feedLimits.classList.remove("d-none"); 
+    } else {
+        feedLimits.classList.add("d-none"); 
+        feedPerWeekInput.value = ""; 
+        feedTotalInput.value = "";
+    }
+}
 
 
-        <script>
-            function toggleFeedLimits(show) {
-                var feedLimits = document.getElementById("feed-limits");
-                var feedPerWeekInput = document.getElementById("feed-per-week");
-                var feedTotalInput = document.getElementById("feed-total");
+  function toggleUnlimited(show) {
+    var uploadUnlimited = document.getElementById("upload-unlimited");
+    var uploadExtra = document.getElementById("upload-extra");
 
-                if (show) {
-                    feedLimits.classList.add("show");
-                    feedLimits.classList.remove("collapse");
-                } else {
-                    feedLimits.classList.remove("show");
-                    feedLimits.classList.add("collapse");
+    if (show) {
+      uploadUnlimited.classList.add("show");
+    } else {
+      uploadUnlimited.classList.remove("show");
+      uploadExtra.classList.remove("show");
+    }
+  }
+  function toggleUnlimitedAccess(show) {
+    var feedAccessYes = document.getElementById("feed-yes");
+    var unlimitedAccessDiv = document.getElementById("unlimited-access");
 
-                    feedPerWeekInput.value = null;
-                    feedTotalInput.value = null;
-                }
-            }
+    if (show) {
+        unlimitedAccessDiv.classList.remove("d-none"); 
+    } else {
+        unlimitedAccessDiv.classList.add("d-none"); 
+    }
+}
 
-            function toggleUploadExtra(show) {
-                var uploadExtra = document.getElementById("upload-extra");
-                var uploadPhotoInput = document.getElementById("upload-extra-photo");
-                var uploadVideoInput = document.getElementById("upload-extra-video");
+  function toggleUploadExtra(show) {
+    var uploadExtra = document.getElementById("upload-extra");
+    var uploadPhotoInput = document.getElementById("upload-extra-photo");
+    var uploadVideoInput = document.getElementById("upload-extra-video");
 
-                if (show) {
-                    uploadExtra.classList.add("show");
-                    uploadExtra.classList.remove("collapse");
-                } else {
-                    uploadExtra.classList.remove("show");
-                    uploadExtra.classList.add("collapse");
+    if (show) {
+      uploadExtra.classList.add("show");
+    } else {
+      uploadExtra.classList.remove("show");
 
-                    uploadPhotoInput.value = null;
-                    uploadVideoInput.value = null;
-                }
-            }
+      uploadPhotoInput.value = "";
+      uploadVideoInput.value = "";
+    }
+  }
 
-            function toggleBranchOfficeAccess(show) {
+  function toggleUploadExtra(show) {
+    var uploadExtra = document.getElementById("upload-extra");
+    var uploadPhotoInput = document.getElementById("upload-extra-photo");
+    var uploadVideoInput = document.getElementById("upload-extra-video");
 
-                var branchOfficeAccess = document.getElementById("branch-office-access-limit");
-                var branchOfficeLimit = document.getElementById("branch-office-limit");
+    if (show) {
+      uploadExtra.classList.add("show");
+      uploadExtra.classList.remove("collapse");
+    } else {
+      uploadExtra.classList.remove("show");
+      uploadExtra.classList.add("collapse");
 
-                if (show) {
+      uploadPhotoInput.value = null;
+      uploadVideoInput.value = null;
+    }
+  }
 
-                    branchOfficeAccess.classList.add("show");
-                    branchOfficeAccess.classList.remove("collapse");
-                } else {
+  function toggleBranchOfficeAccess(show) {
+    var branchOfficeAccess = document.getElementById(
+      "branch-office-access-limit"
+    );
+    var branchOfficeLimit = document.getElementById("branch-office-limit");
 
-                    branchOfficeAccess.classList.remove("show");
-                    branchOfficeAccess.classList.add("collapse");
+    if (show) {
+      branchOfficeAccess.classList.add("show");
+      branchOfficeAccess.classList.remove("collapse");
+    } else {
+      branchOfficeAccess.classList.remove("show");
+      branchOfficeAccess.classList.add("collapse");
 
-                    branchOfficeLimit.value = null;
-                }
-            }
-            function toggleExtraLimits(show) {
-                var extraLimits = document.getElementById("extra-limits");
-                var extraPerWeekInput = document.getElementById("extra-per-week");
-                var extraTotalInput = document.getElementById("extra-total");
+      branchOfficeLimit.value = null;
+    }
+  }
+  function toggleExtraLimits(show) {
+    var extraLimits = document.getElementById("extra-limits");
+    var extraPerWeekInput = document.getElementById("extra-per-week");
+    var extraTotalInput = document.getElementById("extra-total");
 
-                if (show) {
-                    extraLimits.classList.add("show");
-                    extraLimits.classList.remove("collapse");
-                } else {
-                    extraLimits.classList.remove("show");
-                    extraLimits.classList.add("collapse");
+    if (show) {
+      extraLimits.classList.add("show");
+      extraLimits.classList.remove("collapse");
+    } else {
+      extraLimits.classList.remove("show");
+      extraLimits.classList.add("collapse");
 
-                    extraPerWeekInput.value = null;
-                    extraTotalInput.value = null;
-                }
-            }
-        </script>
+      extraPerWeekInput.value = null;
+      extraTotalInput.value = null;
+    }
+  }
+</script>
