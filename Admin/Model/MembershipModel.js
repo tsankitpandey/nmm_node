@@ -122,8 +122,9 @@ class MembershipModel extends BaseModel {
             post_per_weak = ?, 
             status = ?, 
             upload_video = ?, 
-            uploade_photo = ?
-           
+            uploade_photo = ?,
+            gallary_unlimited_access = ?,
+            membership_plans_unlimited_access= ?
           WHERE id = ?`; 
   
         const values = [
@@ -139,7 +140,7 @@ class MembershipModel extends BaseModel {
           data.membership_plans.extra_contact_limit,
           data.membership_plans.feeds_upload,
           data.membership_plans.fees,
-          data.membership_plans.gallery_access,
+          data.gallery_access,
           data.membership_plans.mobile_access,
           data.membership_plans.personal_contact_details,
           data.membership_plans.post_access,
@@ -147,6 +148,9 @@ class MembershipModel extends BaseModel {
           data.membership_plans.status,
           data.membership_plans.upload_video,
           data.membership_plans.uploade_photo,
+          data.unlimited_gallery_access,
+          data.unlimited_post_access,
+
         
           membershipId // Ensure correct plan is updated
         ];

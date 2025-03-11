@@ -6,8 +6,8 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <!-- <%= JSON.stringify(selectedMembership) %> -->
-          <div class="card">
+        <div class="card">
+          <!-- <%= JSON.stringify(selectedMembership) %> -->
             <div class="card-body border border-1 rounded-3">
               <form action="/planupdate/<%= selectedMembership.id %>" method="POST" enctype="multipart/form-data">
                 <input type="hidden" />
@@ -67,33 +67,37 @@
                   <div class="form-group mb-3">
                     <label>Gallery Access</label> &nbsp; &nbsp; &nbsp;
                     <div class="form-check form-check-inline">
-                      <input type="radio" class="form-check-input" name="gallery_access" id="upload-yes" value="1"
-                        <%=selectedMembership.gallery_access=="1" ? "checked" : "" %> />
-                      <label class="form-check-label" for="upload-yes">Yes</label>
+                      <input type="radio" class="form-check-input" name="gallery_access" id="gallery-yes" value="1"
+                        onchange="toggleUnlimitedeAccess(true);" <%=selectedMembership.gallery_access=="1" ? "checked"
+                        : "" %> />
+                      <label class="form-check-label" for="gallery-yes">Yes</label>
                     </div>
                     <div class="form-check form-check-inline">
-                      <input type="radio" class="form-check-input" name="gallery_access" id="upload-no" value="0"
-                        <%=selectedMembership.gallery_access=="0" ? "checked" : "" %> />
-                      <label class="form-check-label" for="upload-no">No</label>
-                    </div>
-                  </div>
-                  <div class="form-group mb-3">
-                    <label>Unlimitd Access <span class="text-danger"></span></label>
-                    &nbsp; &nbsp; &nbsp;
-                    <div class="form-check form-check-inline">
-                      <input type="radio" class="form-check-input" name="membership_plans[gallery_access]"
-                        id="upload-yes" value="1" onclick="toggleUploadExtra(false);"
-                        <%=selectedMembership.gallary_unlimited_access=="1" ? "checked" : "" %>>
-                      <label class="form-check-label" for="upload-yes">Yes</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                      <input type="radio" class="form-check-input" name="membership_plans[gallery_access]"
-                        id="upload-no" value="0" onclick="toggleUploadExtra(true);"
-                        <%=selectedMembership.gallary_unlimited_access=="0" ? "checked" : "" %>>
-                      <label class="form-check-label" for="upload-no">No</label>
+                      <input type="radio" class="form-check-input" name="gallery_access" id="gallery-no" value="0"
+                        onchange="toggleUnlimitedeAccess(false);" <%=selectedMembership.gallery_access=="0" ? "checked"
+                        : "" %> />
+                      <label class="form-check-label" for="gallery-no">No</label>
                     </div>
                   </div>
 
+                  <div id="unlimited-access-section"
+                    style="display: <%= selectedMembership.gallery_access == '1' ? 'block' : 'none' %>;">
+                    <div class="form-group mb-3">
+                      <label>Unlimited Access</label> &nbsp; &nbsp; &nbsp;
+                      <div class="form-check form-check-inline">
+                        <input type="radio" class="form-check-input" name="unlimited_gallery_access" id="upload-yes"
+                          value="1" onclick="toggleUploadExtra(false);"
+                          <%=selectedMembership.gallary_unlimited_access=="1" ? "checked" : "" %>>
+                        <label class="form-check-label" for="upload-yes">Yes</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input type="radio" class="form-check-input" name="unlimited_gallery_access" id="upload-no"
+                          value="0" onclick="toggleUploadExtra(true);"
+                          <%=selectedMembership.gallary_unlimited_access=="0" ? "checked" : "" %>>
+                        <label class="form-check-label" for="upload-no">No</label>
+                      </div>
+                    </div>
+                  </div>
                   <!-- Upload Extra Section -->
                   <div id="upload-extra"
                     class="<%= selectedMembership.gallary_unlimited_access == '0' ? 'show' : 'collapse' %>">
@@ -195,51 +199,36 @@
                   <div class="form-group mb-3">
                     <label>Feed Access</label> &nbsp; &nbsp; &nbsp;
                     <div class="form-check form-check-inline">
-                        <input
-                            type="radio"
-                            class="form-check-input"
-                            name="membership_plans[post_access]"
-                            id="feed-yes"
-                            value="1"
-                          
-                          
-                          
-                            <%=selectedMembership.post_access==1 ? "checked" :""
-                            %>
-                        />
+                        <input type="radio" class="form-check-input" name="membership_plans[post_access]" id="feed-yes" value="1"
+                            <%= selectedMembership.post_access == 1 ? "checked" : "" %> onchange="toggleUnlimitedAccess();" />
                         <label class="form-check-label" for="feed-yes">Yes</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input
-                            type="radio"
-                            class="form-check-input"
-                            name="membership_plans[post_access]"
-                            id="feed-no"
-                            value="0"
-                           
-                            <%=selectedMembership.post_access==0 ? "checked"
-                        :"" %>
-                        />
+                        <input type="radio" class="form-check-input" name="membership_plans[post_access]" id="feed-no" value="0"
+                            <%= selectedMembership.post_access == 0 ? "checked" : "" %> onchange="toggleUnlimitedAccess();" />
                         <label class="form-check-label" for="feed-no">No</label>
                     </div>
                 </div>
-                  <div class="form-group mb-3">
-                    <label>Unlimited Access </label> &nbsp; &nbsp; &nbsp;
+                
+                <!-- Unlimited Access (Visibility Controlled via Condition) -->
+                <div class="form-group mb-3 <%= selectedMembership.gallary_unlimited_access == '0' ? 'show' : 'collapse' %>" 
+                     id="unlimitedAccessSection">
+                    <label>Unlimited Access</label> &nbsp; &nbsp; &nbsp;
                     <div class="form-check form-check-inline">
-                      <input type="radio" class="form-check-input" name="membership_plans[post_access]" id="feed-yes"
-                        value="1" onclick="toggleFeedLimits(false);" <%=selectedMembership.membership_plans_unlimited_access==1 ? "checked" :""
-                        %>
-                      <label class="form-check-label" for="feed-yes">Yes</label>
+                        <input type="radio" class="form-check-input" name="unlimited_post_access" id="unlimited-yes" value="1"
+                            onclick="toggleFeedLimits(false);" <%= selectedMembership.membership_plans_unlimited_access == 1 ? "checked" : "" %> />
+                        <label class="form-check-label" for="unlimited-yes">Yes</label>
                     </div>
                     <div class="form-check form-check-inline">
-                      <input type="radio" class="form-check-input" name="membership_plans[post_access]" id="feed-no"
-                        value="0" onclick="toggleFeedLimits(true);" <%=selectedMembership.membership_plans_unlimited_access==0 ? "checked"
-                        :"" %>
-                      <label class="form-check-label" for="feed-no">No</label>
+                        <input type="radio" class="form-check-input" name="unlimited_post_access" id="unlimited-no" value="0"
+                            onclick="toggleFeedLimits(true);" <%= selectedMembership.membership_plans_unlimited_access == 0 ? "checked" : "" %> />
+                        <label class="form-check-label" for="unlimited-no">No</label>
                     </div>
-                  </div>
+                </div>
+                
 
-                  <div id="feed-limits" class="<%= selectedMembership.membership_plans_unlimited_access == '0' ? 'show' : 'collapse' %>">
+                  <div id="feed-limits"
+                    class="<%= selectedMembership.membership_plans_unlimited_access == '0' ? 'show' : 'collapse' %>">
                     <div class="col-xl-7 mb-3">
                       <label for="feed-per-week" class="d-flex align-items-center">Feed per week limit
                         <input type="number" class="form-control" id="feed-per-week"
@@ -254,7 +243,7 @@
                   </div>
                 </div>
 
-                <div class="col-xl-6 col-md-6">
+                <!-- <div class="col-xl-6 col-md-6">
                   <div class="form-group mb-3">
                     <label>Branch Office Access <span class="text-danger"></span></label>
                     &nbsp; &nbsp; &nbsp;
@@ -285,7 +274,7 @@
                       </label>
                     </div>
                   </div>
-                </div>
+                </div> -->
 
                 <div class="col-xl-6 col-md-6">
                   <div class="form-group mb-3">
@@ -324,7 +313,7 @@
                 </div>
               </form>
             </div>
-          </div>
+        </div>
       </div>
     </div>
 
@@ -396,4 +385,40 @@
           extraTotalInput.value = null;
         }
       }
+
+      function toggleUnlimitedeAccess(show) {
+        let unlimitedAccessDiv = document.getElementById(
+          "unlimited-access-section"
+        );
+        if (show) {
+          unlimitedAccessDiv.style.display = "block";
+        } else {
+          unlimitedAccessDiv.style.display = "none";
+        }
+      }
+
+      // Ensure correct state on page load
+      window.onload = function () {
+        let galleryYes = document.getElementById("gallery-yes");
+        toggleUnlimitedeAccess(galleryYes.checked);
+      };
+      
+
+      function toggleUnlimitedAccess() {
+        var feedYes = document.getElementById("feed-yes");
+        var unlimitedAccessSection = document.getElementById("unlimitedAccessSection");
+
+        if (feedYes.checked) {
+            unlimitedAccessSection.classList.add("show");
+            unlimitedAccessSection.classList.remove("collapse");
+        } else {
+            unlimitedAccessSection.classList.add("collapse");
+            unlimitedAccessSection.classList.remove("show");
+        }
+    }
+
+    // Ensure proper visibility on page load based on preselected values
+    window.onload = function () {
+        toggleUnlimitedAccess();
+    };
     </script>

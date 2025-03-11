@@ -70,6 +70,7 @@ class MembershipController extends BaseController {
 
   static async MembershipUpdate(req, res) {
     const data = req.body;
+
    const  membershipId = req.params.id;
     // return res.status(200).json({data});
 
