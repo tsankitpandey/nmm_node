@@ -22,8 +22,8 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <% if (request.request && request.request.length > 0) { %>
-                                            <% request.request.forEach((requests) => { %>
+                                        <% if (request && request.length > 0) { %>
+                                            <% request.forEach((requests) => { %>
                                                 <!-- <pre><%= JSON.stringify(requests,null,2) %></pre> -->
                                         <tr>
                                             <td><%= requests.first_name %></td>

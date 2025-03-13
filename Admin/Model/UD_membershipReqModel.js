@@ -7,12 +7,12 @@ class UD_membershipReqModel extends BaseModel {
 
             const query = "SELECT * FROM membership_request;";
 
-            super.db.query(query, (err1, request) => {
+            super.db.query(query, (err1, result) => {
                 if (err1) {
                     console.error("Error fetching membership request:", err1);
                     return reject(err1);
                 }
-                resolve({ request });
+                resolve(result);
             });
         });
     } 

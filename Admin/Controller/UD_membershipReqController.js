@@ -76,9 +76,9 @@ class UD_membershipReqController extends BaseController{
             const { id } = req.query;
             // return res.status(200).json({"msg": id})
             const MemberShipDate = await UD_membershipReqModel.MembershipReqIndex();
+            // return res.status(200).json({"msg": MemberShipDate})
+            const MemberShipDates = MemberShipDate?.find(MemberShipDate => MemberShipDate.id == id);
             // return res.status(200).json({"msg": MemberShipDate.id})
-            const MemberShipDates = MemberShipDate.find(MemberShipDate => MemberShipDate.id == id);
-            return res.status(200).json({"msg": MemberShipDate.id})
 
          
                 res.render("user Directory/MembershipDateAdd", {
@@ -98,7 +98,7 @@ class UD_membershipReqController extends BaseController{
     static async MembershipDateUpdate(req, res) {
       const data = req.body; 
       const requestId = req.body.RequestId;
-      return res.status(200).json({"msg":req.body})
+      // return res.status(200).json({"msg":req.body})
       try {
 
           const updateResult = await UD_membershipReqModel.updateMembershipDate(requestId, data);
