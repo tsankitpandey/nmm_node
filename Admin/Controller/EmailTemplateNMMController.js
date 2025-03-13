@@ -1,5 +1,6 @@
 const BaseController=require("./BaseController");
 const EmailTemModel=require("../Model/EmailTemModel")
+
 class EmailTemplateNMMController extends BaseController{
 
     static async EmailTemIndex(req,res){
@@ -165,29 +166,36 @@ class EmailTemplateNMMController extends BaseController{
         }
     }
 
-    static async CustomTemDelete (req,res){
+   
+    static async CustomTemDelete(req, res) {
         try {
+            let { id } = req.query; // Get the `id` parameter from the query
     
-            const { id } = req.query; 
-            // return res.status(200).json({"msg": id})         
-            const result = await EmailTemModel.CustomTemDelete(id);
-            
-            if (result && result.affectedRows > 0) { 
-                req.flash('success', 'custom email deleted successfully!');
-                return res.status(200).redirect(res.Admin('/emailList'));
-    
-            } else {
-                req.flash('error', 'Failed to delete custom email. No rows were affected.');
-                return res.status(200).redirect(res.Admin('/emailList'));
+            if (!id) {
+                req.flash('error', 'No emails selected for deletion.');
+                return res.status(400).redirect(res.Admin('/emailList'));
             }
-        }
-         catch (error) {
-            console.error('Error in ActiveMemebr:', error);
-            req.flash('error', 'An error occurred while Deleting custom email.');
+    
+            const idArray = id.split(",").map(Number); // Convert comma-separated string into an array
+    
+            const result = await EmailTemModel.DeleteTemEmail(idArray);
+    
+            if (result && result.affectedRows > 0) { 
+                req.flash('success', 'Emails deleted successfully!');
+            } else {
+                req.flash('error', 'Failed to delete emails. No rows were affected.');
+            }
+    
             return res.status(200).redirect(res.Admin('/emailList'));
+    
+        } catch (error) {
+            console.error('Error in Email deletion:', error);
+            req.flash('error', 'An error occurred while deleting the emails.');
+            return res.status(500).redirect(res.Admin('/emailList'));
         }
     }
 
+    
     static async CustomTemAdd(req, res){
 
         res.render("NMM/EmailTemplate/CustomTemAdd", { title: "Add", layout: "layout/layout-model", component_title:'EmailTemplate', icon:'<i class="bx bx-home-alt"></i>', page_title: 'Custom Add' })
@@ -215,47 +223,99 @@ class EmailTemplateNMMController extends BaseController{
         
     }
 
+
     static async ActivateTemEmail(req, res) {
         try {
-            const { id } = req.query; 
-            // return res.status(200).json({"msg": id})
-            const result = await EmailTemModel.ActivateTemEmail(id);
-            
+            let { id } = req.query;  // Get the `id` parameter from query
+    
+            if (!id) {
+                req.flash('error', 'No emails selected for activation.');
+                return res.status(400).redirect(res.Admin('/emailList'));
+            }
+    
+            const idArray = id.split(",").map(Number); // Convert comma-separated string into an array
+    
+            const result = await EmailTemModel.ActivateTemEmail(idArray);
+    
             if (result && result.affectedRows > 0) { 
-                req.flash('success', 'Email activated successfully!');
+                req.flash('success', 'Emails activated successfully!');
             } else {
-                req.flash('error', 'Failed to activate email. No rows were affected.');
+                req.flash('error', 'Failed to activate emails. No rows were affected.');
             }
     
             return res.status(200).redirect(res.Admin('/emailList'));
     
         } catch (error) {
             console.error('Error in Email activation:', error);
-            req.flash('error', 'An error occurred while activating the email.');
+            req.flash('error', 'An error occurred while activating the emails.');
             return res.status(500).redirect(res.Admin('/emailList'));
         }
     }
+    
 
     static async DeactivateTemEmail(req, res) {
         try {
-            const { id } = req.query; 
+            let { id } = req.query; 
     
-            const result = await EmailTemModel.DeactivateTemEmail(id);
-            
+            if (!id) {
+                req.flash('error', 'No emails selected for deactivation.');
+                return res.status(400).redirect(res.Admin('/emailList'));
+            }
+    
+            const idArray = id.split(",").map(Number); 
+    
+            const result = await EmailTemModel.DeactivateTemEmail(idArray);
+    
             if (result && result.affectedRows > 0) { 
-                req.flash('success', 'Email Deactivated successfully!');
+                req.flash('success', 'Emails deactivated successfully!');
             } else {
-                req.flash('error', 'Failed to Deactivated email. No rows were affected.');
+                req.flash('error', 'Failed to deactivate emails. No rows were affected.');
             }
     
             return res.status(200).redirect(res.Admin('/emailList'));
     
         } catch (error) {
-            console.error('Error in Email Deactivat:', error);
-            req.flash('error', 'An error occurred while Deactivate the email.');
+            console.error('Error in Email deactivation:', error);
+            req.flash('error', 'An error occurred while deactivating the emails.');
             return res.status(500).redirect(res.Admin('/emailList'));
         }
     }
+    
+
+    static async sendTestEmail(req, res) {
+        try {
+            const { email, ids } = req.body;
+            if (!email || !ids || ids.length === 0) {
+                return res.status(400).json({ status: 'error', message: 'Invalid input data.' });
+            }
+
+            for (const id of ids) {
+                const template = await EmailSetup.emailTemplate(id);
+                // return res.status(200).json({template});
+                if (!template) {
+                    return res.status(404).json({ status: 'error', message: `Email template with ID ${id} not found.` });
+                }
+
+                const sent = await EmailSetup.RequestDemo(email, template);
+                if (!sent) {
+                    return res.status(500).json({ status: 'error', message: `Failed to send email for template ID ${id}.` });
+                }
+            }
+
+            return res.json({
+                message: 'Mail successfully sent.',
+                status: 'success',
+            });
+        } catch (error) {
+            console.error('Error in sendTestEmail:', error);
+            return res.status(500).json({
+                message: 'Failed to send email, please try again.',
+                status: 'error',
+            });
+        }
+    }
+    
+
 
 }
 module.exports = EmailTemplateNMMController;

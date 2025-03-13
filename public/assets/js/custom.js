@@ -1,25 +1,97 @@
 $(document).ready(function () {
   if ($.fn.DataTable) {
-  if ($.fn.dataTable.isDataTable('#example2')) {
-      $('#example2').DataTable().destroy();
+    if ($.fn.dataTable.isDataTable('#example2')) {
+        $('#example2').DataTable().destroy();
+    }
+
+    var table = $('#example2').DataTable({
+        retrieve: true, 
+        lengthChange: false,
+        buttons: ['copy', 'excel', 'pdf', 'print']
+    });
+
+    table.buttons().container()
+        .appendTo('#example2_wrapper .col-md-6:eq(0)');
+
+    if (!$.fn.dataTable.isDataTable('#example')) {
+        $('#example').DataTable();
+    }
   }
 
-  var table = $('#example2').DataTable({
-      retrieve: true, // Retrieve existing instance instead of reinitializing
-      lengthChange: false,
-      buttons: ['copy', 'excel', 'pdf', 'print']
-  });
+    document.querySelectorAll(".form-check-all").forEach(mainCheckbox => {
+     
+        mainCheckbox.addEventListener("change", function () {
+            let table = this.closest("table");
+            let checkboxes = table.querySelectorAll(".form-check-this");
+            checkboxes.forEach(checkbox => checkbox.checked = this.checked);
+        });
+    });
 
-  // Append buttons to DataTable wrapper
-  table.buttons().container()
-      .appendTo('#example2_wrapper .col-md-6:eq(0)');
 
-  // Initialize DataTable for another table (#example) if needed
-  if (!$.fn.dataTable.isDataTable('#example')) {
-      $('#example').DataTable();
-  }
-  }
+    document.querySelectorAll(".form-check-this").forEach(rowCheckbox => {
+        rowCheckbox.addEventListener("change", function () {
+            let table = this.closest("table");
+            let mainCheckbox = table.querySelector(".form-check-all");
+            let allChecked = table.querySelectorAll(".form-check-this:checked").length === table.querySelectorAll(".form-check-this").length;
+            mainCheckbox.checked = allChecked;
+        });
+    });
+
 });
+
+function activateSelectedEmails() {
+    let selectedIds = [];
+    
+    document.querySelectorAll(".form-check-this:checked").forEach(checkbox => {
+        selectedIds.push(checkbox.value);
+    });
+
+    if (selectedIds.length === 0) {
+        alert("Please select at least one email to activate.");
+        return;
+    }
+
+    let idsString = selectedIds.join(",");
+
+    window.location.href = `/emailActivate?id=${idsString}`;
+}
+function deactivateSelectedEmails() {
+    let selectedIds = [];
+
+    document.querySelectorAll(".form-check-this:checked").forEach(checkbox => {
+        selectedIds.push(checkbox.value);
+    });
+
+    if (selectedIds.length === 0) {
+        alert("Please select at least one email to deactivate.");
+        return;
+    }
+
+    let idsString = selectedIds.join(",");
+
+    window.location.href = `/emailDeactivate?id=${idsString}`;
+}
+function deleteSelectedEmails() {
+    let selectedIds = [];
+
+    document.querySelectorAll(".form-check-this:checked").forEach(checkbox => {
+        selectedIds.push(checkbox.value);
+    });
+
+    if (selectedIds.length === 0) {
+        alert("Please select at least one email to delete.");
+        return;
+    }
+
+    if (!confirm("Are you sure you want to delete the selected emails?")) {
+        return;
+    }
+
+    let idsString = selectedIds.join(",");
+
+    window.location.href = `/CustomTemDelete?id=${idsString}`;
+}
+
 
 if ($('.single-select').length) {
 $('.single-select').select2({
@@ -1130,3 +1202,27 @@ function previewImage(event) {
     }
     reader.readAsDataURL(event.target.files[0]); // Convert file to base64 URL
 }
+
+
+
+
+// document.addEventListener("DOMContentLoaded", function () {
+
+//     document.querySelectorAll(".form-check-all").forEach(mainCheckbox => {
+       
+//         mainCheckbox.addEventListener("change", function () {
+//             let table = this.closest("table");
+//             let checkboxes = table.querySelectorAll(".form-check-this");
+//             checkboxes.forEach(checkbox => checkbox.checked = this.checked);
+//         });
+//     });
+
+//     document.querySelectorAll(".form-check-this").forEach(rowCheckbox => {
+//         rowCheckbox.addEventListener("change", function () {
+//             let table = this.closest("table");
+//             let mainCheckbox = table.querySelector(".form-check-all");
+//             let allChecked = table.querySelectorAll(".form-check-this:checked").length === table.querySelectorAll(".form-check-this").length;
+//             mainCheckbox.checked = allChecked;
+//         });
+//     });
+// });

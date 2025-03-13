@@ -29,18 +29,21 @@
                                             <td><%= requests.first_name %></td>
                                             <td><%= requests.email %> </td>
                                             <td><%= requests.contact_number %></td>
-                                            <td>   
+                                            <td>
+                                            <button type="button" class="btn btn-sm btn-primary" data-route="<%= AdminRoute(`/Date?id=${requests.id}`) %>" data-bs-toggle="modal" data-bs-target="#form-modal">
+                                                    <i class='bx bxs-calendar' ></i>
+                                            </button>
                                             <button type="button" class="btn btn-sm btn-success confirm-box" 
                                                 data-route="<%= AdminRoute(`/Approve?id=${requests.id}`) %>" 
                                                 data-tooltip="Approve" 
                                                 data-title="Membership Approve" 
                                                 data-content="Are you sure you want to approve the membership..?" 
                                                 data-type="success">
-                                                <i class='bx bxs-calendar'></i>
+                                                <i class='bx bxs-calendar-check'></i>
                                             </button>
 
                                             <button type="button" class="btn btn-sm btn-danger confirm-box" data-route="<%= AdminRoute(`/RequestDelete?id=${requests.id}`) %>" data-tooltip="Delete" data-title="Member Remove" data-content="Are you sure want to delete this news!" data-type="red">
-                                                <i class='bx bxs-trash' ></i>
+                                                <i class='bx bxs-calendar-x' ></i>
                                             </button>
 
                                            </td>

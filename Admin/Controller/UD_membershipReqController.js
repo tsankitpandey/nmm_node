@@ -71,6 +71,53 @@ class UD_membershipReqController extends BaseController{
             });
         }
     }
+    static async MembershipDateAdd(req,res){
+        try {
+            const { id } = req.query;
+            // return res.status(200).json({"msg": id})
+            const MemberShipDate = await UD_membershipReqModel.MembershipReqIndex();
+            // return res.status(200).json({"msg": MemberShipDate.id})
+            const MemberShipDates = MemberShipDate.find(MemberShipDate => MemberShipDate.id == id);
+            return res.status(200).json({"msg": MemberShipDate.id})
+
+         
+                res.render("user Directory/MembershipDateAdd", {
+                layout: "layout/layout-model",
+                title: "MemberShip Date",
+                page_title: "MemberShip Date",
+                MemberShipDates,
+          
+            });
+       
+        } catch (error) {
+            console.error('Error fetching News:', error);
+            res.status(500).json({ message: 'Internal server error', error });
+        }
+    }
+    
+    static async MembershipDateUpdate(req, res) {
+      const data = req.body; 
+      const requestId = req.body.RequestId;
+      return res.status(200).json({"msg":req.body})
+      try {
+
+          const updateResult = await UD_membershipReqModel.updateMembershipDate(requestId, data);
+         
+          if (updateResult.affectedRows > 0) {
+              req.flash("success", "Membership Date Updated successfully!");
+              return res.status(200).redirect(res.Admin('/MembershipReq'));
+          } else {
+              req.flash("warning", "Failed to Update Membership Date. No rows were affected.");
+              return res.status(200).redirect(res.Admin('/MembershipReq'));
+          }
+      } catch (error) {
+          console.error("Error in Membership Date:", error);
+          req.flash("error", "An error occurred while updating the Membership Date.");
+          return res.status(200).redirect(res.Admin('/MembershipReq'));
+      }
+      }
+
+   
 
 }
 module.exports = UD_membershipReqController;

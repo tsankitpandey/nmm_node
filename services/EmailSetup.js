@@ -58,7 +58,7 @@ class EmailSetup {
     static async RequestDemo(data, email_id) {
 
             const template = await this.emailTemplate(email_id);
-
+                // return res.status(200).json({template});
             var msz=template.message.replace('{company_name}', data.CompanyName);
                 msz=msz.replace('{member_name}', data.Name);
                 msz=msz.replace('{company_contact}', data.Number);

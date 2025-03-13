@@ -149,9 +149,13 @@ route.post('/CustomTemSave', upload.any(), EmailTemplateNMMController.CustomTemS
 route.post('/CustomTemEdit', EmailTemplateNMMController.CustomTemEdit);
 route.post('/CustomTemView', EmailTemplateNMMController.CustomTemView);
 route.post('/CustomTemUpdate', upload.any(), EmailTemplateNMMController.CustomTemUpdate);
-route.post('/CustomTemDelete', EmailTemplateNMMController.CustomTemDelete);
-route.post('/emailActivate', upload.any(), EmailTemplateNMMController.ActivateTemEmail);
-route.post('/emailDeactivate', upload.any(), EmailTemplateNMMController.DeactivateTemEmail);
+// route.post('/CustomTemDelete', EmailTemplateNMMController.CustomTemDelete);
+// route.post('/emailActivate', upload.any(), EmailTemplateNMMController.ActivateTemEmail);
+// route.post('/emailDeactivate', upload.any(), EmailTemplateNMMController.DeactivateTemEmail);
+route.get('/CustomTemDelete', EmailTemplateNMMController.CustomTemDelete);
+route.get('/emailActivate', EmailTemplateNMMController.ActivateTemEmail);
+route.get('/emailDeactivate', EmailTemplateNMMController.DeactivateTemEmail);
+route.post('/sendTestEmail', EmailTemplateNMMController.sendTestEmail);
 
 //setting 
 route.get('/setting', SettingNMMController.SettingIndex);
@@ -162,5 +166,8 @@ route.post('/emailUpdate', upload.any(), SettingNMMController.EmailUpdate);
 route.get('/MembershipReq', UD_membershipReqController.MembershipReqIndex);
 route.post('/RequestDelete', UD_membershipReqController.MembershipReqDelete);
 route.post('/Approve', UD_membershipReqController.MembershipReqAprrove);
+route.post('/Date', upload.any(), UD_membershipReqController.MembershipDateAdd);
+route.post("/DateUpdate",upload.any(),UD_membershipReqController.MembershipDateUpdate);
+
 
 module.exports = route;

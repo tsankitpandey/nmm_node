@@ -184,7 +184,32 @@ class UD_membershipReqModel extends BaseModel {
         });
     }
     
+    static async updateMembershipDate(requestId,data) {
+        const timestamp = Math.floor(Date.now() / 1000);
+        return new Promise((resolve, reject) => {
     
+            const query = `
+                UPDATE membership_request 
+                SET 
+                membership_since = ?, 
+                  membership_start = ?, 
+                  membership_expire = ?, 
+                    updated_at = ?
+                WHERE 
+                    id = ?;
+            `;
+
+            super.db.query(query, [data.membership_since, data.membership_start, data.membership_expire, timestamp, requestId], (err, results) => {
+                if (err) {
+                    console.error("Error updating MemberShip Date by ID:", err);
+                    reject(err);
+                } else {
+                    resolve(results);
+                }
+            });
+        });
+    }
+
     
 
     
