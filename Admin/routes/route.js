@@ -168,6 +168,8 @@ route.post('/RequestDelete', UD_membershipReqController.MembershipReqDelete);
 route.post('/Approve', UD_membershipReqController.MembershipReqAprrove);
 route.post('/Date', upload.any(), UD_membershipReqController.MembershipDateAdd);
 route.post("/DateUpdate",upload.any(),UD_membershipReqController.MembershipDateUpdate);
+route.get('/MembershipUpgradeReq', UD_membershipReqController.MembershipUpgradeIndex)
+route.post('/UpgradeApprove', UD_membershipReqController.MembershipUpgradeAprrove),
 
 
 module.exports = route;

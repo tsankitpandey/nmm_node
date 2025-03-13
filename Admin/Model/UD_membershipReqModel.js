@@ -135,55 +135,6 @@ class UD_membershipReqModel extends BaseModel {
         });
     }
     
-    
-
-    static async MembershipReqAprrove12(id) {
-
-        const timestamp = Math.floor(Date.now() / 1000);
-
-        return new Promise((resolve, reject) => {
-            const query = `SELECT * FROM membership_request WHERE id = ?`;
-
-            super.db.query(query, [id], async (err, results) => {
-            if (err) return reject({ error: 'Error fetching data', details: err });
-            if (results.length === 0) return reject({ error: 'No member found' });
-    
-                const memberData = results[0];
-                const membershipRequestId = memberData.id; 
-    
-                const plainPassword = `100${membershipRequestId}00`;
-                
-                const insertQuery = `
-                    INSERT INTO member (first_name, last_name, country, email, password, country_code, contact, login_attempt, created_at)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-    
-                const values = [
-                    memberData.first_name,
-                    memberData.last_name,
-                    memberData.country,
-                    memberData.email,
-                    plainPassword,
-                    memberData.country_code,
-                    memberData.contact,
-                    '0',
-                    timestamp
-                ];
-    
-                super.db.query(insertQuery, values, (err, insertResult) => {
-                    if (err) return reject({ error: 'Error inserting Member', details: err });
-
-                    const deleteQuery = `DELETE FROM membership_request WHERE id = ?`;
-
-                    super.db.query(deleteQuery, [id], (err, deleteResult) => {
-                        if (err) return reject({ error: 'Error deleting Membership Request', details: err });
-    
-                        resolve({ insertResult, deleteResult, generatedPassword: plainPassword });
-                    });
-                });
-            });
-        });
-    }
-    
     static async updateMembershipDate(requestId,data) {
         const timestamp = Math.floor(Date.now() / 1000);
         return new Promise((resolve, reject) => {
@@ -210,7 +161,69 @@ class UD_membershipReqModel extends BaseModel {
         });
     }
 
+    static async MembershipUpgradeIndex() {
+
+        return new Promise((resolve, reject) => {
+
+            const query = `
+                SELECT membership_upgrade_request.*, 
+                company.company_name, company.member_plan 
+                FROM membership_upgrade_request
+                INNER JOIN company ON membership_upgrade_request.company_id = company.id
+                `; 
+
+            super.db.query(query, (err1, result) => {
+                if (err1) {
+                    console.error("Error fetching membership Upgrade request:", err1);
+                    return reject(err1);
+                }
+                resolve(result);
+            });
+        });
+    } 
+
+    static async MembershipReqApprove(id) {
+        const timestamp = Math.floor(Date.now() / 1000);
     
+        return new Promise((resolve, reject) => {
+            
+            const query = `SELECT * FROM membership_log WHERE id = ?`;
+
+            super.db.query(query, [id], async (err, results) => {
+
+                if (err) return reject({ error: 'Error fetching membership upgrade request', details: err });
+    
+                const memberData = results[0];
+    
+                    super.db.query(memberData, membervalue, (err, memberData) => {
+                        if (err) return reject({ error: 'Error upgrading Member', details: err });
+
+                        const insertMembership = `
+                            INSERT INTO membership_log 
+                            (company_id, purchase_date, membership, updated_at)
+                            VALUES (?, ?, ?, ?, ?)
+                        `;
+    
+                        const companyValues = [
+                            insertMembership.company_id,
+                            insertMembership.purchase_date,
+                            insertMembership.membership,
+                            insertMembership.updated_at,
+                            
+                            timestamp
+                        ];
+                        super.db.query(companyValues, companyValues, (err, insertCompanyResult) => {
+                            if (err) return reject({ error: 'Error inserting Company', details: err });
+    
+                
+    
+                        resolve();
+                    });
+
+                });
+            });
+        });
+    }
 
     
 

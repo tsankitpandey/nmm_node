@@ -71,15 +71,14 @@ class UD_membershipReqController extends BaseController{
             });
         }
     }
+
     static async MembershipDateAdd(req,res){
         try {
             const { id } = req.query;
-            // return res.status(200).json({"msg": id})
+            
             const MemberShipDate = await UD_membershipReqModel.MembershipReqIndex();
-            // return res.status(200).json({"msg": MemberShipDate})
-            const MemberShipDates = MemberShipDate?.find(MemberShipDate => MemberShipDate.id == id);
-            // return res.status(200).json({"msg": MemberShipDate.id})
 
+            const MemberShipDates = MemberShipDate?.find(MemberShipDate => MemberShipDate.id == id);
          
                 res.render("user Directory/MembershipDateAdd", {
                 layout: "layout/layout-model",
@@ -115,9 +114,55 @@ class UD_membershipReqController extends BaseController{
           req.flash("error", "An error occurred while updating the Membership Date.");
           return res.status(200).redirect(res.Admin('/MembershipReq'));
       }
-      }
+    }
 
-   
+    static async MembershipUpgradeIndex(req, res) {
+        try {
+            const Upgrade = await UD_membershipReqModel.MembershipUpgradeIndex();
+
+            // return res.status(200).json({"msg": Upgrade})
+            
+            res.render("user Directory/membership_UpgradeReq", {
+                title: "Email Template List",
+                component_title: "Membership Request ",
+                icon: '<i class="bx bx-home-alt"></i>',
+                page_title: "Membership Upgrade  Request List",
+                Upgrade,
+            });
+        } catch (error) {
+            console.error("Error in SettingIndex:", error);
+            req.flash("error", "An error occurred while fetching the email settings.");
+            res.redirect(res.Admin("/MembershipUpgradeReq"));
+        }
+    }
+
+    static async MembershipUpgradeAprrove(req, res) {
+        try {
+            const { id } = req.query;
+    
+            const result = await UD_membershipReqModel.MembershipUpgradeAprrove(id);
+    
+            if (result.deleteResult.affectedRows > 0) {
+                return res.status(200).json({
+                    status: 'success',
+                    message: "Membership Request Approved Successfully",
+                    redirect: res.Admin('/MembershipReq')
+                });
+            } else {
+                return res.status(200).json({
+                    status: 'error',
+                    message: "Failed to Approved Membership Request. No rows were affected."
+                });
+            }
+        } catch (error) {
+            console.error('Error in Membership Request:', error);
+            return res.status(500).json({
+                status: 'error',
+                message: "An error occurred while Approved Membership Request.",
+                details: error
+            });
+        }
+    }
 
 }
 module.exports = UD_membershipReqController;
