@@ -7,14 +7,11 @@ class AuthenticationController extends BaseController{
 
     static async loginVerify(req,res){
         const {email, password} = req.body;
-       
-      
+    
         if(email) {
-
             const data=await AuthenticationModel.loginVerify(email, password );
-
-         
-            if (data.length>0) {
+        
+            if (Object.keys(data).length > 0) {
                 
                 const token = jwt.sign({ email }, process.env.JWT_SECRET, {
                     expiresIn: "1h", 

@@ -6,10 +6,32 @@ class AuthenticationModel extends BaseModel{
             const query = `SELECT * FROM member WHERE email = '${email}' AND password = '${password}'`;
             
             super.db.query(query,  (err, result) => {
+
                 if (err) {
                     return reject(err);
                 }
-                resolve(result);
+
+                const query2 = `SELECT 
+                    membership_plans.*
+                FROM 
+                    member 
+                INNER JOIN 
+                    company ON company.id = member.company_id
+                INNER JOIN 
+                    membership_plans ON membership_plans.id = SUBSTRING_INDEX(company.member_plan, ':', 1) 
+                WHERE 
+                    member.email = '${email}' 
+                    AND member.password = '${password}';`;
+                
+                super.db.query(query2,  (err, result2) => {
+                    if (err) {
+                        return reject(err);
+                    }
+                    console.log(result2[0])
+                    delete result2[0].description;
+                    resolve({member:result[0],membership_plan:result2[0]});
+                });    
+               
             });
         });
     }
