@@ -182,48 +182,102 @@ class UD_membershipReqModel extends BaseModel {
         });
     } 
 
-    static async MembershipReqApprove(id) {
+    static async MembershipUpgradeApprove(id) {
         const timestamp = Math.floor(Date.now() / 1000);
     
         return new Promise((resolve, reject) => {
-            
-            const query = `SELECT * FROM membership_log WHERE id = ?`;
-
-            super.db.query(query, [id], async (err, results) => {
-
-                if (err) return reject({ error: 'Error fetching membership upgrade request', details: err });
+            const query = `SELECT * FROM membership_upgrade_request WHERE id = ?`;
     
-                const memberData = results[0];
+            super.db.query(query, [id], (err, results) => {
+                if (err) {
+                    
+                    return reject({ error: 'Error fetching membership upgrade request', details: err });
+                }
     
-                    super.db.query(memberData, membervalue, (err, memberData) => {
-                        if (err) return reject({ error: 'Error upgrading Member', details: err });
-
-                        const insertMembership = `
-                            INSERT INTO membership_log 
-                            (company_id, purchase_date, membership, updated_at)
-                            VALUES (?, ?, ?, ?, ?)
+                console.log("✅ Query Results:", results); 
+    
+                if (!results || results.length === 0) {
+                    
+                    return reject({ error: 'No membership upgrade request found' });
+                }
+    
+                const upgradeData = results[0];  
+                console.log("Upgrade Data:", upgradeData);
+    
+                const insertUpgrade = `
+                    INSERT INTO membership_log (company_id, purchase_date, membership, created_at)
+                    VALUES (?, ?, ?, ?)
+                `;
+                
+                const upgradeValues = [
+                    upgradeData.company_id,
+                    upgradeData.created_at,  
+                    upgradeData.membership_id, 
+                    timestamp
+                ];
+    
+                console.log("🔹 Inserting into membership_log:", upgradeValues);
+    
+                super.db.query(insertUpgrade, upgradeValues, (err, insertUpgradeResult) => {
+                    if (err) {
+                        console.error("❌ Error inserting into membership_log:", err);
+                        return reject({ error: 'Error inserting into membership_log', details: err });
+                    }
+    
+                    console.log("✅ Inserted into membership_log:", insertUpgradeResult);
+    
+                    const logId = insertUpgradeResult.insertId;  
+                    console.log("🔹 Membership Log ID:", logId);
+    
+                    const query1 = `SELECT * FROM membership_log WHERE id = ?`;
+    
+                    super.db.query(query1, [logId], (err, fetchData) => {
+                        if (err) {
+                            console.error("❌ Error fetching membership log:", err);
+                            return reject({ error: 'Error fetching membership log', details: err });
+                        }
+    
+                        if (!fetchData || fetchData.length === 0) {
+                            console.error("❌ No membership log found for ID:", fetchData);
+                            return reject({ error: 'No membership log found' });
+                        }
+                        fetchDataResult = fetchData[0];
+                        console.log(fetchDataResult);
+                        const upgradeCompany = `
+                            UPDATE company 
+                            SET 
+                            member_plan = ?, 
+                            membership_log_id = ?,  
+                                updated_at = ?
+                            WHERE 
+                                id = ?;
                         `;
     
-                        const companyValues = [
-                            insertMembership.company_id,
-                            insertMembership.purchase_date,
-                            insertMembership.membership,
-                            insertMembership.updated_at,
+                        const companyValue = [
+                            upgradeData.membership_id,
+                            logId,
+                            timestamp  
                             
-                            timestamp
                         ];
-                        super.db.query(companyValues, companyValues, (err, insertCompanyResult) => {
-                            if (err) return reject({ error: 'Error inserting Company', details: err });
     
-                
+                        console.log("🔹 Inserting into company:", companyValue);
     
-                        resolve();
+                        super.db.query(upgradeCompany, companyValue, (err, companyResult) => {
+                            if (err) {
+                                console.error("❌ Error inserting into company:", err);
+                                return reject({ error: 'Error inserting into company', details: err });
+                            }
+    
+                            console.log("✅ Inserted into company:", companyResult);
+                            resolve({ insertUpgradeResult, companyResult });
+                        });
                     });
-
                 });
             });
         });
     }
+    
+    
 
     
 

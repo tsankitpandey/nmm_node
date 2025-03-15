@@ -136,33 +136,36 @@ class UD_membershipReqController extends BaseController{
         }
     }
 
-    static async MembershipUpgradeAprrove(req, res) {
+    static async MembershipUpgradeApprove(req, res) {
         try {
-            const { id } = req.query;
+
+            const { id } = req.query;  
+            const result = await UD_membershipReqModel.MembershipUpgradeApprove(id);
+            // return res.status(200).json({"msg": id});
     
-            const result = await UD_membershipReqModel.MembershipUpgradeAprrove(id);
-    
-            if (result.deleteResult.affectedRows > 0) {
+            return res.status(200).json({"msg":result})
+            if (result.insertUpgradeResult.affectedRows > 0) {
                 return res.status(200).json({
                     status: 'success',
-                    message: "Membership Request Approved Successfully",
-                    redirect: res.Admin('/MembershipReq')
+                    message: "Upgrade Membership Request Approved Successfully",
+                    redirect: res.Admin('/MembershipUpgradeReq')
                 });
             } else {
                 return res.status(200).json({
                     status: 'error',
-                    message: "Failed to Approved Membership Request. No rows were affected."
+                    message: "Failed to Approve Membership Upgrade Request. No rows were affected."
                 });
             }
         } catch (error) {
             console.error('Error in Membership Request:', error);
             return res.status(500).json({
                 status: 'error',
-                message: "An error occurred while Approved Membership Request.",
+                message: "An error occurred while approving the Membership Request.",
                 details: error
             });
         }
     }
+    
 
 }
 module.exports = UD_membershipReqController;
