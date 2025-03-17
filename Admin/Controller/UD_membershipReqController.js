@@ -43,7 +43,6 @@ class UD_membershipReqController extends BaseController{
         }
     }
     
-
     static async MembershipReqAprrove(req, res) {
         try {
             const { id } = req.query;
@@ -143,7 +142,7 @@ class UD_membershipReqController extends BaseController{
             const result = await UD_membershipReqModel.MembershipUpgradeApprove(id);
             // return res.status(200).json({"msg": id});
     
-            return res.status(200).json({"msg":result})
+            // return res.status(200).json({"msg":result})
             if (result.insertUpgradeResult.affectedRows > 0) {
                 return res.status(200).json({
                     status: 'success',
@@ -163,6 +162,27 @@ class UD_membershipReqController extends BaseController{
                 message: "An error occurred while approving the Membership Request.",
                 details: error
             });
+        }
+    }
+
+    static async MembershipUpgradeRej (req,res){
+        try {
+    
+            const { id } = req.query;
+        
+            const result = await UD_membershipReqModel.MembershipUpgradeRej(id);
+            if (result && result.affectedRows > 0) { 
+                return res.status(200).json({status:'success',message:"Upgrade Membership Request Rejected Succeffully", redirect:res.Admin('/MembershipUpgradeReq')});
+    
+            } else {
+             
+                return res.status(200).json({status:'error',message:"Failed to Reject Upgrade Membership Request. No rows were affected.'"});
+              
+            }
+        }
+         catch (error) {
+            console.error('Error in Upgrade Membership Request:', error);
+            return res.status(200).json({status:'error',message:"An error occurred while Rejecting Upgrade Membership Request."});
         }
     }
     

@@ -170,6 +170,7 @@ route.post('/Date', upload.any(), UD_membershipReqController.MembershipDateAdd);
 route.post("/DateUpdate",upload.any(),UD_membershipReqController.MembershipDateUpdate);
 route.get('/MembershipUpgradeReq', UD_membershipReqController.MembershipUpgradeIndex)
 route.post('/UpgradeApprove', UD_membershipReqController.MembershipUpgradeApprove),
+route.post('/UpgradeReject', UD_membershipReqController.MembershipUpgradeRej);
 
 
 module.exports = route;

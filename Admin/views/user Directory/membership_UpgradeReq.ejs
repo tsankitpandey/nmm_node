@@ -28,8 +28,20 @@
                                                 <!-- <pre><%= JSON.stringify(Upgrades,null,2) %></pre> -->
                                         <tr>
                                             <td><%= Upgrades.company_name %></td>
-                                            <td><%= Upgrades.member_plan %> </td>
-                                            <td><%= Upgrades.membership_id %></td>
+                                            <td>
+                                                <% 
+                                                  const memberPlan = Upgrades.member_plan; 
+                                                  const planParts = memberPlan.split(':');
+                                                  const planId = planParts[0];
+                                                  const plan = planParts[1]; 
+                                                %>
+                                                <%= plan %>
+                                              </td>
+                                            <td><% const newPlan = Upgrades.membership_id;
+                                                const planPart =  newPlan.split(':'); 
+                                                const newplanId = planParts[0];
+                                                const Newplan = planPart[1]; %>
+                                                <%= Newplan %></td>
                                             <td>   
                                             <button type="button" class="btn btn-sm btn-success confirm-box" 
                                                 data-route="<%= AdminRoute(`/UpgradeApprove?id=${Upgrades.id}`) %>" 
@@ -41,7 +53,7 @@
                                             </button>
 
                                             <button type="button" class="btn btn-sm btn-danger confirm-box" data-route="<%= AdminRoute(`/UpgradeReject?id=${Upgrades.id}`) %>" data-tooltip="Delete" data-title="Membership Reject" data-content="Are you sure want to Reject this Membership Upgrade!" data-type="red">
-                                                <i class='bx bxs-trash' ></i>
+                                                <i class='bx bxs-calendar-x' ></i>
                                             </button>
 
                                            </td>

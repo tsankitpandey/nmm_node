@@ -194,15 +194,7 @@ class UD_membershipReqModel extends BaseModel {
                     return reject({ error: 'Error fetching membership upgrade request', details: err });
                 }
     
-                console.log("✅ Query Results:", results); 
-    
-                if (!results || results.length === 0) {
-                    
-                    return reject({ error: 'No membership upgrade request found' });
-                }
-    
-                const upgradeData = results[0];  
-                console.log("Upgrade Data:", upgradeData);
+                const upgradeData = results[0];
     
                 const insertUpgrade = `
                     INSERT INTO membership_log (company_id, purchase_date, membership, created_at)
@@ -216,33 +208,26 @@ class UD_membershipReqModel extends BaseModel {
                     timestamp
                 ];
     
-                console.log("🔹 Inserting into membership_log:", upgradeValues);
-    
                 super.db.query(insertUpgrade, upgradeValues, (err, insertUpgradeResult) => {
                     if (err) {
-                        console.error("❌ Error inserting into membership_log:", err);
                         return reject({ error: 'Error inserting into membership_log', details: err });
                     }
     
-                    console.log("✅ Inserted into membership_log:", insertUpgradeResult);
-    
                     const logId = insertUpgradeResult.insertId;  
-                    console.log("🔹 Membership Log ID:", logId);
+
+                    const query1 = `
+                    SELECT membership_log.* 
+                    FROM membership_log
+                    INNER JOIN company ON membership_log.company_id = company.id
+                    `; 
     
-                    const query1 = `SELECT * FROM membership_log WHERE id = ?`;
-    
-                    super.db.query(query1, [logId], (err, fetchData) => {
-                        if (err) {
-                            console.error("❌ Error fetching membership log:", err);
+                    super.db.query(query1,  (err, fetchData) => {
+                        if (err) {     
                             return reject({ error: 'Error fetching membership log', details: err });
                         }
     
-                        if (!fetchData || fetchData.length === 0) {
-                            console.error("❌ No membership log found for ID:", fetchData);
-                            return reject({ error: 'No membership log found' });
-                        }
-                        fetchDataResult = fetchData[0];
-                        console.log(fetchDataResult);
+                        const fetchDataResult = fetchData[0];
+                        
                         const upgradeCompany = `
                             UPDATE company 
                             SET 
@@ -256,30 +241,47 @@ class UD_membershipReqModel extends BaseModel {
                         const companyValue = [
                             upgradeData.membership_id,
                             logId,
-                            timestamp  
+                            timestamp,
+                            upgradeData.company_id  
                             
                         ];
     
-                        console.log("🔹 Inserting into company:", companyValue);
-    
                         super.db.query(upgradeCompany, companyValue, (err, companyResult) => {
                             if (err) {
-                                console.error("❌ Error inserting into company:", err);
                                 return reject({ error: 'Error inserting into company', details: err });
                             }
+
+                            const deleteUpgrade = `DELETE FROM membership_upgrade_request WHERE id = ?`;
     
-                            console.log("✅ Inserted into company:", companyResult);
-                            resolve({ insertUpgradeResult, companyResult });
+                            super.db.query(deleteUpgrade, [id], (err, deleteCompResult) => {
+                               
+                                if (err) return reject({ error: 'Error deleting Company Request', details: err });
+                            resolve({ insertUpgradeResult, companyResult, deleteCompResult });
                         });
+                    });
                     });
                 });
             });
         });
     }
-    
-    
 
+    static async MembershipUpgradeRej(id) {
+        return new Promise((resolve, reject) => {
+            const query = `
+                DELETE FROM membership_upgrade_request
+                WHERE id = ?`;
     
+            super.db.query(query, [id], (err, results) => {
+                if (err) {
+                    console.error('Error executing Rejecting query:', err);
+                    return reject({ error: 'Error Rejecting Member Request', details: err });
+                }
+    
+                resolve(results);
+            });
+        });
+    }
+       
 
 }
 module.exports = UD_membershipReqModel;
