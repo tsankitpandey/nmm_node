@@ -41,14 +41,20 @@ class AuthenticationModel extends BaseModel{
             try {
                 const timestamp = Math.floor(Date.now() / 1000);
     
-                // Remove emoji characters from country codes
-                data.contact = data.contact.replace(/[\uD800-\uDFFF]./g, '').trim(); 
-                data.mobile = data.mobile.replace(/[\uD800-\uDFFF]./g, '').trim();
-                data.telephone = data.telephone.replace(/[\uD800-\uDFFF]./g, '').trim(); 
+               
+                const removeEmojis = (text) => text.replace(/[\uD83C-\uDBFF\uDC00-\uDFFF]+/g, '').trim();
+    
+               
+                const contact = removeEmojis(data.contact);
+                const telephone = removeEmojis(data.telephone);
+    
+              
+                const memberBirthday = data.member_birthday ? Math.floor(new Date(data.member_birthday).getTime() / 1000) : null;
+                const companyEstablishmentDate = data.companyEstablishmentDate ? Math.floor(new Date(data.companyEstablishmentDate).getTime() / 1000) : null;
     
                 const memberQuery = `INSERT INTO membership_request 
-                    (first_name, last_name, job_tittle, country, email, contact_country_code, contact_number, mobile_country_code, mobile_number, created_at) 
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+                    (first_name, last_name, job_tittle, country, email, contact_country_code, contact_number, birth_date, created_at) 
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
     
                 const memberValues = [
                     data.member_firstName,
@@ -56,45 +62,43 @@ class AuthenticationModel extends BaseModel{
                     data.member_jobTitle,
                     data.member_Country,
                     data.member_email,
-                    data.contact, 
+                    contact, 
                     data.member_contactNumber,
-                    data.mobile, 
-                    data.member_mobile,
+                    memberBirthday,
                     timestamp
                 ];
     
                 super.db.query(memberQuery, memberValues, (err, memberResult) => {
                     if (err) {
-                        console.error("Membership Request Insert Error:", err);
+                        console.error("Membership Request Insert Error:", err, "\nQuery:", memberQuery, "\nValues:", memberValues);
                         return reject({ success: false, message: "Failed to insert into membership_request", error: err });
                     }
     
                     const membershipId = memberResult.insertId;
     
                     const companyQuery = `INSERT INTO company_request 
-                        (member_id, company_name, company_email, country_code, contact_number, branches, city, number_employees, establish_date, membership_plan, Adress_company, about_company, company_logo, created_at) 
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+                        (member_id, company_name, company_email, country_code, contact_number, city, number_employees, establish_date, membership_plan, Adress_company, about_company, company_logo, created_at) 
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
     
                     const companyValues = [
                         membershipId,
                         data.companyName,
                         data.email,
-                        data.telephone, 
+                        telephone, 
                         data.company_telephone,
-                        data.branches,
                         data.city,
                         data.numEmployees || 0,
-                        data.companyEstablishmentDate,
+                        companyEstablishmentDate,
                         data.membershipPlan,
                         data.companyAddress,
                         data.aboutCompany,
-                        image[0].thumbUrl,
+                        image[0]?.thumbUrl || null,
                         timestamp
                     ];
     
                     super.db.query(companyQuery, companyValues, (err, companyResult) => {
                         if (err) {
-                            console.error("Company Request Insert Error:", err);
+                            console.error("Company Request Insert Error:", err, "\nQuery:", companyQuery, "\nValues:", companyValues);
                             return reject({ success: false, message: "Failed to insert into company_request", error: err });
                         }
     
