@@ -10,20 +10,17 @@ class MembershipModel extends BaseModel {
         const query = `
           INSERT INTO membership_plans 
           (
-            membership_name, description, attend_event, branch_office_access, 
-            branch_office_limit, comment_feed, direct_chat, duration_in_months, 
-            extra_contact, extra_contact_limit, feeds_upload, fees, gallery_access, 
+            membership_name, description, attend_event,comment_feed, direct_chat, duration_in_months, 
+            extra_contact, extra_contact_limit, post_total_limit, fees, gallery_access, 
             mobile_access, personal_contact_details, post_access, post_per_weak, 
-            status, upload_video, gallary_unlimited_access,membership_plans_unlimited_access, uploade_photo, created_at
+            status, upload_video, gallary_unlimited_access,post_unlimited_access, uploade_photo, created_at
           ) 
-          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
         const values = [
           data.membership_plans.membership_name,  
           data.area,      
           data.membership_plans.attend_event,
-          data.membership_plans.branch_office_access,
-          data.membership_plans.branch_office_limit,
           data.membership_plans.comment_feed,
           data.membership_plans.direct_chat,
           data.membership_plans.duration_in_months,
@@ -37,10 +34,10 @@ class MembershipModel extends BaseModel {
           data.membership_plans.post_access,
           data.membership_plans.post_per_weak,
           data.membership_plans.status,
-          data.membership_plans.upload_video,
+          data.upload_video,
           data.Gallery_unlimited_access,
           data.membership_plans.unlimited_access,
-          data.membership_plans.uploade_photo,
+          data.upload_photo,
           timestamp ,
         
         ];
@@ -106,14 +103,12 @@ class MembershipModel extends BaseModel {
             membership_name = ?, 
             description = ?, 
             attend_event = ?, 
-            branch_office_access = ?, 
-            branch_office_limit = ?, 
             comment_feed = ?, 
             direct_chat = ?, 
             duration_in_months = ?, 
             extra_contact = ?, 
             extra_contact_limit = ?, 
-            feeds_upload = ?, 
+            post_total_limit = ?, 
             fees = ?, 
             gallery_access = ?, 
             mobile_access = ?, 
@@ -124,15 +119,14 @@ class MembershipModel extends BaseModel {
             upload_video = ?, 
             uploade_photo = ?,
             gallary_unlimited_access = ?,
-            membership_plans_unlimited_access= ?
+            post_unlimited_access= ?
           WHERE id = ?`; 
   
         const values = [
           data.membership_plans.membership_name,
           data.area,  
           data.membership_plans.attend_event,
-          data.membership_plans.branch_office_access,
-          data.membership_plans.branch_office_limit,
+          
           data.membership_plans.comment_feed,
           data.membership_plans.direct_chat,
           data.membership_plans.duration_in_months,
@@ -152,7 +146,7 @@ class MembershipModel extends BaseModel {
           data.unlimited_post_access,
 
         
-          membershipId // Ensure correct plan is updated
+          membershipId 
         ];
   
         super.db.query(query, values, (err, result) => {

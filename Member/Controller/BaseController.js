@@ -6,7 +6,8 @@ class BaseController {
     static uploadFiles = uploadFiles; 
     static deleteFiles = deleteFiles; 
     static EmailSetup = EmailSetup;   
-    static db = pool;  
+    static db = pool;
+    static bucketFolder="DEMO";  
 }
 
 module.exports = BaseController;
