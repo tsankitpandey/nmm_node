@@ -181,7 +181,7 @@ static async AddEvent(data, image) {
             data.start_date,
             data.end_date,
             data.Location,
-            data.timeZone , 
+            data.timezone , 
             data.eventStatus,
             timestamp  
         ];
