@@ -1,21 +1,38 @@
 const BaseModel=require('./BaseModel');
 
-class CountryModel extends BaseModel{
+class dataModel extends BaseModel{
 
-    static async countryList() {
+    static async getContainer() {
         return new Promise((resolve, reject) => {
             const query=`SELECT 
-    CONCAT(country.id, ':', country.name) AS value,
-    country.name AS label
-FROM country;
-`
-           super.db.query(query, 
-            (err, results) => {
+                CONCAT(container_type_master.id, ':', container_type_master.name) AS value,
+                container_type_master.name AS label
+            FROM container_type_master;`
+            super.db.query(query, (err, results) => {
                 if (err) {
                     reject(err);
-                } else {
+                } 
+                   
+            
                     resolve(results);
-                }
+                
+            });
+        });
+    }
+    
+    static async airportMaster() {
+        return new Promise((resolve, reject) => {
+            const query=`SELECT 
+                CONCAT(airportmaster.id, ':', airportmaster.City) AS value,
+                airportmaster.City AS label,
+                airportmaster.country_id AS CountryId
+            FROM airportmaster;`
+            super.db.query(query, (err, results) => {
+                if (err) {
+                    reject(err);
+                } 
+                    resolve(results);
+                
             });
         });
     }
@@ -62,4 +79,4 @@ FROM country;
     
 
 }
-module.exports=CountryModel;
+module.exports=dataModel;
