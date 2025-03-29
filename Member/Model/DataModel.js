@@ -37,6 +37,56 @@ class dataModel extends BaseModel{
         });
     }
 
+    static async commodityMaster() {
+        return new Promise((resolve, reject) => {
+            const query = `SELECT 
+                CONCAT(commodity_master.id, ':', commodity_master.commodity_name) AS value,
+                commodity_master.commodity_name AS label
+            FROM commodity_master;`; 
+    
+            super.db.query(query, (err, results) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(results);
+                }
+            });
+        });
+    }
+    
+    static async imoMaster() {
+        return new Promise((resolve, reject) => {
+            const query=`SELECT 
+                CONCAT(imomaster.id, ':', imomaster.name) AS value,
+                imomaster.name AS label,
+                imomaster.imo_value AS imoValue
+            FROM imomaster;`
+            super.db.query(query, (err, results) => {
+                if (err) {
+                    reject(err);
+                } 
+                    resolve(results);
+                
+            });
+        });
+    }
+
+    static async UnMaster() {
+        return new Promise((resolve, reject) => {
+            const query=`SELECT 
+                CONCAT(unmaster.id, ':', unmaster.name) AS value,
+                unmaster.name AS label,
+                unmaster.imomaster_id AS unId
+            FROM unmaster;`
+            super.db.query(query, (err, results) => {
+                if (err) {
+                    reject(err);
+                } 
+                    resolve(results);
+                
+            });
+        });
+    }
     static async cityList() {
         return new Promise((resolve, reject) => {
            super.db.query("SELECT name FROM city", 
