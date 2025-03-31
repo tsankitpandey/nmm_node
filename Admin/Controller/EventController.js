@@ -192,7 +192,7 @@ class EventController extends BaseController {
     try {
       const data = req.body;
       const file = req.files;
-      // return res.status(200).json({ mesg: file });
+      // return res.status(200).json({data });
       const image = await super.uploadFiles(file, "DEMO");
       if (image) {
         const result = await EventModel.EventSave(data, image);

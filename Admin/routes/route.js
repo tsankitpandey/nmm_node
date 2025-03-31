@@ -70,7 +70,7 @@ route.post('/editEms/:id',upload.any(), EventController.EditEms);
 route.post('/updateEms/:id',upload.any(), EventController.UpdateEms);
 route.get('/EmsDelete/:id',upload.any(), EventController.EmsDelete); 
 route.post('/EventSave', upload.any(), EventController.EventSave);
-route.post('/EventSave', upload.any(), EventController.EventSave);
+// route.post('/EventSave', upload.any(), EventController.EventSave);
 route.post('/AddEventConfrece', upload.any(), EventController.AddEvent);
 route.get('/EventEdit',  EventController.editevent);
 route.post('/Eventupdate',upload.any(), EventController.Eventupdate);
@@ -113,7 +113,8 @@ route.post('/sheetImport', CrmNMMController.sheetImport);
 // Business Impact Router---
 route.get('/ViewImpact', BusinessNMMController.ViewIndex);
 route.get('/Transaction', BusinessNMMController.TransactionIndex);
-route.post('/save', BusinessNMMController.TransactionSave);
+route.post('/Save', upload.any(),BusinessNMMController.TransactionSave);
+route.post('/ViewModel', BusinessNMMController.ViewModel);
 
 
 // Business Impact Router---
@@ -149,9 +150,6 @@ route.post('/CustomTemSave', upload.any(), EmailTemplateNMMController.CustomTemS
 route.post('/CustomTemEdit', EmailTemplateNMMController.CustomTemEdit);
 route.post('/CustomTemView', EmailTemplateNMMController.CustomTemView);
 route.post('/CustomTemUpdate', upload.any(), EmailTemplateNMMController.CustomTemUpdate);
-// route.post('/CustomTemDelete', EmailTemplateNMMController.CustomTemDelete);
-// route.post('/emailActivate', upload.any(), EmailTemplateNMMController.ActivateTemEmail);
-// route.post('/emailDeactivate', upload.any(), EmailTemplateNMMController.DeactivateTemEmail);
 route.get('/CustomTemDelete', EmailTemplateNMMController.CustomTemDelete);
 route.get('/emailActivate', EmailTemplateNMMController.ActivateTemEmail);
 route.get('/emailDeactivate', EmailTemplateNMMController.DeactivateTemEmail);
