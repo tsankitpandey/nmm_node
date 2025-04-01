@@ -32,5 +32,9 @@ route.get('/getIMOmaster',DataController.imoMaster);
 route.get('/getUNmaster',DataController.UnMaster);
 route.post('/insertPricing', upload.any(),PricingController.insertPricing);
 route.post('/getSent_request', upload.any(),PricingController.Requestget);
+route.post('/getFillterd_request', upload.any(),PricingController.RequestFillter);
+route.post('/request_accept', upload.any(),PricingController.RequestApprove);
+route.post('/Approvedrequest', upload.any(),PricingController.ApprovedRequest);
+
 
 module.exports = route;

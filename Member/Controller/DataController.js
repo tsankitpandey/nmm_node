@@ -37,6 +37,7 @@ class DataController extends BaseController{
             else{
                 return res.status(200).json({status:"succes",
                     msz:"error in fetching data",
+
                     data:result,
                 })
             }
