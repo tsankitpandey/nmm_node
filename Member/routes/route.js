@@ -16,6 +16,10 @@ const NewsController = require("../Controller/NewsController")
 const EventsController = require("../Controller/EventsController")
 const DataController = require("../Controller/DataController")
 const PricingController= require("../Controller/PricingController")
+const TimelineController=require("../Controller/TimelineController");
+const ProfileController= require("../Controller/ProfileController");
+
+
 route.post('/login',  upload.none(), AuthenticationController.loginVerify);
 route.post('/signup',  upload.any(),  AuthenticationController.signup);
 route.get('/countryList',CountryController.countryList);
@@ -35,6 +39,18 @@ route.post('/getSent_request', upload.any(),PricingController.Requestget);
 route.post('/getFillterd_request', upload.any(),PricingController.RequestFillter);
 route.post('/request_accept', upload.any(),PricingController.RequestApprove);
 route.post('/Approvedrequest', upload.any(),PricingController.ApprovedRequest);
+
+route.post('/TimelineInsert',upload.any(),asyncHandler(TimelineController.FeedsInsert));
+route.post('/TimelineGet',upload.none(),asyncHandler(TimelineController.TimelineGet));
+route.post('/TimelineLike',upload.none(),asyncHandler(TimelineController.TimelineLike));
+
+route.post('/ProfileGet',upload.none(),asyncHandler(ProfileController.profileGet));
+route.post('/SocialUpdate',upload.none(),asyncHandler(ProfileController.SocialUpdate));
+
+
+route.post('/CompanyLogo',upload.any(),asyncHandler(ProfileController.UpdateCompanyLogo));
+route.post('/CompanyBanner',upload.any(),asyncHandler(ProfileController.UpdateCompanyBanner));
+
 
 
 module.exports = route;
