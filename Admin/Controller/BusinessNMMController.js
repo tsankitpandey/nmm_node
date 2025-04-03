@@ -96,14 +96,12 @@ class BusinessNMMController extends BaseController{
             
             const result = await BusinessNMMModel.TransactionSave(data, receiver_id, sender_id);
             // return res.status(200).json({"Received Data:": result});
-
+          
         if (result) {
-        
-            req.flash("success", "Transaction saved successfully!");
-            return res.status(200).redirect(res.Admin("/ViewImpact"));
+          return res.status(200).json({status:'success',message:"Transaction saved successfully!", redirect:res.Admin('/ViewImpact')});
           } else {
-            req.flash("error", "Failed to save Transaction. No rows were affected.");
-            return res.status(200).redirect(res.Admin("/ViewImpact"));
+           
+            return res.status(200).json({status:'error',message:"Failed to save Transaction. No rows were affected", redirect:res.Admin('/ViewImpact')});
           }
         } catch (error) {
           console.error("Transaction Save Error", error);

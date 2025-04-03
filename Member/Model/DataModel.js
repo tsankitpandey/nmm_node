@@ -87,6 +87,24 @@ class dataModel extends BaseModel{
             });
         });
     }
+
+    static async Companylist() {
+        return new Promise((resolve, reject) => {
+            const query = `SELECT 
+                CONCAT(company.id, ':', company.company_name) AS value,
+                company.company_name AS label
+            FROM company;`; 
+            
+            super.db.query(query, (err, results) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(results);
+                }
+            });
+        });
+    }
+    
     static async cityList() {
         return new Promise((resolve, reject) => {
            super.db.query("SELECT name FROM city", 

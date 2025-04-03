@@ -107,8 +107,8 @@ class PricingModel extends BaseModel {
 
     static async RequestApprove(data, image) {
         return new Promise((resolve, reject) => {
-            const timestamp = Date.now(); 
-    
+            const timestamp = Date.now();
+
             const query1 = new Promise((resolve, reject) => {
                 const sql = `UPDATE pricing_request SET accept = 1 WHERE id = ?`;
                 super.db.query(sql, [data.reqId], (updateErr, updateResults) => {
@@ -118,7 +118,7 @@ class PricingModel extends BaseModel {
                     resolve(updateResults);
                 });
             });
-    
+
             const query2 = new Promise((resolve, reject) => {
                 const sql = `INSERT INTO pricing_accept (pricing_request_id, receiver_member_id, invoice, created_at) VALUES (?, ?, ?, ?)`;
                 const values = [data.reqId, data.userId, image[0].thumbUrl, timestamp];
@@ -129,8 +129,8 @@ class PricingModel extends BaseModel {
                     resolve(results);
                 });
             });
-    
-            // Ensure Promise.all is used correctly
+
+
             Promise.all([query1, query2])
                 .then(([updateResults, results]) => {
                     resolve({
@@ -138,11 +138,11 @@ class PricingModel extends BaseModel {
                         results,
                     });
                 })
-                .catch(reject); // Handle errors
+                .catch(reject);
         });
     }
-    
-    
+
+
 
 
     static async ApprovedRequest(id) {
@@ -154,7 +154,7 @@ class PricingModel extends BaseModel {
                 FROM pricing_accept AS pa
                 JOIN member AS m ON pa.receiver_member_id = ${id}
                 WHERE pa.receiver_member_id = ?`;
-    
+
             super.db.query(query, [id], (err, results) => {
                 if (err) {
                     return reject(err);
@@ -162,27 +162,27 @@ class PricingModel extends BaseModel {
                 if (results.length === 0) {
                     return reject(new Error("No pricing request found for the given member ID"));
                 }
-    
-                const pricingRequestIds = results.map(result => result.pricing_request_id); 
-    
-             
+
+                const pricingRequestIds = results.map(result => result.pricing_request_id);
+
+
                 const query2 = `SELECT * FROM pricing_request WHERE id IN (?) AND accept = ?`;
-    
+
                 super.db.query(query2, [pricingRequestIds, 1], (err, updateResults) => {
                     if (err) {
                         return reject(err);
                     }
                     resolve({
-                        pricingRequests: updateResults,  
-                        companyName: results[0].company_name  
+                        pricingRequests: updateResults,
+                        companyName: results[0].company_name
                     });
                 });
             });
         });
     }
-    
-    
-    
+
+
+
 
 
 

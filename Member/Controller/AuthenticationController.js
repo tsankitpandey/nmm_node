@@ -7,6 +7,8 @@ class AuthenticationController extends BaseController{
 
     static async loginVerify(req,res){
         const {email, password} = req.body;
+
+      
     
         if(email) {
             const data=await AuthenticationModel.loginVerify(email, password );

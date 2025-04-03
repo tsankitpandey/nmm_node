@@ -18,6 +18,7 @@ const DataController = require("../Controller/DataController")
 const PricingController= require("../Controller/PricingController")
 const TimelineController=require("../Controller/TimelineController");
 const ProfileController= require("../Controller/ProfileController");
+const BusinessController= require("../Controller/BuisnessController")
 
 
 route.post('/login',  upload.none(), AuthenticationController.loginVerify);
@@ -34,6 +35,7 @@ route.get('/getairportmaster',DataController.airportMaster);
 route.get('/getcommoditymaster',DataController.commodityMaster);
 route.get('/getIMOmaster',DataController.imoMaster);
 route.get('/getUNmaster',DataController.UnMaster);
+route.get('/getcompanyList',DataController.Companylist);
 route.post('/insertPricing', upload.any(),PricingController.insertPricing);
 route.post('/getSent_request', upload.any(),PricingController.Requestget);
 route.post('/getFillterd_request', upload.any(),PricingController.RequestFillter);
@@ -50,6 +52,9 @@ route.post('/SocialUpdate',upload.none(),asyncHandler(ProfileController.SocialUp
 
 route.post('/CompanyLogo',upload.any(),asyncHandler(ProfileController.UpdateCompanyLogo));
 route.post('/CompanyBanner',upload.any(),asyncHandler(ProfileController.UpdateCompanyBanner));
+
+route.post('/insertTransaction',upload.any(),asyncHandler(BusinessController.insertTransaction))
+route.post('/getTransaction',upload.any(),asyncHandler(BusinessController.getTransaction))
 
 
 
