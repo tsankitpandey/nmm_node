@@ -143,6 +143,45 @@ class dataModel extends BaseModel{
         });
     }
     
+    static async Services() {
+        return new Promise((resolve, reject) => {
+          const query = `
+            SELECT service_name AS label, CONCAT(services.id, ':', services.service_name) AS value
+            FROM services
+          `;
+      
+          super.db.query(query, (err, results) => {
+            if (err) {
+              console.error("Error fetching services:", err);
+              return reject(err);
+            }
+            resolve(results);
+          });
+        });
+      }
+      
+      static async InsertServices(companyId, serviceIds) {
+        return new Promise((resolve, reject) => {
+          const servicesString = serviceIds.join(",")
+      
+          const query = `
+            UPDATE company
+            SET service = ?
+            WHERE id = ?
+          `;
+      
+          super.db.query(query, [servicesString, companyId], (err, result) => {
+            if (err) {
+              console.error("Error updating services column:", err);
+              return reject(err);
+            }
+            resolve(result);
+          });
+        });
+      }
+      
+      
+      
     
     
 

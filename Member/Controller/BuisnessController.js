@@ -7,10 +7,10 @@ class BusinessController extends BaseController{
 static async insertTransaction(req, res) {
   const data = req.body;
       
-        const receiver_id =  data.From_Company_Name.value.split(":")[0];
-        const sender_id = data.To_Company_Name.value.split(":")[0];
+        const receiver_id = Number(data.From_Company_Name.split(":")[0])
+        const sender_id = Number(data.To_Company_Name.split(":")[0])
       
-         
+        // return res.status(200).json({receiver_id,sender_id}) 
     try {
         
         const result = await BusinessModel.insertTransaction(data, receiver_id, sender_id);

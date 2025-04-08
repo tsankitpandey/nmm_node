@@ -102,7 +102,101 @@ class ProfileModel extends BaseModel{
             });
         });
     }
-    
+
+    static async EditIntro(data) {
+        return new Promise((resolve, reject) => {
+         
+          const foundationTimestamp = Math.floor(new Date(data.foundationDate).getTime() / 1000);
+      
+          const query = `
+            UPDATE company 
+            SET 
+              bio = ?, 
+              foundation_date = ? 
+            WHERE id = ?
+          `;
+      
+          const values = [data.memberBio, foundationTimestamp, data.company_id];
+      
+          super.db.query(query, values, (err, result) => {
+            if (err) {
+              reject(err);
+            } else {
+              resolve(result);
+            }
+          });
+        });
+      }
+
+      static async updateMember(data) {
+        return new Promise((resolve, reject) => {
+          let query;
+          let values;
+      
+         
+          data.CountryCode = data.CountryCode.replace(/[^\x00-\x7F]/g, "").trim();
+      
+         
+          const hasProfilePic =
+            data.ProfilePicture &&
+            (typeof data.ProfilePicture === "string" ||
+              (typeof File !== "undefined" && data.ProfilePicture instanceof File));
+      
+          if (hasProfilePic) {
+            query = `
+              UPDATE member
+              SET first_name = ?, middle_name = ?, last_name = ?, member_logo = ?, 
+                  job_title = ?, department = ?, country_code = ?, contact = ?
+              WHERE id = ?
+            `;
+      
+            values = [
+              data.FirstName,
+              data.MiddleName,
+              data.LastName,
+              typeof data.ProfilePicture === "string" ? data.ProfilePicture : "", 
+              data.JobTitle,
+              data.Department,
+              data.CountryCode,
+              data.PhoneDirect,
+              data.member_id,
+            ];
+          } else {
+            query = `
+              UPDATE member
+              SET first_name = ?, middle_name = ?, last_name = ?, 
+                  job_title = ?, department = ?, country_code = ?, contact = ?
+              WHERE id = ?
+            `;
+      
+            values = [
+              data.FirstName,
+              data.MiddleName,
+              data.LastName,
+              data.JobTitle,
+              data.Department,
+              data.CountryCode,
+              data.PhoneDirect,
+              data.member_id,
+            ];
+          }
+      
+          // Execute the query
+          super.db.query(query, values, (err, result) => {
+            if (err) {
+              console.error("Error updating member:", err);
+              return reject(err);
+            }
+            resolve(result);
+          });
+        });
+      }
+      
+      
+      
+      
+      
+      
     
     
   

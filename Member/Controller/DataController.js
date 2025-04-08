@@ -136,6 +136,45 @@ class DataController extends BaseController{
     
     }
 
+    static async Services(req,res){
+        try{
+            const result = await dataModel.Services();
+            if(result){
+                return res.status(200).json({status:"success",result})
+            }
+            else{
+                return res.status(200).json({status:"error",result}) 
+            }
+        }
+            catch(error){
+                console.log(error,"error")
+                return res.status(200).json({status:"error",error}) 
+            }
+
+        
+    }
+
+    static async insertCompanyServices(req, res){
+        try {
+          const { selectedServices, companyId } = req.body;
+         
+          if (!selectedServices || !companyId) {
+            return res.status(400).json({ status: "error", message: "Missing required fields" });
+          }
+      
+          const result = await dataModel.InsertServices(companyId, selectedServices);
+          if(result){
+            return res.status(200).json({ status: "success", message: "Services inserted", result });
+          }
+          else{
+            return res.status(200).json({ status: "error", message: " error in Services", result });
+          }
+      
+        } catch (error) {
+          console.error("Insert Services Error:", error);
+          return res.status(200).json({ status: "error", message: "Internal server error", error });
+        }
+      };
 
     }
     module.exports= DataController;

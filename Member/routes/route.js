@@ -19,7 +19,7 @@ const PricingController= require("../Controller/PricingController")
 const TimelineController=require("../Controller/TimelineController");
 const ProfileController= require("../Controller/ProfileController");
 const BusinessController= require("../Controller/BuisnessController")
-
+const GalleryController = require("../Controller/GalleryController")
 
 route.post('/login',  upload.none(), AuthenticationController.loginVerify);
 route.post('/signup',  upload.any(),  AuthenticationController.signup);
@@ -48,6 +48,10 @@ route.post('/TimelineLike',upload.none(),asyncHandler(TimelineController.Timelin
 
 route.post('/ProfileGet',upload.none(),asyncHandler(ProfileController.profileGet));
 route.post('/SocialUpdate',upload.none(),asyncHandler(ProfileController.SocialUpdate));
+route.post('/introUpdate',upload.none(),asyncHandler(ProfileController.EditIntro));
+route.post('/updateMember',upload.any(),asyncHandler(ProfileController.updateMember))
+route.get('/getservices',upload.any(),asyncHandler(DataController.Services))
+route.post('/Insertservices',upload.any(),asyncHandler(DataController.insertCompanyServices))
 
 
 route.post('/CompanyLogo',upload.any(),asyncHandler(ProfileController.UpdateCompanyLogo));
@@ -57,5 +61,14 @@ route.post('/insertTransaction',upload.any(),asyncHandler(BusinessController.ins
 route.post('/getTransaction',upload.any(),asyncHandler(BusinessController.getTransaction))
 
 
+//---------- Gallery's Routes ---------------
+
+route.post('/InsertAlbum',upload.any(), asyncHandler(GalleryController.AlbumInsert));
+route.post('/Insertphoto',upload.any(), asyncHandler(GalleryController.PhotoInsert));
+// reuse the same controller and model for video 
+route.post('/Insertvideo',upload.any(), asyncHandler(GalleryController.PhotoInsert));
+route.post('/MediaGet',upload.any(), asyncHandler(GalleryController.MediaGet));
+route.post('/AlbumGet',upload.any(), asyncHandler(GalleryController.AlbumGet));
+route.post('/Mediadelete',upload.any(), asyncHandler(GalleryController.deleteMedia));
 
 module.exports = route;
