@@ -36,6 +36,48 @@ class GalleryModel extends BaseModel {
     });
   }
 
+  static async updateAlbum(data, images) {
+    return new Promise((resolve, reject) => {
+      const timestamp = Math.floor(Date.now() / 1000);
+     
+     
+      const query1 = `UPDATE album SET title = ?, updated_at = ? WHERE id = ?`;
+      const values = [data.title, timestamp, data.album_id];
+  
+      super.db.query(query1, values, (err, result) => {
+        if (err) {
+          console.log(err);
+          return reject(err);
+        }
+  
+       
+        const query2 = `INSERT INTO gallery (album_id, file_url, extension_type, updated_at) VALUES ?`;
+  
+        const values2 = images.map((image) => [
+          data.album_id,
+          image.file_url,
+          image.extension_type,
+          timestamp,
+        ]);
+  
+        if (values2.length === 0) {
+        
+          return resolve({ albumId: data.album_id, message: 'Album updated without new images' });
+        }
+  
+        super.db.query(query2, [values2], (err1, result1) => {
+          if (err1) {
+            console.log(err1);
+            return reject(err1);
+          }
+  
+          resolve({ albumId: data.album_id, gallery: result1 });
+        });
+      });
+    });
+  }
+  
+
   static async PhotoInsert(data, images) {
     return new Promise((resolve, reject) => {
       const timestamp = Math.floor(Date.now() / 1000);
@@ -90,7 +132,7 @@ class GalleryModel extends BaseModel {
         super.db.query(query1, [ids], (err1, galleryResults) => {
           if (err1) return reject(err1);
 
-          // Group gallery data by album_id
+        
           const groupedGallery = galleryResults.reduce((acc, item) => {
             if (!acc[item.album_id]) {
               acc[item.album_id] = [];
@@ -99,7 +141,7 @@ class GalleryModel extends BaseModel {
             return acc;
           }, {});
 
-          // Combine album title and gallery data
+         
           const finalResult = albumResults.map((album) => ({
             title: album.title,
             album_id: album.id.toString(),
@@ -125,6 +167,26 @@ class GalleryModel extends BaseModel {
       });
     });
   }
+
+  static async deleteGallery(id) {
+    return new Promise((resolve, reject) => {
+      const query = `DELETE FROM album WHERE id = ?`; 
+      super.db.query(query, [id], (err, res) => {     
+        if (err) {
+          reject(err);
+        } else {
+          const query1 = `DELETE FROM gallery WHERE album_id = ?`; 
+          super.db.query(query1,[id],(err1,res1)=>{
+            if (err1) {
+              reject(err1);
+            } else {
+              resolve(res1);
+            }
+          })
+        }
+      });
+    });
+  }
   
 
   static async GetFile(id) {
@@ -146,6 +208,43 @@ class GalleryModel extends BaseModel {
             });
         });
     }
+
+    static async GetAlum(id) {
+      return new Promise((resolve, reject) => {
+  
+              const query = `
+                  SELECT
+                      gallery.file_url,
+                      gallery.extension_type
+                  FROM gallery
+                  WHERE gallery.album_id = ${id}`;
+              
+             super.db.query(query, (err, results) => {
+                  if (err) {
+                      console.error("Database query error:", err); 
+                      return reject(err);
+                  }
+                  resolve(results);
+              });
+          });
+      }
+
+      static async AlbumDelete(id) {
+        return new Promise((resolve, reject) => {
+          const query = `
+            DELETE FROM gallery
+            WHERE album_id = ?`;
+            resolve(id)
+          super.db.query(query, [id], (err, result) => {
+            if (err) {
+              console.error("Database delete error:", err);
+              return reject(err);
+            }
+            resolve(result); 
+          });
+        });
+      }
+      
 }
 
 

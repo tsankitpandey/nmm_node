@@ -45,6 +45,7 @@ route.post('/Approvedrequest', upload.any(),PricingController.ApprovedRequest);
 route.post('/TimelineInsert',upload.any(),asyncHandler(TimelineController.FeedsInsert));
 route.post('/TimelineGet',upload.none(),asyncHandler(TimelineController.TimelineGet));
 route.post('/TimelineLike',upload.none(),asyncHandler(TimelineController.TimelineLike));
+route.post('/MemberTimeline',upload.any(), asyncHandler(GalleryController.deleteMedia));
 
 route.post('/ProfileGet',upload.none(),asyncHandler(ProfileController.profileGet));
 route.post('/SocialUpdate',upload.none(),asyncHandler(ProfileController.SocialUpdate));
@@ -69,6 +70,9 @@ route.post('/Insertphoto',upload.any(), asyncHandler(GalleryController.PhotoInse
 route.post('/Insertvideo',upload.any(), asyncHandler(GalleryController.PhotoInsert));
 route.post('/MediaGet',upload.any(), asyncHandler(GalleryController.MediaGet));
 route.post('/AlbumGet',upload.any(), asyncHandler(GalleryController.AlbumGet));
+route.post('/updateAlbum',upload.any(), asyncHandler(GalleryController.updateAlbum));
+route.post('/deleteAlbum',upload.any(), asyncHandler(GalleryController.deleteAlbum));
 route.post('/Mediadelete',upload.any(), asyncHandler(GalleryController.deleteMedia));
+
 
 module.exports = route;

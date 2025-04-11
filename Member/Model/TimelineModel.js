@@ -151,6 +151,26 @@ static async TimelineGet(data){
 
     })
 }
+
+static async getPostsByCompanyId(companyId) {
+    return new Promise((resolve, reject) => {
+      const query = `
+        SELECT * 
+        FROM company_post 
+        WHERE company_id = ? 
+        ORDER BY id DESC;
+      `;
+  
+      super.db.query(query, [companyId], (err, results) => {
+        if (err) {
+          console.error("Database query error:", err);
+          return reject(err);
+        }
+        resolve(results);
+      });
+    });
+  }
+  
    
 
 static async TimelineLike(data){

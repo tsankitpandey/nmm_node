@@ -50,6 +50,39 @@ class TimelineController extends BaseController{
     
    }
 
+   static async MemberTimeline(req,res,next){
+    const data= req.body;
+    const id = data.id;
+
+    // return res.status(200).json(id)
+    try{
+      const result= await TimelineModel.getPostsByCompanyId(id);
+      if(result.length>0){
+        result.forEach(data => {
+          data.file_url=data.file_url.replace("/thumb/", "/"); 
+        });
+        const sortedPosts = result.sort((a, b) => b.created_at - a.created_at);
+        const updatedPosts = sortedPosts.map(post => {
+          const companyLikesString = post.company_like || '';
+          const companyLikes = companyLikesString.split(',').filter(Boolean).map(Number);
+          const userId = Number(data.userId);
+          return {
+              ...post,
+              liked: companyLikes.includes(userId) ? 1 : 0
+          };
+        });
+
+        res.status(200).json({status:'success',data:updatedPosts ,lastCompanyPostId});
+      }else{
+        res.status(200).json({status:'error',data:result });
+      }
+
+    }catch(err){
+       next(err);
+    }
+    
+   }
+
    static async TimelineLike(req,res,next){
     const data= req.body;
 
